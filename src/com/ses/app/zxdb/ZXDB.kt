@@ -1,14 +1,9 @@
 package com.ses.app.zxdb
 
-import com.ses.app.sql.Column
 import com.ses.app.sql.SQL
-import com.ses.app.sql.Table
 import java.sql.Connection
 import java.sql.DriverManager
 import kotlin.reflect.KClass
-import kotlin.reflect.KFunction
-import kotlin.reflect.full.findAnnotation
-import kotlin.reflect.full.primaryConstructor
 
 class ZXDB {
     companion object {
@@ -32,6 +27,7 @@ class ZXDB {
     fun <T: Any> readTable(cls: KClass<T>) {
         conn?.let {
             SQL(it).fetch<T>(cls) { c ->
+                println(c)
             }
         }
     }

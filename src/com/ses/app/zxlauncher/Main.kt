@@ -1,14 +1,20 @@
 package com.ses.app.zxlauncher
 
-import com.ses.app.zxdb.Entry
+import com.ses.app.zxdb.MachineType
 import com.ses.app.zxdb.ZXDB
 import javafx.application.Application
+import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
+import javafx.scene.control.TreeView
 import javafx.stage.Stage
 
-class Test: Application() {
+// https://github.com/zxdb/ZXDB/raw/master/ZXDB_mysql.sql
+class Main: Application() {
+    @FXML
+    private val treeView: TreeView<Category>? = null
+
     override fun start(primaryStage: Stage?) {
         val loader = FXMLLoader(javaClass.getResource("main.fxml"))
         val root = loader.load<Parent>()
@@ -26,9 +32,10 @@ class Test: Application() {
         @JvmStatic
         fun main(args: Array<String>) {
             ZXDB.instance.open()
-            ZXDB.instance.readTable<Entry>(Entry::class)
+            ZXDB.instance.readTable(MachineType::class)
+            ZXDB.instance.close()
 
-            launch(Test::class.java, *args)
+            launch(Main::class.java, *args)
         }
     }
 }
