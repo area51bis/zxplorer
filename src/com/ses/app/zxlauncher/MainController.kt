@@ -5,6 +5,8 @@ import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
 import javafx.scene.Parent
+import javafx.scene.control.TableColumn
+import javafx.scene.control.TableView
 import javafx.scene.control.TreeItem
 import javafx.scene.control.TreeView
 import java.net.URL
@@ -20,6 +22,8 @@ class MainController : Initializable {
 
     @FXML
     lateinit var treeView: TreeView<Category>
+    @FXML
+    lateinit var tableView: TableView<*>
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         createTree()
