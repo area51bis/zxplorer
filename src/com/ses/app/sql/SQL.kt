@@ -2,13 +2,21 @@ package com.ses.app.sql
 
 import java.sql.Connection
 import java.sql.ResultSet
+import java.sql.SQLException
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty
+import kotlin.reflect.KProperty
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.hasAnnotation
 import kotlin.reflect.full.primaryConstructor
+import kotlin.reflect.jvm.jvmErasure
 
 class SQL(private val conn: Connection) {
+    companion object {
+        fun getTableName(cls: KClass<*>): String? = cls.findAnnotation<Table>()?.name
+        fun getKeyProperty(cls: KClass<*>): KProperty<*>? = cls.members.find { it.hasAnnotation<Key>() } as KProperty<*>
+    }
+
     fun <T : Any> fetch(cls: KClass<T>, f: (row: T) -> Unit) {
         val table = cls.findAnnotation<Table>()
         if (table != null) {
@@ -19,20 +27,13 @@ class SQL(private val conn: Connection) {
                 val columns = map.values
 
                 stmt?.executeQuery("SELECT ${map.keys.joinToString()} FROM $tableName")?.use { rs ->
-                    fillColumnsMap(map, rs)
                     @Suppress("UNCHECKED_CAST") val ctor: () -> T = cls.primaryConstructor as () -> T
-
-                    columns.forEach { println("${it.name} -> ${it.property.name} (${it.rsIndex})") }
 
                     while (rs.next()) {
                         val row: T = ctor()
 
                         columns.forEach {
-                            val index = it.rsIndex
-                            if (index != null) {
-                                val value = rs.getObject(index)
-                                it.property.setter.call(row, value)
-                            }
+                            it.read(row, rs)
                         }
 
                         f(row)
@@ -49,23 +50,43 @@ class SQL(private val conn: Connection) {
             if (prop is KMutableProperty) {
                 val c = prop.findAnnotation<Column>()
                 val name = if (c?.name != "") c!!.name else prop.name
-                map[name] = ColumnInfo(name, prop)
+                val isKey = prop.hasAnnotation<Key>()
+                map[name] = ColumnInfo(name, prop, isKey)
             }
         }
 
         return map
     }
-
-    private fun fillColumnsMap(map: Map<String, ColumnInfo>, rs: ResultSet) {
-        for (i in 1..rs.metaData.columnCount) {
-            val columnName = rs.metaData.getColumnName(i)
-            map[columnName]?.apply {
-                rsIndex = i
-            }
-        }
-    }
 }
 
-data class ColumnInfo(val name: String, val property: KMutableProperty<*>) {
-    var rsIndex: Int? = null
+val RS_DEFAULT_GETTER: (ResultSet, Int) -> Any? = { rs, i -> rs.getBoolean(i) }
+val RS_GETTERS: HashMap<KClass<*>, (ResultSet, Int) -> Any?> = hashMapOf(
+        Byte::class to { rs, i -> rs.getByte(i) },
+        Int::class to { rs, i -> rs.getInt(i) },
+        Boolean::class to { rs, i -> rs.getBoolean(i) },
+        String::class to { rs, i -> rs.getString(i) }
+)
+
+class ColumnInfo(val name: String, val property: KMutableProperty<*>, val isKey: Boolean = false) {
+    private var rsIndex: Int? = null
+
+    private val rsGetter: ((ResultSet, Int) -> Any?) by lazy {
+        RS_GETTERS[property.returnType.jvmErasure] ?: RS_DEFAULT_GETTER
+    }
+
+    fun read(thiz: Any, rs: ResultSet) {
+        if (rsIndex == null) {
+            rsIndex = try {
+                rs.findColumn(name)
+            } catch (e: SQLException) {
+                0
+            }
+        }
+
+        // rsIndex no debería ser null
+        if( rsIndex != 0 ) {
+            val value = rsGetter(rs, rsIndex!!)
+            property.setter.call(thiz, value)
+        }
+    }
 }

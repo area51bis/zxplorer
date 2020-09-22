@@ -1,29 +1,23 @@
 package com.ses.app.zxlauncher
 
-import com.ses.app.zxdb.MachineType
 import com.ses.app.zxdb.ZXDB
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.stage.Stage
 
+// https://github.com/zxdb/ZXDB/raw/master/ZXDB_mysql.sql
+
 class App : Application() {
     override fun start(primaryStage: Stage?) {
+        ZXDB.instance.load()
+
         val scene = Scene(MainController.load())
         //val controller = loader.getController<MainController>()
 
         primaryStage?.apply {
-            title = "Hello World"
+            title = "ZX Launcher"
             this.scene = scene
             show()
         }
     }
-}
-
-// https://github.com/zxdb/ZXDB/raw/master/ZXDB_mysql.sql
-fun main(args: Array<String>) {
-    ZXDB.instance.open()
-    ZXDB.instance.readTable(MachineType::class)
-    ZXDB.instance.close()
-
-    Application.launch(App::class.java, *args)
 }
