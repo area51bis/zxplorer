@@ -38,7 +38,7 @@ class MainController : Initializable {
     }
 
     private fun createTree() {
-        treeView.root = TreeCategory("ZXDB")
+        treeView.root = TreeGenreItem("ZXDB")
 
         // crear los nodos en el orden de las categorías
         ZXDB.instance.getTable(GenreType::class).rows.forEach { genre ->
@@ -51,7 +51,7 @@ class MainController : Initializable {
         }
 
         treeView.selectionModel.selectedItemProperty().addListener { observable, oldValue, newValue ->
-            val category = newValue as TreeCategory
+            val category = newValue as TreeGenreItem
             println("Category: ${category.value}")
             tableView.items = category.entries
         }
@@ -61,16 +61,16 @@ class MainController : Initializable {
     private fun addTreeEntry(entry: Entry) {
         val path = ZXDBUtil.getCategoryPath(entry)
 
-        var node = treeView.root as TreeCategory
+        var node = treeView.root as TreeGenreItem
         node.addEntry(entry)
 
         path.forEach { pathPart ->
             val n = node.children.find { item -> item.value == pathPart }
 
             if (n != null) {
-                node = n as TreeCategory
+                node = n as TreeGenreItem
             } else {
-                TreeCategory(pathPart).also { cat ->
+                TreeGenreItem(pathPart).also { cat ->
                     node.children.add(cat)
                     //node.children.sortBy { item -> item.value }
                     node = cat
@@ -82,7 +82,7 @@ class MainController : Initializable {
     }
 
     /** Obtiene un nodo de una categoría, creando los necesarios. */
-    private fun getCategoryNode(name: String): TreeCategory {
+    private fun getCategoryNode(name: String): TreeGenreItem {
         val path: List<String> = ZXDBUtil.getCategoryPath(name)
         var node = treeView.root
 
@@ -92,7 +92,7 @@ class MainController : Initializable {
             if (n != null) {
                 node = n
             } else {
-                TreeCategory(pathPart).also { cat ->
+                TreeGenreItem(pathPart).also { cat ->
                     node.children.add(cat)
                     //node.children.sortBy { item -> item.value }
                     node = cat
@@ -100,7 +100,7 @@ class MainController : Initializable {
             }
         }
 
-        return node as TreeCategory
+        return node as TreeGenreItem
     }
 
     private fun createTable() {

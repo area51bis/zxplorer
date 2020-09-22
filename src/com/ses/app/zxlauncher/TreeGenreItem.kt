@@ -6,10 +6,9 @@ import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.scene.control.TreeItem
 
-class TreeCategory : TreeItem<String> {
+class TreeGenreItem : TreeItem<String> {
     private val genreId: Int?
     val entries: ObservableList<Entry> by lazy {  FXCollections.observableArrayList() }
-    //val entries: ArrayList<Entry> by lazy { ArrayList() }
 
     constructor(name: String) : super(name) {
         genreId = null
