@@ -2,8 +2,8 @@ package com.ses.app.zxlauncher
 
 import com.ses.app.zxdb.ZXDB
 import com.ses.app.zxdb.dao.Entry
+import com.ses.app.zxdb.dao.GenreType
 import javafx.beans.property.ReadOnlyStringWrapper
-import javafx.beans.value.ObservableValue
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
@@ -12,7 +12,6 @@ import javafx.fxml.Initializable
 import javafx.scene.Parent
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
-import javafx.scene.control.TreeItem
 import javafx.scene.control.TreeView
 import javafx.util.Callback
 import java.net.URL
@@ -28,7 +27,7 @@ class MainController : Initializable {
     }
 
     @FXML
-    lateinit var treeView: TreeView<Category>
+    lateinit var treeView: TreeView<String>
 
     @FXML
     lateinit var tableView: TableView<Entry>
@@ -39,20 +38,69 @@ class MainController : Initializable {
     }
 
     private fun createTree() {
-        val root = TreeItem(Category("root")).apply {
-            isExpanded = true
-            children.addAll(
-                    TreeItem(Category("Arcade")),
-                    TreeItem(Category("Adventure")),
-                    TreeItem(Category("Puzzle"))
-            )
+        treeView.root = TreeCategory("ZXDB")
+
+        // crear los nodos en el orden de las categorías
+        ZXDB.instance.getTable(GenreType::class).rows.forEach { genre ->
+            getCategoryNode(genre.text!!)
         }
 
-        treeView.root = root
-        treeView.selectionModel.selectedItemProperty().addListener { observable: ObservableValue<out TreeItem<Category>>?, oldValue: TreeItem<Category>?, newValue: TreeItem<Category> ->
-            val category = newValue.value
-            println("Category: " + category.name)
+        // añadir las entradas a los nodos
+        ZXDB.instance.getTable(Entry::class).rows.forEach { entry ->
+            addTreeEntry(entry)
         }
+
+        treeView.selectionModel.selectedItemProperty().addListener { observable, oldValue, newValue ->
+            val category = newValue as TreeCategory
+            println("Category: ${category.value}")
+            tableView.items = category.entries
+        }
+    }
+
+    /** Añade una entrada a los nodos correspondientes, creando los necesarios. */
+    private fun addTreeEntry(entry: Entry) {
+        val path = ZXDBUtil.getCategoryPath(entry)
+
+        var node = treeView.root as TreeCategory
+        node.addEntry(entry)
+
+        path.forEach { pathPart ->
+            val n = node.children.find { item -> item.value == pathPart }
+
+            if (n != null) {
+                node = n as TreeCategory
+            } else {
+                TreeCategory(pathPart).also { cat ->
+                    node.children.add(cat)
+                    //node.children.sortBy { item -> item.value }
+                    node = cat
+                }
+            }
+
+            node.addEntry(entry)
+        }
+    }
+
+    /** Obtiene un nodo de una categoría, creando los necesarios. */
+    private fun getCategoryNode(name: String): TreeCategory {
+        val path: List<String> = ZXDBUtil.getCategoryPath(name)
+        var node = treeView.root
+
+        path.forEach { pathPart ->
+            val n = node.children.find { item -> item.value == pathPart }
+
+            if (n != null) {
+                node = n
+            } else {
+                TreeCategory(pathPart).also { cat ->
+                    node.children.add(cat)
+                    //node.children.sortBy { item -> item.value }
+                    node = cat
+                }
+            }
+        }
+
+        return node as TreeCategory
     }
 
     private fun createTable() {

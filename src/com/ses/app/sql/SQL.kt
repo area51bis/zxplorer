@@ -63,6 +63,9 @@ val RS_DEFAULT_GETTER: (ResultSet, Int) -> Any? = { rs, i -> rs.getBoolean(i) }
 val RS_GETTERS: HashMap<KClass<*>, (ResultSet, Int) -> Any?> = hashMapOf(
         Byte::class to { rs, i -> rs.getByte(i) },
         Int::class to { rs, i -> rs.getInt(i) },
+        Long::class to { rs, i -> rs.getLong(i) },
+        Float::class to { rs, i -> rs.getFloat(i) },
+        Double::class to { rs, i -> rs.getDouble(i) },
         Boolean::class to { rs, i -> rs.getBoolean(i) },
         String::class to { rs, i -> rs.getString(i) }
 )
