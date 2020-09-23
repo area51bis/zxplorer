@@ -1,4 +1,4 @@
-package com.ses.app.sql
+package com.ses.sql
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)

@@ -1,4 +1,4 @@
-package com.ses.app.sql
+package com.ses.sql
 
 import java.sql.Connection
 import java.sql.ResultSet

@@ -1,10 +1,10 @@
-package com.ses.app.zxdb
+package com.ses.zxdb
 
-import com.ses.app.sql.SQL
-import com.ses.app.zxdb.dao.Entry
-import com.ses.app.zxdb.dao.FileType
-import com.ses.app.zxdb.dao.GenreType
-import com.ses.app.zxdb.dao.MachineType
+import com.ses.sql.SQL
+import com.ses.zxdb.dao.Entry
+import com.ses.zxdb.dao.FileType
+import com.ses.zxdb.dao.GenreType
+import com.ses.zxdb.dao.MachineType
 import java.sql.Connection
 import java.sql.DriverManager
 import kotlin.reflect.KClass
@@ -38,12 +38,8 @@ class ZXDB {
         return (tables[cls] ?: readTable(cls)) as Table<T>
     }
 
-    fun getGenre(genreId: Int?): GenreType? {
-        return if (genreId != null) {
-            getTable(GenreType::class)[genreId]
-        } else {
-            null
-        }
+    fun getGenre(genreId: Int): GenreType? {
+        return getTable(GenreType::class)[genreId]
     }
 
     private fun <T : Any> readTable(cls: KClass<T>): Table<T> {

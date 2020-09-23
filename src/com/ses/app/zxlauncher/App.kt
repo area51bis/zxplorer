@@ -1,6 +1,6 @@
 package com.ses.app.zxlauncher
 
-import com.ses.app.zxdb.ZXDB
+import com.ses.zxdb.ZXDB
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.stage.Stage

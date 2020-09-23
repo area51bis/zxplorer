@@ -1,7 +1,7 @@
-package com.ses.app.zxdb.dao
+package com.ses.zxdb.dao
 
-import com.ses.app.sql.Column
-import com.ses.app.sql.Table
+import com.ses.sql.Column
+import com.ses.sql.Table
 
 @Table("downloads")
 class Download {

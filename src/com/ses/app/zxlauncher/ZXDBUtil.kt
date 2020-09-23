@@ -1,8 +1,8 @@
 package com.ses.app.zxlauncher
 
-import com.ses.app.zxdb.ZXDB
-import com.ses.app.zxdb.dao.Entry
-import com.ses.app.zxdb.dao.GenreType
+import com.ses.zxdb.ZXDB
+import com.ses.zxdb.dao.Entry
+import com.ses.zxdb.dao.GenreType
 
 class ZXDBUtil {
     companion object {

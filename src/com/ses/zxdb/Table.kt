@@ -1,6 +1,6 @@
-package com.ses.app.zxdb
+package com.ses.zxdb
 
-import com.ses.app.sql.SQL
+import com.ses.sql.SQL
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 

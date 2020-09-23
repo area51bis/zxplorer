@@ -1,6 +1,6 @@
-package com.ses.app.zxdb.dao
+package com.ses.zxdb.dao
 
-import com.ses.app.sql.Table
+import com.ses.sql.Table
 
 @Table("genretypes")
 class GenreType: GenericType<Int>()

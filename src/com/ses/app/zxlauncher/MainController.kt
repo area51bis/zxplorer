@@ -1,8 +1,9 @@
 package com.ses.app.zxlauncher
 
-import com.ses.app.zxdb.ZXDB
-import com.ses.app.zxdb.dao.Entry
-import com.ses.app.zxdb.dao.GenreType
+import com.ses.net.Http
+import com.ses.zxdb.ZXDB
+import com.ses.zxdb.dao.Entry
+import com.ses.zxdb.dao.GenreType
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
@@ -14,6 +15,7 @@ import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.TreeView
 import javafx.util.Callback
+import java.io.File
 import java.net.URL
 import java.util.*
 
@@ -52,7 +54,7 @@ class MainController : Initializable {
 
         treeView.selectionModel.selectedItemProperty().addListener { observable, oldValue, newValue ->
             val category = newValue as TreeGenreItem
-            println("Category: ${category.value}")
+            //println("Category: ${category.value}")
             tableView.items = category.entries
         }
     }
@@ -115,5 +117,24 @@ class MainController : Initializable {
         val listData: ObservableList<Entry> = FXCollections.observableArrayList()
         ZXDB.instance.getTable(Entry::class).rows.forEach { listData.add(it) }
         tableView.items = listData
+    }
+
+    @FXML
+    fun menuUpdateDatabaseAction() {
+        val workingDir = File(System.getProperty("user.dir"))
+        val file = File(workingDir, "ZXDB_mysql.sql")
+
+        // descargar ZXDB_mysql.sql
+        Http().apply {
+            request = "https://github.com/zxdb/ZXDB/raw/master/ZXDB_mysql.sql"
+            getFile(file) { status, progress ->
+            }
+        }
+
+        // convertir a sqlite
+
+        // sustituir fichero
+
+        // recargar base de datos y refrescar los datos
     }
 }

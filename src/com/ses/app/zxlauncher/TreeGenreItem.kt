@@ -1,7 +1,7 @@
 package com.ses.app.zxlauncher
 
-import com.ses.app.zxdb.dao.Entry
-import com.ses.app.zxdb.dao.GenreType
+import com.ses.zxdb.dao.Entry
+import com.ses.zxdb.dao.GenreType
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.scene.control.TreeItem
