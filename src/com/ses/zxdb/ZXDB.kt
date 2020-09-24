@@ -9,6 +9,27 @@ import java.sql.Connection
 import java.sql.DriverManager
 import kotlin.reflect.KClass
 
+/*
+Descargas:
+
+SELECT e.id, e.title, ft.text, fmt.text, d.file_link
+FROM entries e
+INNER JOIN downloads d ON d.entry_id=e.id
+INNER JOIN filetypes ft ON ft.id=d.filetype_id
+INNER JOIN formattypes fmt ON fmt.id==d.formattype_id
+WHERE e.id=48
+*/
+
+/*
+Releases:
+
+SELECT e.title, r.release_seq, r.release_year, r.release_month, r.release_day, r.release_price
+FROM entries e
+INNER JOIN releases r ON r.entry_id=e.id
+WHERE e.id=3012 -- AND r.release_seq=0
+ORDER BY release_seq
+*/
+
 class ZXDB {
     companion object {
         const val DB_NAME = "ZXDB.db"

@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact name="ZXLauncher:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ZXLauncher_jar</output-path>
+    <root id="root">
+      <element id="archive" name="ZXLauncher.jar">
+        <element id="module-output" name="ZXLauncher" />
+      </element>
+      <element id="directory" name="lib">
+        <element id="library" level="application" name="JavaFX" />
+        <element id="library" level="project" name="KotlinJavaRuntime" />
+        <element id="library" level="project" name="org.xerial:sqlite-jdbc:3.32.3.2" />
+      </element>
+    </root>
+  </artifact>
+</component>
