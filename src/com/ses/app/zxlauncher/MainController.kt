@@ -1,5 +1,6 @@
 package com.ses.app.zxlauncher
 
+import com.ses.app.zxlauncher.ui.ProgressDialog
 import com.ses.net.Http
 import com.ses.zxdb.ZXDB
 import com.ses.zxdb.dao.Entry
@@ -122,6 +123,11 @@ class MainController : Initializable {
 
     @FXML
     fun menuUpdateDatabaseAction() {
+        if (true) {
+            ProgressDialog.create().show()
+            return
+        }
+
         val workingDir = File(System.getProperty("user.dir"))
         val file = File(workingDir, "ZXDB_mysql.sql")
 
@@ -143,7 +149,7 @@ class MainController : Initializable {
     fun menuAboutAction() {
         Alert(Alert.AlertType.INFORMATION).apply {
             title = "About"
-            //headerText = null
+            headerText = null
             contentText = "ZXLauncher 0.001"
         }.showAndWait()
     }

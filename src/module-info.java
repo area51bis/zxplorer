@@ -9,6 +9,7 @@ module app {
     requires kotlin.stdlib.jdk7;
 
     exports com.ses.zxdb.dao; // reflection
+    exports com.ses.app.zxlauncher.ui; // reflection
 
     opens com.ses.app.zxlauncher;
 }
