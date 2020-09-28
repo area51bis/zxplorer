@@ -17,26 +17,24 @@ class SQL(private val conn: Connection) {
         fun getKeyProperty(cls: KClass<*>): KProperty<*>? = cls.members.find { it.hasAnnotation<Key>() } as KProperty<*>
     }
 
-    fun <T : Any> fetch(select: String = "*", from: String? = null, where: String? = null, orderBy: String? = null, cls: KClass<T>, f: (row: T) -> Unit) {
+    fun <T : Any> select(columns: String = "*", from: String? = null, where: String? = null, orderBy: String? = null, cls: KClass<T>, f: (row: T) -> Unit) {
         val table = from ?: cls.findAnnotation<Table>()?.name
 
         if (table != null) {
-            val query = StringBuilder("SELECT $select FROM $table").apply {
+            val query = StringBuilder("SELECT $columns FROM $table").apply {
                 if (where != null) append(" WHERE $where")
                 if (orderBy != null) append(" ORDER BY $orderBy")
             }.toString()
 
             conn.createStatement().use { stmt ->
-                val map = getColumnsMap(cls)
-                val columns = map.values
-
                 stmt?.executeQuery(query)?.use { rs ->
+                    val columsInfo = getColumnsMap(cls).values
                     @Suppress("UNCHECKED_CAST") val ctor: () -> T = cls.primaryConstructor as () -> T
 
                     while (rs.next()) {
                         val row: T = ctor()
 
-                        columns.forEach {
+                        columsInfo.forEach {
                             it.read(row, rs)
                         }
 

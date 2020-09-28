@@ -2,10 +2,10 @@ package com.ses.app.zxlauncher
 
 import com.ses.app.zxlauncher.ui.ProgressDialog
 import com.ses.net.Http
-import com.ses.zxdb.ZXDB
+import com.ses.zxdb.*
+import com.ses.zxdb.dao.Download
 import com.ses.zxdb.dao.Entry
 import com.ses.zxdb.dao.GenreType
-import com.ses.zxdb.downloadServerUrl
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
@@ -39,13 +39,20 @@ class MainController : Initializable {
     @FXML
     lateinit var tableView: TableView<Entry>
 
+    @FXML
+    lateinit var downloadsTableView: TableView<Download>
+
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         createTree()
         createTable()
+        createDownloadsTable()
+
+        treeView.selectionModel.select(treeView.root)
     }
 
     private fun createTree() {
         treeView.root = TreeGenreItem("ZXDB")
+        treeView.root.isExpanded = true
 
         // crear los nodos en el orden de las categorías
         ZXDB.getTable(GenreType::class).rows.forEach { genre ->
@@ -119,9 +126,31 @@ class MainController : Initializable {
             cellValueFactory = Callback { p -> ReadOnlyStringWrapper(ZXDB.getGenre(p.value.genretype_id)?.text) }
         })
 
+        /*
         val listData: ObservableList<Entry> = FXCollections.observableArrayList()
         ZXDB.getTable(Entry::class).rows.forEach { listData.add(it) }
         tableView.items = listData
+        */
+    }
+
+    private fun createDownloadsTable() {
+        downloadsTableView.columns.add(TableColumn<Download, String>("Name").apply {
+            cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.fileName) }
+        })
+
+        downloadsTableView.columns.add(TableColumn<Download, String>("Type").apply {
+            cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.fileType?.text) }
+        })
+
+        downloadsTableView.columns.add(TableColumn<Download, String>("Format").apply {
+            cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.formatType?.text) }
+        })
+
+        downloadsTableView.columns.add(TableColumn<Download, String>("Machine").apply {
+            cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.machineType?.text) }
+        })
+
+        downloadsTableView.items = FXCollections.observableArrayList()
     }
 
     @FXML
@@ -160,8 +189,6 @@ class MainController : Initializable {
     @FXML
     fun onTableRowClick(e: MouseEvent) {
         val entry = tableView.selectionModel.selectedItem
-        for (download in ZXDB.getDownloads(entry.id)) {
-            println(download.downloadServerUrl)
-        }
+        downloadsTableView.items.setAll(entry.downloads)
     }
 }

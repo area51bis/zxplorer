@@ -43,6 +43,7 @@ class ZXDB {
 
         private var LOAD_TABLES = arrayOf(
                 // enumeration tables
+                Extension::class,
                 FileType::class,
                 GenreType::class,
                 MachineType::class,
@@ -74,7 +75,7 @@ class ZXDB {
 
         fun getDownloads(entryId: Int): List<Download> {
             val list = ArrayList<Download>()
-            SQL(conn).fetch(where = "entry_id = $entryId", cls = Download::class, f = list::add)
+            SQL(conn).select(where = "entry_id = $entryId", cls = Download::class, f = list::add)
             return list
         }
 
@@ -90,7 +91,7 @@ class ZXDB {
 
         private fun <T : Any> readTable(cls: KClass<T>): Table<T> {
             val table = Table<T>(cls)
-            SQL(conn).fetch(cls = cls, f = table::addRow)
+            SQL(conn).select(cls = cls, f = table::addRow)
             tables[cls] = table
             return table
         }
