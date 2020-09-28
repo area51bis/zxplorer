@@ -9,7 +9,7 @@ import javafx.stage.Stage
 
 class App : Application() {
     override fun start(primaryStage: Stage?) {
-        ZXDB.instance.load()
+        ZXDB.load()
 
         val scene = Scene(MainController.load())
         //val controller = loader.getController<MainController>()
@@ -19,5 +19,10 @@ class App : Application() {
             this.scene = scene
             show()
         }
+    }
+
+    override fun stop() {
+        super.stop()
+        //ZXDB.release()
     }
 }

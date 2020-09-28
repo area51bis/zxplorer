@@ -1,10 +1,7 @@
 package com.ses.zxdb
 
 import com.ses.sql.SQL
-import com.ses.zxdb.dao.Entry
-import com.ses.zxdb.dao.FileType
-import com.ses.zxdb.dao.GenreType
-import com.ses.zxdb.dao.MachineType
+import com.ses.zxdb.dao.*
 import java.sql.Connection
 import java.sql.DriverManager
 import kotlin.reflect.KClass
@@ -34,39 +31,68 @@ class ZXDB {
     companion object {
         const val DB_NAME = "ZXDB.db"
 
-        val instance by lazy {
-            ZXDB()
+        //val ARCHIVE_ORG = "https://archive.org/download/World_of_Spectrum_June_2017_Mirror/World of Spectrum June 2017 Mirror.zip/World of Spectrum June 2017 Mirror/sinclair"
+        private const val ARCHIVE_ORG = "https://archive.org/download/World_of_Spectrum_June_2017_Mirror/World%20of%20Spectrum%20June%202017%20Mirror.zip/World%20of%20Spectrum%20June%202017%20Mirror/sinclair"
+        private const val SPECTRUM_COMPUTING_ORG = "https://spectrumcomputing.co.uk"
+        // las pantallas (carga y juego) parecen estar en SPECTRUM_COMPUTING_ORG
+
+        private val DOWNLOAD_SERVERS = arrayOf(
+                DownloadServer("/pub/sinclair/", ARCHIVE_ORG),
+                DownloadServer("/zxdb/sinclair/", SPECTRUM_COMPUTING_ORG)
+        )
+
+        private var LOAD_TABLES = arrayOf(
+                // enumeration tables
+                FileType::class,
+                GenreType::class,
+                MachineType::class,
+
+                Entry::class
+        )
+        private val tables: HashMap<KClass<*>, Table<*>> = HashMap()
+
+        private var conn: Connection = DriverManager.getConnection("jdbc:sqlite:$DB_NAME")
+
+        /*
+        protected fun finalize() {
+            conn.close()
         }
-    }
+        */
 
-    private val tables: HashMap<KClass<*>, Table<*>> = HashMap()
+        fun load() {
+            for (t in LOAD_TABLES) readTable(t)
+        }
 
-    private var conn: Connection = DriverManager.getConnection("jdbc:sqlite:$DB_NAME")
+        @Suppress("UNCHECKED_CAST")
+        fun <T : Any> getTable(cls: KClass<T>): Table<T> {
+            return (tables[cls] ?: readTable(cls)) as Table<T>
+        }
 
-    protected fun finalize() {
-        conn.close()
-    }
+        fun getGenre(genreId: Int): GenreType? {
+            return getTable(GenreType::class)[genreId]
+        }
 
-    fun load() {
-        readTable(MachineType::class)
-        readTable(FileType::class)
-        readTable(GenreType::class)
-        readTable(Entry::class)
-    }
+        fun getDownloads(entryId: Int): List<Download> {
+            val list = ArrayList<Download>()
+            SQL(conn).fetch(where = "entry_id = $entryId", cls = Download::class, f = list::add)
+            return list
+        }
 
-    @Suppress("UNCHECKED_CAST")
-    fun <T : Any> getTable(cls: KClass<T>): Table<T> {
-        return (tables[cls] ?: readTable(cls)) as Table<T>
-    }
+        fun getDownloadServerUrl(url: String): String {
+            for (server in DOWNLOAD_SERVERS) {
+                if (url.startsWith(server.prefix)) {
+                    return server.url + url
+                }
+            }
 
-    fun getGenre(genreId: Int): GenreType? {
-        return getTable(GenreType::class)[genreId]
-    }
+            return url
+        }
 
-    private fun <T : Any> readTable(cls: KClass<T>): Table<T> {
-        val table = Table<T>(cls)
-        SQL(conn).fetch(cls, table::addRow)
-        tables[cls] = table
-        return table
+        private fun <T : Any> readTable(cls: KClass<T>): Table<T> {
+            val table = Table<T>(cls)
+            SQL(conn).fetch(cls = cls, f = table::addRow)
+            tables[cls] = table
+            return table
+        }
     }
 }

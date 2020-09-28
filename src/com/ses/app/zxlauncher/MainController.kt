@@ -5,6 +5,7 @@ import com.ses.net.Http
 import com.ses.zxdb.ZXDB
 import com.ses.zxdb.dao.Entry
 import com.ses.zxdb.dao.GenreType
+import com.ses.zxdb.downloadServerUrl
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
@@ -16,9 +17,11 @@ import javafx.scene.control.Alert
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.TreeView
+import javafx.scene.input.MouseEvent
 import javafx.util.Callback
 import java.io.File
 import java.net.URL
+import java.net.URLEncoder
 import java.util.*
 
 
@@ -45,12 +48,12 @@ class MainController : Initializable {
         treeView.root = TreeGenreItem("ZXDB")
 
         // crear los nodos en el orden de las categorías
-        ZXDB.instance.getTable(GenreType::class).rows.forEach { genre ->
+        ZXDB.getTable(GenreType::class).rows.forEach { genre ->
             getCategoryNode(genre.text!!)
         }
 
         // añadir las entradas a los nodos
-        ZXDB.instance.getTable(Entry::class).rows.forEach { entry ->
+        ZXDB.getTable(Entry::class).rows.forEach { entry ->
             addTreeEntry(entry)
         }
 
@@ -113,11 +116,11 @@ class MainController : Initializable {
         })
 
         tableView.columns.add(TableColumn<Entry, String>("Category").apply {
-            cellValueFactory = Callback { p -> ReadOnlyStringWrapper(ZXDB.instance.getGenre(p.value.genretype_id)?.text) }
+            cellValueFactory = Callback { p -> ReadOnlyStringWrapper(ZXDB.getGenre(p.value.genretype_id)?.text) }
         })
 
         val listData: ObservableList<Entry> = FXCollections.observableArrayList()
-        ZXDB.instance.getTable(Entry::class).rows.forEach { listData.add(it) }
+        ZXDB.getTable(Entry::class).rows.forEach { listData.add(it) }
         tableView.items = listData
     }
 
@@ -152,5 +155,13 @@ class MainController : Initializable {
             headerText = null
             contentText = "ZXLauncher 0.001"
         }.showAndWait()
+    }
+
+    @FXML
+    fun onTableRowClick(e: MouseEvent) {
+        val entry = tableView.selectionModel.selectedItem
+        for (download in ZXDB.getDownloads(entry.id)) {
+            println(download.downloadServerUrl)
+        }
     }
 }

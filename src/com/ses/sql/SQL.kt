@@ -17,16 +17,20 @@ class SQL(private val conn: Connection) {
         fun getKeyProperty(cls: KClass<*>): KProperty<*>? = cls.members.find { it.hasAnnotation<Key>() } as KProperty<*>
     }
 
-    fun <T : Any> fetch(cls: KClass<T>, f: (row: T) -> Unit) {
-        val table = cls.findAnnotation<Table>()
+    fun <T : Any> fetch(select: String = "*", from: String? = null, where: String? = null, orderBy: String? = null, cls: KClass<T>, f: (row: T) -> Unit) {
+        val table = from ?: cls.findAnnotation<Table>()?.name
+
         if (table != null) {
-            val tableName = table.name
+            val query = StringBuilder("SELECT $select FROM $table").apply {
+                if (where != null) append(" WHERE $where")
+                if (orderBy != null) append(" ORDER BY $orderBy")
+            }.toString()
 
             conn.createStatement().use { stmt ->
                 val map = getColumnsMap(cls)
                 val columns = map.values
 
-                stmt?.executeQuery("SELECT ${map.keys.joinToString()} FROM $tableName")?.use { rs ->
+                stmt?.executeQuery(query)?.use { rs ->
                     @Suppress("UNCHECKED_CAST") val ctor: () -> T = cls.primaryConstructor as () -> T
 
                     while (rs.next()) {
@@ -42,6 +46,29 @@ class SQL(private val conn: Connection) {
             }
         }
     }
+
+    /*
+    fun <T : Any> fetch(query: String, cls: KClass<T>, f: (row: T) -> Unit) {
+        conn.createStatement().use { stmt ->
+            val map = getColumnsMap(cls)
+            val columns = map.values
+
+            stmt?.executeQuery(query)?.use { rs ->
+                @Suppress("UNCHECKED_CAST") val ctor: () -> T = cls.primaryConstructor as () -> T
+
+                while (rs.next()) {
+                    val row: T = ctor()
+
+                    columns.forEach {
+                        it.read(row, rs)
+                    }
+
+                    f(row)
+                }
+            }
+        }
+    }
+    */
 
     private fun <T : Any> getColumnsMap(cls: KClass<T>): Map<String, ColumnInfo> {
         val map: LinkedHashMap<String, ColumnInfo> = LinkedHashMap()
@@ -87,7 +114,7 @@ class ColumnInfo(val name: String, val property: KMutableProperty<*>, val isKey:
         }
 
         // rsIndex no debería ser null
-        if( rsIndex != 0 ) {
+        if (rsIndex != 0) {
             val value = rsGetter(rs, rsIndex!!)
             property.setter.call(thiz, value)
         }

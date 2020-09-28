@@ -14,7 +14,7 @@ class ZXDBUtil {
         }
 
         fun getCategoryPath(entry: Entry): List<String> {
-            return getCategoryPath(ZXDB.instance.getGenre(entry.genretype_id)?.text)
+            return getCategoryPath(ZXDB.getGenre(entry.genretype_id)?.text)
         }
 
         fun getCategoryPath(genre: GenreType): List<String> {
