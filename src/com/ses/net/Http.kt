@@ -13,12 +13,20 @@ class Http {
         POST("POST")
     }
 
+    enum class Status {
+        Connecting,
+        Connected,
+        Downloading,
+        Completed,
+        Error
+    }
 
     var method: RequestMethod = RequestMethod.GET
     lateinit var request: String
     var params: Map<String, String>? = null
     var bufferSize: Int = 8 * 1024
     var timeout: Int = 5000
+    var progressHandler: HttpProgressHandler? = null
 
     private var errorCode = 0
     private var errorMessage: String? = null
@@ -45,10 +53,16 @@ class Http {
         }
     }
 
-    fun request(output: OutputStream, progressHandler: HttpProgressHandler? = null) {
+    private fun request(output: OutputStream, progressHandler: HttpProgressHandler? = null) {
+        this.progressHandler = progressHandler
+        connect {
+            read(it, output)
+        }
+    }
+
+    private fun connect(connectionHandler: (conn: HttpURLConnection) -> Unit) {
         errorCode = -1
 
-        var input: InputStream? = null
         var conn: HttpURLConnection? = null
 
         try {
@@ -101,8 +115,19 @@ class Http {
                 else -> error(conn.responseCode, conn.responseMessage)
             }
 
-            input = conn.inputStream
+            connectionHandler(conn)
 
+        } catch (e: Exception) {
+            //TODO: mejorar la gestión de errores
+            error(errorCode, e.message ?: "Unknown error")
+
+        } finally {
+            conn?.disconnect()
+        }
+    }
+
+    private fun read(conn: HttpURLConnection, output: OutputStream) {
+        conn.inputStream.use { input ->
             val contentLenght = conn.contentLengthLong
 
             val buffer = ByteArray(bufferSize)
@@ -120,20 +145,12 @@ class Http {
             errorCode = 0
 
             progressHandler?.invoke(0, 1f)
-
-        } catch (e: Exception) {
-            errorMessage = e.message
-
-        } finally {
-            input?.close()
-            conn?.disconnect()
         }
     }
 
     private fun error(code: Int, message: String) {
         errorCode = code
         errorMessage = message
-        println("Error $code: $message")
         throw RuntimeException(message)
     }
 

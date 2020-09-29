@@ -8,20 +8,16 @@ import com.ses.zxdb.dao.Entry
 import com.ses.zxdb.dao.GenreType
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.collections.FXCollections
-import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
 import javafx.scene.Parent
 import javafx.scene.control.Alert
-import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.TreeView
 import javafx.scene.input.MouseEvent
-import javafx.util.Callback
 import java.io.File
 import java.net.URL
-import java.net.URLEncoder
 import java.util.*
 
 
@@ -118,13 +114,8 @@ class MainController : Initializable {
     }
 
     private fun createTable() {
-        tableView.columns.add(TableColumn<Entry, String>("Title").apply {
-            cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.title) }
-        })
-
-        tableView.columns.add(TableColumn<Entry, String>("Category").apply {
-            cellValueFactory = Callback { p -> ReadOnlyStringWrapper(ZXDB.getGenre(p.value.genretype_id)?.text) }
-        })
+        tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) }
+        tableView.addColumn<Entry, String>("Category") { ReadOnlyStringWrapper(it.value.genre?.text) }
 
         /*
         val listData: ObservableList<Entry> = FXCollections.observableArrayList()
@@ -134,21 +125,10 @@ class MainController : Initializable {
     }
 
     private fun createDownloadsTable() {
-        downloadsTableView.columns.add(TableColumn<Download, String>("Name").apply {
-            cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.fileName) }
-        })
-
-        downloadsTableView.columns.add(TableColumn<Download, String>("Type").apply {
-            cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.fileType?.text) }
-        })
-
-        downloadsTableView.columns.add(TableColumn<Download, String>("Format").apply {
-            cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.formatType?.text) }
-        })
-
-        downloadsTableView.columns.add(TableColumn<Download, String>("Machine").apply {
-            cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.machineType?.text) }
-        })
+        downloadsTableView.addColumn<Download, String>("Name") { ReadOnlyStringWrapper(it.value.fileName) }
+        downloadsTableView.addColumn<Download, String>("Type") { ReadOnlyStringWrapper(it.value.fileType?.text) }
+        downloadsTableView.addColumn<Download, String>("Format") { ReadOnlyStringWrapper(it.value.formatType?.text) }
+        downloadsTableView.addColumn<Download, String>("Machine") { ReadOnlyStringWrapper(it.value.machineType?.text) }
 
         downloadsTableView.items = FXCollections.observableArrayList()
     }
@@ -190,5 +170,14 @@ class MainController : Initializable {
     fun onTableRowClick(e: MouseEvent) {
         val entry = tableView.selectionModel.selectedItem
         downloadsTableView.items.setAll(entry.downloads)
+    }
+
+    @FXML
+    fun onDatabaseTableRowClick(e: MouseEvent) {
+        val download = downloadsTableView.selectionModel.selectedItem
+        if (e.clickCount == 2) {
+            DownloadManager().download(download) {
+            }
+        }
     }
 }

@@ -32,8 +32,8 @@ class ZXDB {
         const val DB_NAME = "ZXDB.db"
 
         //val ARCHIVE_ORG = "https://archive.org/download/World_of_Spectrum_June_2017_Mirror/World of Spectrum June 2017 Mirror.zip/World of Spectrum June 2017 Mirror/sinclair"
-        private const val ARCHIVE_ORG = "https://archive.org/download/World_of_Spectrum_June_2017_Mirror/World%20of%20Spectrum%20June%202017%20Mirror.zip/World%20of%20Spectrum%20June%202017%20Mirror/sinclair"
-        private const val SPECTRUM_COMPUTING_ORG = "https://spectrumcomputing.co.uk"
+        private const val ARCHIVE_ORG = "https://archive.org/download/World_of_Spectrum_June_2017_Mirror/World%20of%20Spectrum%20June%202017%20Mirror.zip/World%20of%20Spectrum%20June%202017%20Mirror/sinclair/"
+        private const val SPECTRUM_COMPUTING_ORG = "https://spectrumcomputing.co.uk/zxdb/sinclair/"
         // las pantallas (carga y juego) parecen estar en SPECTRUM_COMPUTING_ORG
 
         private val DOWNLOAD_SERVERS = arrayOf(
@@ -82,7 +82,7 @@ class ZXDB {
         fun getDownloadServerUrl(url: String): String {
             for (server in DOWNLOAD_SERVERS) {
                 if (url.startsWith(server.prefix)) {
-                    return server.url + url
+                    return server.getServerUrl(url)
                 }
             }
 

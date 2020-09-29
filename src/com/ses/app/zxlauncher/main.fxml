@@ -48,7 +48,7 @@
                                     </AnchorPane>
                                   <AnchorPane minHeight="200.0" minWidth="100.0" prefHeight="200.0" prefWidth="160.0" SplitPane.resizableWithParent="false">
                                        <children>
-                                          <TableView fx:id="downloadsTableView" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <TableView fx:id="downloadsTableView" onMouseClicked="#onDatabaseTableRowClick" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
                                 </items>

@@ -1,3 +1,5 @@
 package com.ses.zxdb
 
-data class DownloadServer(val prefix: String, val url: String)
+class DownloadServer(val prefix: String, val url: String) {
+    fun getServerUrl(url: String) = this.url + url.substring(prefix.length)
+}
