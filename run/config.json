@@ -1,0 +1,18 @@
+{
+  "programs": [
+    {
+      "id": "zesarux",
+      "name": "ZEsarUX",
+      "exec": "/Applications/zesarux.app",
+      "args": "--tape ${filepath}",
+      "extensions": ["tzx", "tap"]
+    }
+  ],
+
+  "default_programs": [
+    {
+      "extensions": ["tzx", "tap"],
+      "program": "zesaurx"
+    }
+  ]
+}
