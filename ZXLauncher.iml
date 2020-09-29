@@ -10,5 +10,6 @@
     <orderEntry type="library" name="KotlinJavaRuntime" level="project" />
     <orderEntry type="library" name="org.xerial:sqlite-jdbc:3.32.3.2" level="project" />
     <orderEntry type="library" name="org.openjfx:javafx-fxml:15" level="project" />
+    <orderEntry type="library" name="org.json:json:20200518" level="project" />
   </component>
 </module>

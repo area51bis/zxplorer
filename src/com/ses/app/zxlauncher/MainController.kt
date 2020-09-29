@@ -175,7 +175,7 @@ class MainController : Initializable {
     @FXML
     fun onDatabaseTableRowClick(e: MouseEvent) {
         val download = downloadsTableView.selectionModel.selectedItem
-        if (e.clickCount == 2) {
+        if ((download != null) && (e.clickCount == 2)) {
             DownloadManager().download(download) {
             }
         }
