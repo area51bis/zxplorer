@@ -34,7 +34,7 @@
         <items>
             <Label text="Search" />
             <TextField fx:id="searchTextField" onKeyTyped="#onSearchTextChanged" />
-            <ToggleButton fx:id="searchRegExToggleButton" mnemonicParsing="false" text="RegEx" />
+            <ToggleButton fx:id="searchRegExToggleButton" mnemonicParsing="false" text="RegEx" visible="false" />
         </items>
       </ToolBar>
       <SplitPane dividerPositions="0.2" prefHeight="160.0" prefWidth="200.0" VBox.vgrow="ALWAYS">

@@ -1,13 +1,19 @@
 package com.ses.app.zxlauncher
 
+import com.ses.app.zxlauncher.filters.EntryTitleFilter
+import com.ses.app.zxlauncher.filters.Filter
 import com.ses.app.zxlauncher.ui.ProgressDialog
 import com.ses.net.Http
 import com.ses.zxdb.*
 import com.ses.zxdb.dao.Download
 import com.ses.zxdb.dao.Entry
 import com.ses.zxdb.dao.GenreType
+import javafx.beans.Observable
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.collections.FXCollections
+import javafx.collections.ListChangeListener
+import javafx.collections.ObservableList
+import javafx.collections.transformation.FilteredList
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
@@ -18,6 +24,7 @@ import javafx.scene.input.MouseEvent
 import java.io.File
 import java.net.URL
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainController : Initializable {
@@ -31,16 +38,20 @@ class MainController : Initializable {
     // toolbar
     @FXML
     lateinit var searchTextField: TextField
+
     @FXML
     lateinit var searchRegExToggleButton: ToggleButton
 
     @FXML
     lateinit var treeView: TreeView<String>
+
     @FXML
     lateinit var tableView: TableView<Entry>
+
     @FXML
     lateinit var downloadsTableView: TableView<Download>
 
+    private var filters: ArrayList<Filter<Entry>> = ArrayList()
     private val downloadManager = DownloadManager()
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
@@ -64,12 +75,27 @@ class MainController : Initializable {
         ZXDB.getTable(Entry::class).rows.forEach { entry ->
             addTreeEntry(entry)
         }
+    }
 
-        treeView.selectionModel.selectedItemProperty().addListener { observable, oldValue, newValue ->
-            val category = newValue as TreeGenreItem
-            //println("Category: ${category.value}")
-            tableView.items = category.entries
+    private fun selectTreeNode(item: TreeItem<String>) {
+        if (treeView.selectionModel.selectedItem != item) {
+            treeView.selectionModel.select(item)
+        } else {
+            tableView.items = filteredList((item as TreeGenreItem).entries)
         }
+
+        tableView.selectionModel.clearSelection()
+    }
+
+    private fun filteredList(list: ObservableList<Entry>): FilteredList<Entry> = list.filtered {
+        var pass = true
+        for (f in filters) {
+            if (!f.check(it)) {
+                pass = false
+                break
+            }
+        }
+        pass
     }
 
     /** Añade una entrada a los nodos correspondientes, creando los necesarios. */
@@ -122,11 +148,10 @@ class MainController : Initializable {
         tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) }
         tableView.addColumn<Entry, String>("Category") { ReadOnlyStringWrapper(it.value.genre?.text) }
 
-        /*
-        val listData: ObservableList<Entry> = FXCollections.observableArrayList()
-        ZXDB.getTable(Entry::class).rows.forEach { listData.add(it) }
-        tableView.items = listData
-        */
+        treeView.selectionModel.selectedItemProperty().addListener { _, _, item ->
+            val category = item as TreeGenreItem
+            tableView.items = filteredList(category.entries)
+        }
     }
 
     private fun createDownloadsTable() {
@@ -137,9 +162,31 @@ class MainController : Initializable {
         downloadsTableView.addColumn<Download, String>("Machine") { ReadOnlyStringWrapper(it.value.machineType?.text) }
 
         downloadsTableView.items = FXCollections.observableArrayList()
+
+        tableView.selectionModel.selectedItemProperty().addListener { _, _, entry ->
+            if (entry != null) {
+                downloadsTableView.items.setAll(entry.downloads)
+                println(entry.title)
+            } else {
+                downloadsTableView.items.clear()
+            }
+        }
     }
 
     private fun setTextFilter(exp: String?) {
+        if (exp != null) {
+            var f = filters.filterIsInstance<EntryTitleFilter>().firstOrNull()
+            if (f == null) {
+                f = EntryTitleFilter(exp)
+                filters.add(f)
+            } else {
+                f.text = exp
+            }
+        } else {
+            filters.removeAll { it is EntryTitleFilter }
+        }
+
+        selectTreeNode(treeView.selectionModel.selectedItem)
     }
 
     @FXML
@@ -182,8 +229,8 @@ class MainController : Initializable {
 
     @FXML
     fun onTableRowClick(e: MouseEvent) {
-        val entry = tableView.selectionModel.selectedItem
-        downloadsTableView.items.setAll(entry.downloads)
+        //val entry = tableView.selectionModel.selectedItem
+        //downloadsTableView.items.setAll(entry.downloads)
     }
 
     @FXML
