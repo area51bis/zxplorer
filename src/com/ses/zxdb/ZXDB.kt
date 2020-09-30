@@ -27,73 +27,71 @@ WHERE e.id=3012 -- AND r.release_seq=0
 ORDER BY release_seq
 */
 
-class ZXDB {
-    companion object {
-        const val DB_NAME = "ZXDB.db"
+object ZXDB {
+    const val DB_NAME = "ZXDB.db"
 
-        //val ARCHIVE_ORG = "https://archive.org/download/World_of_Spectrum_June_2017_Mirror/World of Spectrum June 2017 Mirror.zip/World of Spectrum June 2017 Mirror/sinclair"
-        private const val ARCHIVE_ORG = "https://archive.org/download/World_of_Spectrum_June_2017_Mirror/World%20of%20Spectrum%20June%202017%20Mirror.zip/World%20of%20Spectrum%20June%202017%20Mirror/sinclair/"
-        private const val SPECTRUM_COMPUTING_ORG = "https://spectrumcomputing.co.uk/zxdb/sinclair/"
-        // las pantallas (carga y juego) parecen estar en SPECTRUM_COMPUTING_ORG
+    //val ARCHIVE_ORG = "https://archive.org/download/World_of_Spectrum_June_2017_Mirror/World of Spectrum June 2017 Mirror.zip/World of Spectrum June 2017 Mirror/sinclair"
+    private const val ARCHIVE_ORG = "https://archive.org/download/World_of_Spectrum_June_2017_Mirror/World%20of%20Spectrum%20June%202017%20Mirror.zip/World%20of%20Spectrum%20June%202017%20Mirror/sinclair/"
+    private const val SPECTRUM_COMPUTING_ORG = "https://spectrumcomputing.co.uk/zxdb/sinclair/"
+    // las pantallas (carga y juego) parecen estar en SPECTRUM_COMPUTING_ORG
 
-        private val DOWNLOAD_SERVERS = arrayOf(
-                DownloadServer("/pub/sinclair/", ARCHIVE_ORG),
-                DownloadServer("/zxdb/sinclair/", SPECTRUM_COMPUTING_ORG)
-        )
+    private val DOWNLOAD_SERVERS = arrayOf(
+            DownloadServer("/pub/sinclair/", ARCHIVE_ORG),
+            DownloadServer("/zxdb/sinclair/", SPECTRUM_COMPUTING_ORG)
+    )
 
-        private var LOAD_TABLES = arrayOf(
-                // enumeration tables
-                Extension::class,
-                FileType::class,
-                GenreType::class,
-                MachineType::class,
+    private var LOAD_TABLES = arrayOf(
+            // enumeration tables
+            Extension::class,
+            FileType::class,
+            GenreType::class,
+            MachineType::class,
 
-                Entry::class
-        )
-        private val tables: HashMap<KClass<*>, Table<*>> = HashMap()
+            Entry::class
+    )
+    private val tables: HashMap<KClass<*>, Table<*>> = HashMap()
 
-        private var conn: Connection = DriverManager.getConnection("jdbc:sqlite:$DB_NAME")
+    private var conn: Connection = DriverManager.getConnection("jdbc:sqlite:$DB_NAME")
 
-        /*
-        protected fun finalize() {
-            conn.close()
-        }
-        */
+    /*
+    protected fun finalize() {
+        conn.close()
+    }
+    */
 
-        fun load() {
-            for (t in LOAD_TABLES) readTable(t)
-        }
+    fun load() {
+        for (t in LOAD_TABLES) readTable(t)
+    }
 
-        @Suppress("UNCHECKED_CAST")
-        fun <T : Any> getTable(cls: KClass<T>): Table<T> {
-            return (tables[cls] ?: readTable(cls)) as Table<T>
-        }
+    @Suppress("UNCHECKED_CAST")
+    fun <T : Any> getTable(cls: KClass<T>): Table<T> {
+        return (tables[cls] ?: readTable(cls)) as Table<T>
+    }
 
-        fun getGenre(genreId: Int): GenreType? {
-            return getTable(GenreType::class)[genreId]
-        }
+    fun getGenre(genreId: Int): GenreType? {
+        return getTable(GenreType::class)[genreId]
+    }
 
-        fun getDownloads(entryId: Int): List<Download> {
-            val list = ArrayList<Download>()
-            SQL(conn).select(where = "entry_id = $entryId", cls = Download::class, f = list::add)
-            return list
-        }
+    fun getDownloads(entryId: Int): List<Download> {
+        val list = ArrayList<Download>()
+        SQL(conn).select(where = "entry_id = $entryId", cls = Download::class, f = list::add)
+        return list
+    }
 
-        fun getDownloadServerUrl(url: String): String {
-            for (server in DOWNLOAD_SERVERS) {
-                if (url.startsWith(server.prefix)) {
-                    return server.getServerUrl(url)
-                }
+    fun getDownloadServerUrl(url: String): String {
+        for (server in DOWNLOAD_SERVERS) {
+            if (url.startsWith(server.prefix)) {
+                return server.getServerUrl(url)
             }
-
-            return url
         }
 
-        private fun <T : Any> readTable(cls: KClass<T>): Table<T> {
-            val table = Table<T>(cls)
-            SQL(conn).select(cls = cls, f = table::addRow)
-            tables[cls] = table
-            return table
-        }
+        return url
+    }
+
+    private fun <T : Any> readTable(cls: KClass<T>): Table<T> {
+        val table = Table<T>(cls)
+        SQL(conn).select(cls = cls, f = table::addRow)
+        tables[cls] = table
+        return table
     }
 }

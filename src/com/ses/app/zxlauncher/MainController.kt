@@ -12,9 +12,9 @@ import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
 import javafx.scene.Parent
-import javafx.scene.control.Alert
-import javafx.scene.control.TableView
-import javafx.scene.control.TreeView
+import javafx.scene.control.*
+import javafx.scene.input.InputMethodEvent
+import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
 import java.io.File
 import java.net.URL
@@ -29,14 +29,20 @@ class MainController : Initializable {
         }
     }
 
+    // toolbar
+    @FXML
+    lateinit var searchTextField: TextField
+    @FXML
+    lateinit var searchRegExToggleButton: ToggleButton
+
     @FXML
     lateinit var treeView: TreeView<String>
-
     @FXML
     lateinit var tableView: TableView<Entry>
-
     @FXML
     lateinit var downloadsTableView: TableView<Download>
+
+    private val downloadManager = DownloadManager()
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         createTree()
@@ -125,12 +131,16 @@ class MainController : Initializable {
     }
 
     private fun createDownloadsTable() {
+        downloadsTableView.addColumn<Download, String>("D") { ReadOnlyStringWrapper(downloadManager.exists(it.value).toString()) }
         downloadsTableView.addColumn<Download, String>("Name") { ReadOnlyStringWrapper(it.value.fileName) }
         downloadsTableView.addColumn<Download, String>("Type") { ReadOnlyStringWrapper(it.value.fileType?.text) }
         downloadsTableView.addColumn<Download, String>("Format") { ReadOnlyStringWrapper(it.value.formatType?.text) }
         downloadsTableView.addColumn<Download, String>("Machine") { ReadOnlyStringWrapper(it.value.machineType?.text) }
 
         downloadsTableView.items = FXCollections.observableArrayList()
+    }
+
+    private fun setTextFilter(exp: String?) {
     }
 
     @FXML
@@ -167,6 +177,11 @@ class MainController : Initializable {
     }
 
     @FXML
+    fun onSearchTextChanged(e: KeyEvent) {
+        setTextFilter(searchTextField.text)
+    }
+
+    @FXML
     fun onTableRowClick(e: MouseEvent) {
         val entry = tableView.selectionModel.selectedItem
         downloadsTableView.items.setAll(entry.downloads)
@@ -176,7 +191,7 @@ class MainController : Initializable {
     fun onDatabaseTableRowClick(e: MouseEvent) {
         val download = downloadsTableView.selectionModel.selectedItem
         if ((download != null) && (e.clickCount == 2)) {
-            DownloadManager().download(download) {
+            downloadManager.download(download) {
             }
         }
     }

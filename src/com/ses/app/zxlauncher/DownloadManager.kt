@@ -8,21 +8,28 @@ import java.io.File
 class DownloadManager {
     var workingDir: File = File(System.getProperty("user.dir"))
 
+    fun getFile(download: Download): File = File(workingDir, download.file_link!!)
+
     fun download(download: Download, completion: (file: File) -> Unit) {
+        val file = getFile(download)
+
+        if (file.exists()) {
+            completion(file)
+            return
+        }
+
         Http().apply {
-            val file = File(workingDir, download.file_link!!)
             file.parentFile.mkdirs()
             request = download.fullUrl
 
             println(request)
             getFile(file) { status, progress ->
                 if (progress == 1.0f) {
-                    println("Completed")
                     completion(file)
-                } else {
-                    print("Downloading... $progress\r");
                 }
             }
         }
     }
+
+    fun exists(download: Download): Boolean = getFile(download).exists()
 }
