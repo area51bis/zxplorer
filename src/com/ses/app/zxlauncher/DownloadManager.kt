@@ -6,9 +6,10 @@ import com.ses.zxdb.fullUrl
 import java.io.File
 
 class DownloadManager {
-    var workingDir: File = File(System.getProperty("user.dir"))
+    var rootDir = App.workingDir // directorio raíz
+    var downloadDir: File = File(rootDir, "zxdb") // directorio de descargas
 
-    fun getFile(download: Download): File = File(workingDir, download.file_link!!)
+    fun getFile(download: Download): File = File(downloadDir, download.file_link!!)
 
     fun download(download: Download, completion: (file: File) -> Unit) {
         val file = getFile(download)

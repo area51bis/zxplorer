@@ -35,6 +35,11 @@ class MainController : Initializable {
         }
     }
 
+    private val testProgram = ProgramLauncher("zesarux",
+            "ZEsarUX",
+            "/Applications/zesarux.app/Contents/MacOS/zesarux",
+            "--realtape '\${filePath}'")
+
     // toolbar
     @FXML
     lateinit var searchTextField: TextField
@@ -59,7 +64,26 @@ class MainController : Initializable {
         createTable()
         createDownloadsTable()
 
+        initObservers()
+
         treeView.selectionModel.select(treeView.root)
+    }
+
+    private fun initObservers() {
+        // al seleccionar un nodo, actualizar la lista
+        treeView.selectionModel.selectedItemProperty().addListener { _, _, item ->
+            val category = item as TreeGenreItem
+            tableView.items = filteredList(category.entries)
+        }
+
+        // al seleccionar un elemento de la lista, actualizar la lista de descargas
+        tableView.selectionModel.selectedItemProperty().addListener { _, _, entry ->
+            if (entry != null) {
+                downloadsTableView.items.setAll(entry.downloads)
+            } else {
+                downloadsTableView.items.clear()
+            }
+        }
     }
 
     private fun createTree() {
@@ -147,11 +171,6 @@ class MainController : Initializable {
     private fun createTable() {
         tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) }
         tableView.addColumn<Entry, String>("Category") { ReadOnlyStringWrapper(it.value.genre?.text) }
-
-        treeView.selectionModel.selectedItemProperty().addListener { _, _, item ->
-            val category = item as TreeGenreItem
-            tableView.items = filteredList(category.entries)
-        }
     }
 
     private fun createDownloadsTable() {
@@ -162,15 +181,6 @@ class MainController : Initializable {
         downloadsTableView.addColumn<Download, String>("Machine") { ReadOnlyStringWrapper(it.value.machineType?.text) }
 
         downloadsTableView.items = FXCollections.observableArrayList()
-
-        tableView.selectionModel.selectedItemProperty().addListener { _, _, entry ->
-            if (entry != null) {
-                downloadsTableView.items.setAll(entry.downloads)
-                println(entry.title)
-            } else {
-                downloadsTableView.items.clear()
-            }
-        }
     }
 
     private fun setTextFilter(exp: String?) {
@@ -237,7 +247,8 @@ class MainController : Initializable {
     fun onDatabaseTableRowClick(e: MouseEvent) {
         val download = downloadsTableView.selectionModel.selectedItem
         if ((download != null) && (e.clickCount == 2)) {
-            downloadManager.download(download) {
+            downloadManager.download(download) { file ->
+                testProgram.launch(file)
             }
         }
     }

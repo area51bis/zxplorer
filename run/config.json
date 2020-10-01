@@ -3,8 +3,9 @@
     {
       "id": "zesarux",
       "name": "ZEsarUX",
-      "exec": "/Applications/zesarux.app",
-      "args": "--tape ${filepath}",
+      "exec": "/Applications/zesarux.app/Contents/MacOS/zesarux",
+      "args": "--realtape '${filePath}'",
+      "unzip": true,
       "extensions": ["tzx", "tap"]
     }
   ],
