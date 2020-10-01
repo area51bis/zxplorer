@@ -8,10 +8,8 @@ import com.ses.zxdb.*
 import com.ses.zxdb.dao.Download
 import com.ses.zxdb.dao.Entry
 import com.ses.zxdb.dao.GenreType
-import javafx.beans.Observable
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.collections.FXCollections
-import javafx.collections.ListChangeListener
 import javafx.collections.ObservableList
 import javafx.collections.transformation.FilteredList
 import javafx.fxml.FXML
@@ -35,10 +33,17 @@ class MainController : Initializable {
         }
     }
 
-    private val testProgram = ProgramLauncher("zesarux",
+    private val zxspinProgram = ProgramLauncher("zxspin",
+            "ZXSpin",
+            "D:\\emu\\spectrum\\zxspin\\zxspin.exe",
+            "\${filePath}")
+
+    private val zesaurProgram = ProgramLauncher("zesarux",
             "ZEsarUX",
-            "/Applications/zesarux.app/Contents/MacOS/zesarux",
-            "--realtape '\${filePath}'")
+            "D:\\emu\\spectrum\\zesaurx\\zesaurx.exe",
+            //"/Applications/zesarux.app/Contents/MacOS/zesarux",
+            "--realloadfast --realtape \${filePath}",
+            true)
 
     // toolbar
     @FXML
@@ -248,7 +253,8 @@ class MainController : Initializable {
         val download = downloadsTableView.selectionModel.selectedItem
         if ((download != null) && (e.clickCount == 2)) {
             downloadManager.download(download) { file ->
-                testProgram.launch(file)
+                val program = Config.getDefaultProgram("")
+                program?.launch(file)
             }
         }
     }

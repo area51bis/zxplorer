@@ -1,10 +1,17 @@
 {
   "programs": [
     {
+      "id": "zxspin",
+      "name": "ZXSpin",
+      "path": "D:\\emu\\spectrum\\zxspin\\zxspin.exe",
+      "args": "${filePath}",
+      "extensions": ["tzx", "tap"]
+    },
+    {
       "id": "zesarux",
       "name": "ZEsarUX",
-      "exec": "/Applications/zesarux.app/Contents/MacOS/zesarux",
-      "args": "--realtape '${filePath}'",
+      "path": "D:\\emu\\spectrum\\zesarux\\zesaurx.exe",
+      "args": "--realloadfast --realtape ${filePath}",
       "unzip": true,
       "extensions": ["tzx", "tap"]
     }
@@ -12,8 +19,8 @@
 
   "default_programs": [
     {
-      "extensions": ["tzx", "tap"],
-      "program": "zesaurx"
+      "program": "zxspin",
+      "extensions": ["tzx", "tap"]
     }
   ]
 }

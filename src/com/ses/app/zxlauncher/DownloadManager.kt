@@ -23,7 +23,6 @@ class DownloadManager {
             file.parentFile.mkdirs()
             request = download.fullUrl
 
-            println(request)
             getFile(file) { status, progress ->
                 if (progress == 1.0f) {
                     completion(file)

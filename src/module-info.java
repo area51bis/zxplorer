@@ -3,6 +3,7 @@ module app {
     requires javafx.graphics;
     requires javafx.fxml;
     requires java.sql;
+    requires org.json;
 
     requires kotlin.stdlib;
     requires kotlin.reflect;
