@@ -5,7 +5,7 @@
       "name": "ZXSpin",
       "path": "D:\\emu\\spectrum\\zxspin\\zxspin.exe",
       "args": "${filePath}",
-      "extensions": ["tzx", "tap"]
+      "ext": ["tzx", "tap"]
     },
     {
       "id": "zesarux",
@@ -13,14 +13,14 @@
       "path": "D:\\emu\\spectrum\\zesarux\\zesaurx.exe",
       "args": "--realloadfast --realtape ${filePath}",
       "unzip": true,
-      "extensions": ["tzx", "tap"]
+      "ext": ["tzx", "tap"]
     }
   ],
 
   "default_programs": [
     {
       "program": "zxspin",
-      "extensions": ["tzx", "tap"]
+      "ext": ["tzx", "tap"]
     }
   ]
 }
