@@ -8,8 +8,10 @@ import org.json.JSONObject
 import java.io.File
 
 object Config {
-    private val programs = LinkedHashMap<String, ProgramLauncher>()
-    private val defaultPrograms = HashMap<String, ProgramLauncher>()
+    // programas soportados
+    private val programs = LinkedHashMap<String, Program>()
+    // extensiones soportadas
+    private val extensions = HashMap<String, ArrayList<Program>>()
 
     init {
         val configFile = File(App.workingDir, "config.json")
@@ -18,33 +20,44 @@ object Config {
 
             // programs
             json.optJSONArray("programs")?.all<JSONObject>()?.forEach { p ->
+                // extensioens soportadas
                 val ext = ArrayList<String>()
                 p.getJSONArray("ext")?.all<String>()?.forEach {
                     ext.add(it)
                 }
-                val prog = ProgramLauncher(p.getString("id"),
+                val prog = Program(p.getString("id"),
                         p.getString("name"),
                         p.getString("path"),
                         p.getString("args"),
                         ext.toTypedArray(),
                         p.optBoolean("unzip"))
                 programs[prog.id] = prog
+
+                // añadirle a todas las extensiones
+                prog.ext.forEach {
+                    val extensionPrograms = extensions.getOrPut(it) { ArrayList() }
+                    extensionPrograms.add(prog)
+                }
             }
 
+            // programas por defecto
             json.optJSONArray("default_programs")?.all<JSONObject>()?.forEach { def ->
                 val programId = def.getString("program")
                 programs[programId]?.also { program ->
                     def.optJSONArray("ext")?.all<String>()?.forEach { ext ->
-                        defaultPrograms[ext] = program
+                        val list = extensions.getOrPut(ext) { ArrayList() }
+                        // ponerle el primero de la lista
+                        list.remove(program)
+                        list.add(0, program)
                     }
                 }
             }
         }
     }
 
-    val allPrograms: Collection<ProgramLauncher> get() = programs.values
+    val allPrograms: Collection<Program> get() = programs.values
 
-    fun getDefaultProgram(download: Download): ProgramLauncher? {
+    fun getDefaultProgram(download: Download): Program? {
         val extension = download.extension
         return if (extension != null) {
             getDefaultProgram(extension.rawExtension)
@@ -53,7 +66,14 @@ object Config {
         }
     }
 
-    fun getDefaultProgram(ext: String): ProgramLauncher? {
-        return defaultPrograms[ext]
+    fun getPrograms(download: Download): List<Program> {
+        val ext = download.extension?.rawExtension
+        return extensions[ext] ?: emptyList()
+    }
+
+    fun getDefaultProgram(ext: String): Program? {
+        val list = extensions[ext]
+        return if ((list != null) && list.isNotEmpty()) list[0]
+        else null
     }
 }

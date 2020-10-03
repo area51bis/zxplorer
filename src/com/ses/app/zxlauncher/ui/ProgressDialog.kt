@@ -11,13 +11,34 @@ import javafx.stage.StageStyle
 
 class ProgressDialog {
     @FXML
+    lateinit var titleLabel: Label
+
+    @FXML
     lateinit var messageLabel: Label
 
     @FXML
     lateinit var progressBar: ProgressBar
 
+    var title: String?
+        get() = titleLabel.text
+        set(value) {
+            titleLabel.text = value
+        }
+
+    var message: String?
+        get() = messageLabel.text
+        set(value) {
+            messageLabel.text = value
+        }
+
+    var progress: Double
+        get() = progressBar.progress
+        set(value) {
+            progressBar.progress = value
+        }
+
     private val stage: Stage = Stage().apply {
-        initStyle(StageStyle.UTILITY)
+        initStyle(StageStyle.UNDECORATED)
         isResizable = false
         initModality(Modality.APPLICATION_MODAL)
     }
@@ -34,5 +55,9 @@ class ProgressDialog {
 
     fun show() {
         stage.show()
+    }
+
+    fun hide() {
+        stage.hide()
     }
 }

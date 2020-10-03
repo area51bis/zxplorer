@@ -5,12 +5,13 @@ module app {
     requires java.sql;
     requires org.json;
 
-    requires kotlin.stdlib;
+    //requires kotlin.stdlib;
     requires kotlin.reflect;
     requires kotlin.stdlib.jdk7;
+    requires kotlinx.coroutines.core;
 
-    exports com.ses.zxdb.dao; // reflection
-    exports com.ses.app.zxlauncher.ui; // reflection
+    exports com.ses.zxdb.dao;
+    exports com.ses.app.zxlauncher.ui;
 
     opens com.ses.app.zxlauncher;
 }

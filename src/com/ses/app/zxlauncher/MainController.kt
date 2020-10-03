@@ -8,6 +8,7 @@ import com.ses.zxdb.*
 import com.ses.zxdb.dao.Download
 import com.ses.zxdb.dao.Entry
 import com.ses.zxdb.dao.GenreType
+import javafx.application.Platform
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
@@ -20,6 +21,7 @@ import javafx.scene.control.*
 import javafx.scene.input.ContextMenuEvent
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
+import kotlinx.coroutines.*
 import java.io.File
 import java.net.URL
 import java.util.*
@@ -197,26 +199,36 @@ class MainController : Initializable {
 
     @FXML
     fun menuUpdateDatabaseAction() {
-        if (true) {
-            ProgressDialog.create().show()
-            return
+        val dialog = ProgressDialog.create().apply {
+            title = "Updating"
+            show()
         }
 
         val workingDir = File(System.getProperty("user.dir"))
         val file = File(workingDir, "ZXDB_mysql.sql")
 
-        // descargar ZXDB_mysql.sql
-        Http().apply {
-            request = "https://github.com/zxdb/ZXDB/raw/master/ZXDB_mysql.sql"
-            getFile(file) { status, progress ->
+        val mainThread = Thread.currentThread()
+        GlobalScope.launch {
+            // descargar ZXDB_mysql.sql
+            Http().apply {
+                request = "https://github.com/zxdb/ZXDB/raw/master/ZXDB_mysql.sql"
+                getFile(file) { status, progress ->
+                    when (status) {
+                        Http.Status.Connecting -> Platform.runLater { dialog.message = "Connecting..." }
+                        Http.Status.Connected -> Platform.runLater { dialog.message = "Downloading..." }
+                    }
+                    dialog.progress = progress.toDouble()
+                }
             }
+
+            // convertir a sqlite
+            Platform.runLater { dialog.message = "Converting..." }
+
+            // sustituir fichero
+
+            // recargar base de datos y refrescar los datos
+            Platform.runLater { dialog.hide() }
         }
-
-        // convertir a sqlite
-
-        // sustituir fichero
-
-        // recargar base de datos y refrescar los datos
     }
 
     @FXML
@@ -249,30 +261,42 @@ class MainController : Initializable {
 
     @FXML
     fun onDownloadsTableContextMenuRequested(e: ContextMenuEvent) {
+        val download = downloadsTableView.selectionModel.selectedItem ?: return
+
         downloadsTableView.contextMenu.items.apply {
             clear()
+
+            // opción descargar
             add(MenuItem("Download").apply {
                 setOnAction {
-                    getDownload(downloadsTableView.selectionModel.selectedItem)
+                    getDownload(download)
                 }
             })
-            add(Menu("Open with...").also { menu ->
-                val download = downloadsTableView.selectionModel.selectedItem
-                val ext = download.extension?.rawExtension
-                if( ext != null ) {
-                    Config.allPrograms.forEach { program ->
+
+            // menú "abrir con..." con los programas soportados
+            val list = Config.getPrograms(download)
+            if (list.isNotEmpty()) {
+                add(Menu("Open with...").also { menu ->
+                    list.forEach { program ->
+                        menu.items.add(MenuItem(program.name).apply {
+                            setOnAction {
+                                getDownload(download, program)
+                            }
+                        })
                     }
-                }
-            })
+                })
+            }
         }
         downloadsTableView.contextMenu.show(downloadsTableView, e.screenX, e.screenY)
     }
 
-    private fun getDownload(download: Download, program: ProgramLauncher? = null) {
+    private fun getDownload(download: Download, program: Program? = null) {
+        println("getDownload: ${download.fileName}")
         downloadManager.download(download) { file ->
             if (program != null) {
                 val extension = download.extension
                 if (extension != null) {
+                    println("open with ${program.name}")
                     program.launch(file)
                 }
             }

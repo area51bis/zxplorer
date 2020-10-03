@@ -1,8 +1,11 @@
 package com.ses.app.zxlauncher
 
+import com.ses.app.zxlauncher.ui.ProgressDialog
 import com.ses.net.Http
 import com.ses.zxdb.dao.Download
+import com.ses.zxdb.fileName
 import com.ses.zxdb.fullUrl
+import javafx.application.Platform
 import java.io.File
 
 class DownloadManager {
@@ -19,15 +22,24 @@ class DownloadManager {
             return
         }
 
+        val dialog = ProgressDialog.create().apply {
+            title = "Download"
+            message = download.fileName
+            show()
+        }
+
         Http().apply {
             file.parentFile.mkdirs()
             request = download.fullUrl
 
             getFile(file) { status, progress ->
-                if (progress == 1.0f) {
-                    completion(file)
+                when (status) {
+                    Http.Status.Connecting -> Platform.runLater { dialog.message = "Connecting..." }
+                    Http.Status.Connected -> Platform.runLater { dialog.message = "Downloading '${download.fileName}'..." }
+                    Http.Status.Completed -> completion(file)
                 }
             }
+            Platform.runLater { dialog.hide() }
         }
     }
 

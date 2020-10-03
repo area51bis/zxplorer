@@ -4,7 +4,7 @@ import com.ses.util.parse
 import java.io.File
 import java.util.zip.ZipFile
 
-class ProgramLauncher(val id: String, val name: String, val path: String, val args: String = "\${filePath}", val ext: Array<String> = emptyArray(), val unzip: Boolean = false) {
+class Program(val id: String, val name: String, val path: String, val args: String = "\${filePath}", val ext: Array<String> = emptyArray(), val unzip: Boolean = false) {
     private val cmd: ArrayList<String> = ArrayList()
     private val dir = File(path).parentFile
 

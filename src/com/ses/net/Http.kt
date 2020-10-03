@@ -5,7 +5,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 
-typealias HttpProgressHandler = (status: Int, progress: Float) -> Unit
+typealias HttpProgressHandler = (status: Http.Status, progress: Float) -> Unit
 
 class Http {
     enum class RequestMethod(val value: String) {
@@ -85,6 +85,7 @@ class Http {
                 URL(request)
             }
 
+            progressHandler?.invoke(Status.Connecting, 0.0f)
             // configurar la conexión y conectar
             conn = (url.openConnection() as HttpURLConnection).apply {
                 requestMethod = method.value
@@ -100,6 +101,7 @@ class Http {
             when (conn.responseCode) {
                 HttpURLConnection.HTTP_OK -> {
                     // ok
+                    progressHandler?.invoke(Status.Connected, 0.0f)
                 }
 
                 HttpURLConnection.HTTP_MOVED_TEMP, HttpURLConnection.HTTP_MOVED_PERM, HttpURLConnection.HTTP_SEE_OTHER -> {
@@ -112,7 +114,10 @@ class Http {
                     conn.connect()
                 }
 
-                else -> error(conn.responseCode, conn.responseMessage)
+                else -> {
+                    progressHandler?.invoke(Status.Error, 0.0f)
+                    error(conn.responseCode, conn.responseMessage)
+                }
             }
 
             connectionHandler(conn)
@@ -139,12 +144,12 @@ class Http {
                 output.write(buffer, 0, count)
 
                 val progress: Float = if (contentLenght != -1L) (total.toFloat() / contentLenght) else -1f
-                progressHandler?.invoke(0, progress)
+                progressHandler?.invoke(Status.Downloading, progress)
             }
 
             errorCode = 0
 
-            progressHandler?.invoke(0, 1f)
+            progressHandler?.invoke(Status.Completed, 1f)
         }
     }
 
