@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
 import javafx.scene.Parent
 import javafx.scene.control.*
+import javafx.scene.input.ContextMenuEvent
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
 import java.io.File
@@ -32,18 +33,6 @@ class MainController : Initializable {
             return loader.load()
         }
     }
-
-    private val zxspinProgram = ProgramLauncher("zxspin",
-            "ZXSpin",
-            "D:\\emu\\spectrum\\zxspin\\zxspin.exe",
-            "\${filePath}")
-
-    private val zesaurProgram = ProgramLauncher("zesarux",
-            "ZEsarUX",
-            "D:\\emu\\spectrum\\zesaurx\\zesaurx.exe",
-            //"/Applications/zesarux.app/Contents/MacOS/zesarux",
-            "--realloadfast --realtape \${filePath}",
-            true)
 
     // toolbar
     @FXML
@@ -181,11 +170,13 @@ class MainController : Initializable {
     private fun createDownloadsTable() {
         downloadsTableView.addColumn<Download, String>("D") { ReadOnlyStringWrapper(downloadManager.exists(it.value).toString()) }
         downloadsTableView.addColumn<Download, String>("Name") { ReadOnlyStringWrapper(it.value.fileName) }
-        downloadsTableView.addColumn<Download, String>("Type") { ReadOnlyStringWrapper(it.value.fileType?.text) }
-        downloadsTableView.addColumn<Download, String>("Format") { ReadOnlyStringWrapper(it.value.formatType?.text) }
+        downloadsTableView.addColumn<Download, String>("Type") { ReadOnlyStringWrapper(it.value.fileType.text) }
+        downloadsTableView.addColumn<Download, String>("Format") { ReadOnlyStringWrapper(it.value.extension?.text) }
         downloadsTableView.addColumn<Download, String>("Machine") { ReadOnlyStringWrapper(it.value.machineType?.text) }
 
         downloadsTableView.items = FXCollections.observableArrayList()
+
+        downloadsTableView.contextMenu = ContextMenu()
     }
 
     private fun setTextFilter(exp: String?) {
@@ -249,12 +240,42 @@ class MainController : Initializable {
     }
 
     @FXML
-    fun onDatabaseTableRowClick(e: MouseEvent) {
+    fun onDownloadsTableRowClick(e: MouseEvent) {
         val download = downloadsTableView.selectionModel.selectedItem
         if ((download != null) && (e.clickCount == 2)) {
-            downloadManager.download(download) { file ->
-                val program = Config.getDefaultProgram("")
-                program?.launch(file)
+            getDownload(download, Config.getDefaultProgram(download))
+        }
+    }
+
+    @FXML
+    fun onDownloadsTableContextMenuRequested(e: ContextMenuEvent) {
+        downloadsTableView.contextMenu.items.apply {
+            clear()
+            add(MenuItem("Download").apply {
+                setOnAction {
+                    getDownload(downloadsTableView.selectionModel.selectedItem)
+                }
+            })
+            add(Menu("Open with...").also { menu ->
+                val download = downloadsTableView.selectionModel.selectedItem
+                val ext = download.extension?.rawExtension
+                if( ext != null ) {
+                    Config.allPrograms.forEach { program ->
+                        if( program.
+                    }
+                }
+            })
+        }
+        downloadsTableView.contextMenu.show(downloadsTableView, e.screenX, e.screenY)
+    }
+
+    private fun getDownload(download: Download, program: ProgramLauncher? = null) {
+        downloadManager.download(download) { file ->
+            if (program != null) {
+                val extension = download.extension
+                if (extension != null) {
+                    program.launch(file)
+                }
             }
         }
     }

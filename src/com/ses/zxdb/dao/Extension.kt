@@ -7,8 +7,8 @@ import com.ses.sql.Table
 @Table("extensions")
 class Extension {
     @Key @Column
-    var ext: String? = null
+    lateinit var ext: String
 
     @Column
-    var text: String? = null
+    lateinit var text: String
 }

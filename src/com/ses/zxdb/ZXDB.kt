@@ -68,7 +68,7 @@ object ZXDB {
         return (tables[cls] ?: readTable(cls)) as Table<T>
     }
 
-    fun getGenre(genreId: Int): GenreType? {
+    fun getGenre(genreId: Int?): GenreType? {
         return getTable(GenreType::class)[genreId]
     }
 

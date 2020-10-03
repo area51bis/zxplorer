@@ -10,16 +10,16 @@
     {
       "id": "zesarux",
       "name": "ZEsarUX",
-      "path": "D:\\emu\\spectrum\\zesarux\\zesaurx.exe",
+      "path": "D:\\emu\\spectrum\\zesarux\\zesarux.exe",
       "args": "--realloadfast --realtape ${filePath}",
-      "unzip": true,
-      "ext": ["tzx", "tap"]
+      "ext": ["tzx", "tap"],
+      "unzip": true
     }
   ],
 
   "default_programs": [
     {
-      "program": "zxspin",
+      "program": "zesarux",
       "ext": ["tzx", "tap"]
     }
   ]

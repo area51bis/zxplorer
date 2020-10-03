@@ -2,10 +2,11 @@ package com.ses.util
 
 import org.json.JSONArray
 
-class JSONArrayIterator<T>(private val arr: JSONArray) : Iterator<T> {
+@Suppress("UNCHECKED_CAST")
+class JSONArrayIterator<T>(private val arr: JSONArray, transform: ((Int) -> T)? = null) : Iterator<T> {
     var index = 0
     override fun hasNext() = index < arr.length()
     override fun next(): T = arr[index++] as T
 }
 
-fun <T> JSONArray.all(): Iterator<T> = JSONArrayIterator(this)
+fun <T> JSONArray.all(transform: ((Int) -> T)? = null): Iterator<T> = JSONArrayIterator(this, transform)

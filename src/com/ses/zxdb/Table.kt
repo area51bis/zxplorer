@@ -15,5 +15,5 @@ class Table<T>(cls: KClass<*>) {
         _rows[key] = row
     }
 
-    operator fun get(i: Any): T? = _rows[i]
+    operator fun get(key: Any?): T? = if (key != null) _rows[key] else null
 }
