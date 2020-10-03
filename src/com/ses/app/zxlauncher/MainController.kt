@@ -261,7 +261,6 @@ class MainController : Initializable {
                 val ext = download.extension?.rawExtension
                 if( ext != null ) {
                     Config.allPrograms.forEach { program ->
-                        if( program.
                     }
                 }
             })
