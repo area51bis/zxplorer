@@ -11,7 +11,12 @@
       <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/15/javafx-base-15.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/15/javafx-base-15-win.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/15/javafx-fxml-15-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/15/javafx-controls-15-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/15/javafx-graphics-15-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/15/javafx-base-15-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES />
   </library>
 </component>

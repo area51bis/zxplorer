@@ -45,29 +45,6 @@ class SQL(private val conn: Connection) {
         }
     }
 
-    /*
-    fun <T : Any> fetch(query: String, cls: KClass<T>, f: (row: T) -> Unit) {
-        conn.createStatement().use { stmt ->
-            val map = getColumnsMap(cls)
-            val columns = map.values
-
-            stmt?.executeQuery(query)?.use { rs ->
-                @Suppress("UNCHECKED_CAST") val ctor: () -> T = cls.primaryConstructor as () -> T
-
-                while (rs.next()) {
-                    val row: T = ctor()
-
-                    columns.forEach {
-                        it.read(row, rs)
-                    }
-
-                    f(row)
-                }
-            }
-        }
-    }
-    */
-
     private fun <T : Any> getColumnsMap(cls: KClass<T>): Map<String, ColumnInfo> {
         val map: LinkedHashMap<String, ColumnInfo> = LinkedHashMap()
 
