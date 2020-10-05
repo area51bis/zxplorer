@@ -51,7 +51,7 @@ object ZXDB {
     )
     private val tables: HashMap<KClass<*>, Table<*>> = HashMap()
 
-    private var conn: Connection = DriverManager.getConnection("jdbc:sqlite:$DB_NAME")
+    private lateinit var conn: Connection
 
     /*
     protected fun finalize() {
@@ -59,8 +59,20 @@ object ZXDB {
     }
     */
 
-    fun load() {
+    fun open(): Boolean = try {
+        conn = DriverManager.getConnection("jdbc:sqlite:$DB_NAME")
         for (t in LOAD_TABLES) readTable(t)
+        true
+    } catch (e: Exception) {
+        false
+    }
+
+    fun close() {
+        try {
+            conn.close()
+        } catch (e: Exception) {
+        }
+        tables.clear();
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -86,6 +98,14 @@ object ZXDB {
         }
 
         return url
+    }
+
+    private fun connect() {
+        try {
+            conn.close()
+        } catch (e: Exception) {
+        }
+        conn = DriverManager.getConnection("jdbc:sqlite:$DB_NAME")
     }
 
     private fun <T : Any> readTable(cls: KClass<T>): Table<T> {

@@ -1,6 +1,5 @@
 package com.ses.app.zxlauncher
 
-import com.ses.zxdb.ZXDB
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.stage.Stage
@@ -14,20 +13,12 @@ class App : Application() {
     }
 
     override fun start(primaryStage: Stage?) {
-        ZXDB.load()
-
         val scene = Scene(MainController.load())
-        //val controller = loader.getController<MainController>()
 
         primaryStage?.apply {
             title = "ZX Launcher"
             this.scene = scene
             show()
         }
-    }
-
-    override fun stop() {
-        super.stop()
-        //ZXDB.release()
     }
 }

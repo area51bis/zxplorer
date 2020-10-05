@@ -5,11 +5,13 @@ import com.ses.app.zxlauncher.filters.Filter
 import com.ses.app.zxlauncher.ui.ProgressDialog
 import com.ses.net.Http
 import com.ses.zxdb.*
+import com.ses.zxdb.converter.MySQLConverter
 import com.ses.zxdb.dao.Download
 import com.ses.zxdb.dao.Entry
 import com.ses.zxdb.dao.GenreType
 import javafx.application.Platform
 import javafx.beans.property.ReadOnlyStringWrapper
+import javafx.beans.value.ChangeListener
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.collections.transformation.FilteredList
@@ -21,6 +23,7 @@ import javafx.scene.control.*
 import javafx.scene.input.ContextMenuEvent
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
+import javafx.scene.layout.VBox
 import kotlinx.coroutines.*
 import java.io.File
 import java.net.URL
@@ -35,6 +38,9 @@ class MainController : Initializable {
             return loader.load()
         }
     }
+
+    @FXML
+    lateinit var rootView: VBox
 
     // toolbar
     @FXML
@@ -56,20 +62,32 @@ class MainController : Initializable {
     private val downloadManager = DownloadManager()
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
+        initObservers()
+
+        if (ZXDB.open()) {
+            initModels()
+        } else {
+            updateZXDB()
+        }
+    }
+
+    private fun initModels() {
         createTree()
         createTable()
         createDownloadsTable()
 
-        initObservers()
-
-        treeView.selectionModel.select(treeView.root)
+        selectTreeNode(treeView.root)
     }
 
     private fun initObservers() {
         // al seleccionar un nodo, actualizar la lista
         treeView.selectionModel.selectedItemProperty().addListener { _, _, item ->
-            val category = item as TreeGenreItem
-            tableView.items = filteredList(category.entries)
+            if (item != null) {
+                val category = item as TreeGenreItem
+                tableView.items = filteredList(category.entries)
+            } else {
+                tableView.items = null
+            }
         }
 
         // al seleccionar un elemento de la lista, actualizar la lista de descargas
@@ -88,7 +106,7 @@ class MainController : Initializable {
 
         // crear los nodos en el orden de las categorías
         ZXDB.getTable(GenreType::class).rows.forEach { genre ->
-            getCategoryNode(genre.text!!)
+            getCategoryNode(genre.text)
         }
 
         // añadir las entradas a los nodos
@@ -165,16 +183,20 @@ class MainController : Initializable {
     }
 
     private fun createTable() {
-        tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) }
-        tableView.addColumn<Entry, String>("Category") { ReadOnlyStringWrapper(it.value.genre?.text) }
+        tableView.columns.setAll(
+                tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) },
+                tableView.addColumn<Entry, String>("Category") { ReadOnlyStringWrapper(it.value.genre?.text) }
+        );
     }
 
     private fun createDownloadsTable() {
-        downloadsTableView.addColumn<Download, String>("D") { ReadOnlyStringWrapper(downloadManager.exists(it.value).toString()) }
-        downloadsTableView.addColumn<Download, String>("Name") { ReadOnlyStringWrapper(it.value.fileName) }
-        downloadsTableView.addColumn<Download, String>("Type") { ReadOnlyStringWrapper(it.value.fileType.text) }
-        downloadsTableView.addColumn<Download, String>("Format") { ReadOnlyStringWrapper(it.value.extension?.text) }
-        downloadsTableView.addColumn<Download, String>("Machine") { ReadOnlyStringWrapper(it.value.machineType?.text) }
+        downloadsTableView.columns.setAll(
+                downloadsTableView.addColumn<Download, String>("D") { ReadOnlyStringWrapper(downloadManager.exists(it.value).toString()) },
+                downloadsTableView.addColumn<Download, String>("Name") { ReadOnlyStringWrapper(it.value.fileName) },
+                downloadsTableView.addColumn<Download, String>("Type") { ReadOnlyStringWrapper(it.value.fileType.text) },
+                downloadsTableView.addColumn<Download, String>("Format") { ReadOnlyStringWrapper(it.value.extension?.text) },
+                downloadsTableView.addColumn<Download, String>("Machine") { ReadOnlyStringWrapper(it.value.machineType?.text) }
+        )
 
         downloadsTableView.items = FXCollections.observableArrayList()
 
@@ -199,20 +221,25 @@ class MainController : Initializable {
 
     @FXML
     fun menuUpdateDatabaseAction() {
+        updateZXDB()
+    }
+
+    private fun updateZXDB() {
         val dialog = ProgressDialog.create().apply {
             title = "Updating"
             show()
         }
 
         val workingDir = File(System.getProperty("user.dir"))
-        val file = File(workingDir, "ZXDB_mysql.sql")
+        val mySqlFile = File(workingDir, "ZXDB_mysql.sql")
+        val sqliteFile = File(workingDir, ZXDB.DB_NAME)
+        val sqliteTempFile = File(workingDir, "_${ZXDB.DB_NAME}_")
 
-        val mainThread = Thread.currentThread()
         GlobalScope.launch {
             // descargar ZXDB_mysql.sql
             Http().apply {
                 request = "https://github.com/zxdb/ZXDB/raw/master/ZXDB_mysql.sql"
-                getFile(file) { status, progress ->
+                getFile(mySqlFile) { status, progress ->
                     when (status) {
                         Http.Status.Connecting -> Platform.runLater { dialog.message = "Connecting..." }
                         Http.Status.Connected -> Platform.runLater { dialog.message = "Downloading..." }
@@ -223,10 +250,17 @@ class MainController : Initializable {
 
             // convertir a sqlite
             Platform.runLater { dialog.message = "Converting..." }
+            MySQLConverter(mySqlFile.absolutePath, sqliteTempFile.absolutePath).convert()
 
             // sustituir fichero
+            ZXDB.close()
+            sqliteFile.delete()
+            sqliteTempFile.renameTo(sqliteFile)
 
             // recargar base de datos y refrescar los datos
+            ZXDB.open()
+            Platform.runLater { initModels() }
+
             Platform.runLater { dialog.hide() }
         }
     }
@@ -291,12 +325,12 @@ class MainController : Initializable {
     }
 
     private fun getDownload(download: Download, program: Program? = null) {
-        println("getDownload: ${download.fileName}")
+        //println("getDownload: ${download.fileName}")
         downloadManager.download(download) { file ->
             if (program != null) {
                 val extension = download.extension
                 if (extension != null) {
-                    println("open with ${program.name}")
+                    //println("open with ${program.name}")
                     program.launch(file)
                 }
             }
