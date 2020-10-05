@@ -22,14 +22,15 @@ class CreateTableParser : SentenceParser() {
         val TABLENAME_PATTERN = Regex("CREATE TABLE.* `(.*)`")
     }
 
-    val sb = StringBuilder()
+    private val sb = StringBuilder()
 
     override fun parse(converter: MySQLConverter): Boolean {
         if (converter.line!!.startsWith("CREATE TABLE")) {
             TABLENAME_PATTERN.find(converter.line!!)?.also { m ->
                 m.groups[1]?.value?.also { tableName ->
-                    converter.conn.createStatement().use { it.execute("DROP TABLE IF EXISTS '$tableName'") }
-                    println("Creating table: $tableName")
+                    converter.executeSql("DROP TABLE IF EXISTS '$tableName'")
+                    //println("Creating table: $tableName")
+                    converter.notifyProgress(tableName)
                 }
             }
 
@@ -55,7 +56,7 @@ class CreateTableParser : SentenceParser() {
             }
 
             val sql = BAD_COMMA.replace(sb.toString())
-            converter.conn.createStatement().use { it.execute(sql) }
+            converter.executeSql(sql)
 
             return true
         }

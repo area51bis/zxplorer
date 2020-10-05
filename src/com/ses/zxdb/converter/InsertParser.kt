@@ -60,10 +60,7 @@ class InsertParser : SentenceParser() {
 
     private fun insertRows(converter: MySQLConverter) {
         val sql = sb.toString()
-        try {
-        converter.conn.createStatement().use { it.execute(sql) }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        converter.executeSql(sql)
+        converter.notifyProgress()
     }
 }

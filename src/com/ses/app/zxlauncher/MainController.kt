@@ -67,7 +67,7 @@ class MainController : Initializable {
         if (ZXDB.open()) {
             initModels()
         } else {
-            updateZXDB()
+            //updateZXDB()
         }
     }
 
@@ -226,42 +226,27 @@ class MainController : Initializable {
 
     private fun updateZXDB() {
         val dialog = ProgressDialog.create().apply {
-            title = "Updating"
+            title = "Updating database"
             show()
         }
+return
+        ZXDBUtil.updateDatabase { status, progress, message ->
+            when (status) {
+                ZXDBUtil.UpdateStatus.Connecting -> Platform.runLater { dialog.progress = ProgressBar.INDETERMINATE_PROGRESS }
+                //ZXDBUtil.UpdateStatus.Downloading -> TODO()
+                //ZXDBUtil.UpdateStatus.Converting -> TODO()
+                ZXDBUtil.UpdateStatus.Completed -> Platform.runLater {
+                    initModels()
+                    dialog.hide()
+                }
 
-        val workingDir = File(System.getProperty("user.dir"))
-        val mySqlFile = File(workingDir, "ZXDB_mysql.sql")
-        val sqliteFile = File(workingDir, ZXDB.DB_NAME)
-        val sqliteTempFile = File(workingDir, "_${ZXDB.DB_NAME}_")
+                ZXDBUtil.UpdateStatus.Error -> Platform.runLater { dialog.hide() }
 
-        GlobalScope.launch {
-            // descargar ZXDB_mysql.sql
-            Http().apply {
-                request = "https://github.com/zxdb/ZXDB/raw/master/ZXDB_mysql.sql"
-                getFile(mySqlFile) { status, progress ->
-                    when (status) {
-                        Http.Status.Connecting -> Platform.runLater { dialog.message = "Connecting..." }
-                        Http.Status.Connected -> Platform.runLater { dialog.message = "Downloading..." }
-                    }
+                else -> Platform.runLater {
                     dialog.progress = progress.toDouble()
+                    dialog.message = message
                 }
             }
-
-            // convertir a sqlite
-            Platform.runLater { dialog.message = "Converting..." }
-            MySQLConverter(mySqlFile.absolutePath, sqliteTempFile.absolutePath).convert()
-
-            // sustituir fichero
-            ZXDB.close()
-            sqliteFile.delete()
-            sqliteTempFile.renameTo(sqliteFile)
-
-            // recargar base de datos y refrescar los datos
-            ZXDB.open()
-            Platform.runLater { initModels() }
-
-            Platform.runLater { dialog.hide() }
         }
     }
 
