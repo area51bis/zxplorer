@@ -14,13 +14,13 @@
    <center>
       <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER_LEFT">
          <children>
-            <Label fx:id="messageLabel" text="Label" />
+            <Label fx:id="messageLabel" text="message" />
             <ProgressBar fx:id="progressBar" maxWidth="1.7976931348623157E308" minWidth="300.0" prefWidth="200.0" progress="0.0" />
          </children>
       </VBox>
    </center>
    <top>
-      <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" text="Label" BorderPane.alignment="CENTER_LEFT">
+      <Label fx:id="titleLabel" alignment="CENTER" contentDisplay="CENTER" text="title" BorderPane.alignment="CENTER_LEFT">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>

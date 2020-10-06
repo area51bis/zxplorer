@@ -3,15 +3,12 @@ package com.ses.app.zxlauncher
 import com.ses.app.zxlauncher.filters.EntryTitleFilter
 import com.ses.app.zxlauncher.filters.Filter
 import com.ses.app.zxlauncher.ui.ProgressDialog
-import com.ses.net.Http
 import com.ses.zxdb.*
-import com.ses.zxdb.converter.MySQLConverter
 import com.ses.zxdb.dao.Download
 import com.ses.zxdb.dao.Entry
 import com.ses.zxdb.dao.GenreType
 import javafx.application.Platform
 import javafx.beans.property.ReadOnlyStringWrapper
-import javafx.beans.value.ChangeListener
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.collections.transformation.FilteredList
@@ -24,8 +21,6 @@ import javafx.scene.input.ContextMenuEvent
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.VBox
-import kotlinx.coroutines.*
-import java.io.File
 import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
@@ -184,9 +179,9 @@ class MainController : Initializable {
 
     private fun createTable() {
         tableView.columns.setAll(
-                tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) },
+                tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) }
                 tableView.addColumn<Entry, String>("Category") { ReadOnlyStringWrapper(it.value.genre?.text) }
-        );
+        )
     }
 
     private fun createDownloadsTable() {
@@ -229,7 +224,7 @@ class MainController : Initializable {
             title = "Updating database"
             show()
         }
-return
+
         ZXDBUtil.updateDatabase { status, progress, message ->
             when (status) {
                 ZXDBUtil.UpdateStatus.Connecting -> Platform.runLater { dialog.progress = ProgressBar.INDETERMINATE_PROGRESS }

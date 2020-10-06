@@ -2,6 +2,7 @@ package com.ses.app.zxlauncher.ui
 
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
+import javafx.fxml.Initializable
 import javafx.scene.Scene
 import javafx.scene.control.Label
 import javafx.scene.control.ProgressBar
@@ -9,8 +10,10 @@ import javafx.scene.paint.Color
 import javafx.stage.Modality
 import javafx.stage.Stage
 import javafx.stage.StageStyle
+import java.net.URL
+import java.util.*
 
-class ProgressDialog {
+class ProgressDialog : Initializable {
     @FXML
     lateinit var titleLabel: Label
 
@@ -53,6 +56,12 @@ class ProgressDialog {
             dialog.stage.scene = scene
             return dialog
         }
+    }
+
+
+    override fun initialize(p0: URL?, p1: ResourceBundle?) {
+        title = null
+        message = null
     }
 
     fun show() {
