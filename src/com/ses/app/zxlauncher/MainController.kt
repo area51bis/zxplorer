@@ -179,7 +179,7 @@ class MainController : Initializable {
 
     private fun createTable() {
         tableView.columns.setAll(
-                tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) }
+                tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) },
                 tableView.addColumn<Entry, String>("Category") { ReadOnlyStringWrapper(it.value.genre?.text) }
         )
     }
