@@ -66,10 +66,7 @@
                               </SplitPane>
                            </children>
                         </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="200.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
-                           <children>
-                              <Label text="Label" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
-                           </children></AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="200.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false" />
                     </items>
                   </SplitPane>
                </children>

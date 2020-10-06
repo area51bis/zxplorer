@@ -120,6 +120,7 @@ class MainController : Initializable {
         tableView.selectionModel.clearSelection()
     }
 
+    /*
     private fun filteredList(list: ObservableList<Entry>): FilteredList<Entry> = list.filtered {
         var pass = true
         for (f in filters) {
@@ -129,6 +130,10 @@ class MainController : Initializable {
             }
         }
         pass
+    }
+    */
+    private fun filteredList(list: ObservableList<Entry>): ObservableList<Entry> {
+        return list
     }
 
     /** Añade una entrada a los nodos correspondientes, creando los necesarios. */
@@ -178,10 +183,11 @@ class MainController : Initializable {
     }
 
     private fun createTable() {
-        tableView.columns.setAll(
-                tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) },
+        //tableView.columns.setAll(
+                tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) }
                 tableView.addColumn<Entry, String>("Category") { ReadOnlyStringWrapper(it.value.genre?.text) }
-        )
+                //tableView.addColumn<Entry, String>("Title") { it.value.titleProp }
+        //)
     }
 
     private fun createDownloadsTable() {

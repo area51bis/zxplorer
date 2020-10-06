@@ -100,14 +100,6 @@ object ZXDB {
         return url
     }
 
-    private fun connect() {
-        try {
-            conn.close()
-        } catch (e: Exception) {
-        }
-        conn = DriverManager.getConnection("jdbc:sqlite:$DB_NAME")
-    }
-
     private fun <T : Any> readTable(cls: KClass<T>): Table<T> {
         val table = Table<T>(cls)
         SQL(conn).select(cls = cls, f = table::addRow)
