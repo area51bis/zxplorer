@@ -9,9 +9,9 @@ import com.ses.zxdb.dao.Entry
 import com.ses.zxdb.dao.GenreType
 import javafx.application.Platform
 import javafx.beans.property.ReadOnlyStringWrapper
+import javafx.beans.value.ChangeListener
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
-import javafx.collections.transformation.FilteredList
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
@@ -21,6 +21,7 @@ import javafx.scene.input.ContextMenuEvent
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.VBox
+import javafx.stage.WindowEvent
 import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
@@ -59,10 +60,12 @@ class MainController : Initializable {
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         initObservers()
 
-        if (ZXDB.open()) {
-            initModels()
-        } else {
-            //updateZXDB()
+        App.mainStage.addEventFilter(WindowEvent.WINDOW_SHOWN) { ev ->
+            if (ZXDB.open()) {
+                initModels()
+            } else {
+                updateZXDB()
+            }
         }
     }
 
@@ -79,9 +82,9 @@ class MainController : Initializable {
         treeView.selectionModel.selectedItemProperty().addListener { _, _, item ->
             if (item != null) {
                 val category = item as TreeGenreItem
-                tableView.items = filteredList(category.entries)
+                tableView.items = filterList(category.entries, tableView.items)
             } else {
-                tableView.items = null
+                tableView.items.clear()
             }
         }
 
@@ -114,7 +117,7 @@ class MainController : Initializable {
         if (treeView.selectionModel.selectedItem != item) {
             treeView.selectionModel.select(item)
         } else {
-            tableView.items = filteredList((item as TreeGenreItem).entries)
+            tableView.items = filterList((item as TreeGenreItem).entries, tableView.items)
         }
 
         tableView.selectionModel.clearSelection()
@@ -132,8 +135,17 @@ class MainController : Initializable {
         pass
     }
     */
-    private fun filteredList(list: ObservableList<Entry>): ObservableList<Entry> {
-        return list
+    private fun filterList(list: ObservableList<Entry>, dest: ObservableList<Entry>): ObservableList<Entry> {
+        return list.filterTo(dest.apply { clear() }) {
+            var pass = true
+            for (f in filters) {
+                if (!f.check(it)) {
+                    pass = false
+                    break
+                }
+            }
+            pass
+        }
     }
 
     /** Añade una entrada a los nodos correspondientes, creando los necesarios. */
@@ -183,21 +195,19 @@ class MainController : Initializable {
     }
 
     private fun createTable() {
-        //tableView.columns.setAll(
-                tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) }
-                tableView.addColumn<Entry, String>("Category") { ReadOnlyStringWrapper(it.value.genre?.text) }
-                //tableView.addColumn<Entry, String>("Title") { it.value.titleProp }
-        //)
+        tableView.columns.clear()
+        tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) }
+        tableView.addColumn<Entry, String>("Category") { ReadOnlyStringWrapper(it.value.genre?.text) }
+        //tableView.addColumn<Entry, String>("Title") { it.value.titleProp }
     }
 
     private fun createDownloadsTable() {
-        downloadsTableView.columns.setAll(
-                downloadsTableView.addColumn<Download, String>("D") { ReadOnlyStringWrapper(downloadManager.exists(it.value).toString()) },
-                downloadsTableView.addColumn<Download, String>("Name") { ReadOnlyStringWrapper(it.value.fileName) },
-                downloadsTableView.addColumn<Download, String>("Type") { ReadOnlyStringWrapper(it.value.fileType.text) },
-                downloadsTableView.addColumn<Download, String>("Format") { ReadOnlyStringWrapper(it.value.extension?.text) },
-                downloadsTableView.addColumn<Download, String>("Machine") { ReadOnlyStringWrapper(it.value.machineType?.text) }
-        )
+        downloadsTableView.columns.clear()
+        downloadsTableView.addColumn<Download, String>("D") { ReadOnlyStringWrapper(downloadManager.exists(it.value).toString()) }
+        downloadsTableView.addColumn<Download, String>("Name") { ReadOnlyStringWrapper(it.value.fileName) }
+        downloadsTableView.addColumn<Download, String>("Type") { ReadOnlyStringWrapper(it.value.fileType.text) }
+        downloadsTableView.addColumn<Download, String>("Format") { ReadOnlyStringWrapper(it.value.extension?.text) }
+        downloadsTableView.addColumn<Download, String>("Machine") { ReadOnlyStringWrapper(it.value.machineType?.text) }
 
         downloadsTableView.items = FXCollections.observableArrayList()
 

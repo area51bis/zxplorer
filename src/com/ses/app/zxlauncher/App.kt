@@ -10,10 +10,16 @@ import java.io.File
 class App : Application() {
     companion object {
         val workingDir = File(System.getProperty("user.dir"))
+
+        lateinit var mainStage: Stage
+        lateinit var mainScene: Scene
     }
 
     override fun start(primaryStage: Stage?) {
+        mainStage = primaryStage!!
+
         val scene = Scene(MainController.load())
+        mainScene = scene
 
         primaryStage?.apply {
             title = "ZX Launcher"
