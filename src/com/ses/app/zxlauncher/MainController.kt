@@ -64,7 +64,7 @@ class MainController : Initializable {
             if (ZXDB.open()) {
                 initModels()
             } else {
-                updateZXDB()
+                //updateZXDB()
             }
         }
     }
