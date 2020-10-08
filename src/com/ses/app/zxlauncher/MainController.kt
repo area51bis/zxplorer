@@ -2,14 +2,16 @@ package com.ses.app.zxlauncher
 
 import com.ses.app.zxlauncher.filters.EntryTitleFilter
 import com.ses.app.zxlauncher.filters.Filter
+import com.ses.app.zxlauncher.model.EntryRow
+import com.ses.app.zxlauncher.model.Model
 import com.ses.app.zxlauncher.ui.ProgressDialog
 import com.ses.zxdb.*
 import com.ses.zxdb.dao.Download
-import com.ses.zxdb.dao.Entry
 import com.ses.zxdb.dao.GenreType
 import javafx.application.Platform
+import javafx.beans.property.ReadOnlyIntegerProperty
+import javafx.beans.property.ReadOnlyIntegerWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
-import javafx.beans.value.ChangeListener
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
@@ -22,6 +24,10 @@ import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.VBox
 import javafx.stage.WindowEvent
+import javafx.util.Callback
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
@@ -49,12 +55,12 @@ class MainController : Initializable {
     lateinit var treeView: TreeView<String>
 
     @FXML
-    lateinit var tableView: TableView<Entry>
+    lateinit var tableView: TableView<EntryRow>
 
     @FXML
     lateinit var downloadsTableView: TableView<Download>
 
-    private var filters: ArrayList<Filter<Entry>> = ArrayList()
+    private var filters: ArrayList<Filter<EntryRow>> = ArrayList()
     private val downloadManager = DownloadManager()
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
@@ -64,17 +70,31 @@ class MainController : Initializable {
             if (ZXDB.open()) {
                 initModels()
             } else {
-                //updateZXDB()
+                updateZXDB()
             }
         }
     }
 
     private fun initModels() {
-        createTree()
-        createTable()
-        createDownloadsTable()
+        val dialog = ProgressDialog.create().apply {
+            title = "Loading..."
+            progress = ProgressBar.INDETERMINATE_PROGRESS
+            show()
+        }
 
-        selectTreeNode(treeView.root)
+        GlobalScope.launch {
+            Model.entryRows
+
+            Platform.runLater {
+                createTree()
+                createTable()
+                createDownloadsTable()
+
+                selectTreeNode(treeView.root)
+
+                dialog.hide()
+            }
+        }
     }
 
     private fun initObservers() {
@@ -106,9 +126,11 @@ class MainController : Initializable {
         ZXDB.getTable(GenreType::class).rows.forEach { genre ->
             getCategoryNode(genre.text)
         }
+        getCategoryNode("Year")
+        getCategoryNode("Availability")
 
         // añadir las entradas a los nodos
-        ZXDB.getTable(Entry::class).rows.forEach { entry ->
+        Model.entryRows.forEach { entry ->
             addTreeEntry(entry)
         }
     }
@@ -135,7 +157,7 @@ class MainController : Initializable {
         pass
     }
     */
-    private fun filterList(list: ObservableList<Entry>, dest: ObservableList<Entry>): ObservableList<Entry> {
+    private fun filterList(list: ObservableList<EntryRow>, dest: ObservableList<EntryRow>): ObservableList<EntryRow> {
         return list.filterTo(dest.apply { clear() }) {
             var pass = true
             for (f in filters) {
@@ -149,11 +171,15 @@ class MainController : Initializable {
     }
 
     /** Añade una entrada a los nodos correspondientes, creando los necesarios. */
-    private fun addTreeEntry(entry: Entry) {
-        val path = ZXDBUtil.getCategoryPath(entry)
+    private fun addTreeEntry(entry: EntryRow) {
+        (treeView.root as TreeGenreItem).addEntry(entry)
+        addTreeEntry(entry, entry.categoryPath)
+        addTreeEntry(entry, listOf("Year", entry.releaseYearString), true)
+        addTreeEntry(entry, listOf("Availability", entry.availabilityString))
+    }
 
+    private fun addTreeEntry(entry: EntryRow, path: List<String>, sortNodes: Boolean = false) {
         var node = treeView.root as TreeGenreItem
-        node.addEntry(entry)
 
         path.forEach { pathPart ->
             val n = node.children.find { item -> item.value == pathPart }
@@ -163,7 +189,7 @@ class MainController : Initializable {
             } else {
                 TreeGenreItem(pathPart).also { cat ->
                     node.children.add(cat)
-                    //node.children.sortBy { item -> item.value }
+                    if( sortNodes ) node.children.sortBy { item -> item.value }
                     node = cat
                 }
             }
@@ -174,7 +200,7 @@ class MainController : Initializable {
 
     /** Obtiene un nodo de una categoría, creando los necesarios. */
     private fun getCategoryNode(name: String): TreeGenreItem {
-        val path: List<String> = ZXDBUtil.getCategoryPath(name)
+        val path: List<String> = Model.getCategoryPath(name)
         var node = treeView.root
 
         path.forEach { pathPart ->
@@ -195,9 +221,22 @@ class MainController : Initializable {
     }
 
     private fun createTable() {
-        tableView.columns.clear()
-        tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) }
-        tableView.addColumn<Entry, String>("Category") { ReadOnlyStringWrapper(ZXDBUtil.getCategoryName(it.value.genre)) }
+        with(tableView.columns) {
+            clear()
+
+            add(TableColumn<EntryRow, String>("Title").apply {
+                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.title) }
+            })
+            add(TableColumn<EntryRow, String>("Category").apply {
+                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.categoryName) }
+            })
+            add(TableColumn<EntryRow, String>("Year").apply {
+                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.releaseYearString) }
+            })
+            add(TableColumn<EntryRow, String>("Availability").apply {
+                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.availabilityString) }
+            })
+        }
     }
 
     private fun createDownloadsTable() {
@@ -240,17 +279,20 @@ class MainController : Initializable {
             show()
         }
 
-        ZXDBUtil.updateDatabase { status, progress, message ->
+        Model.updateDatabase { status, progress, message ->
             when (status) {
-                ZXDBUtil.UpdateStatus.Connecting -> Platform.runLater { dialog.progress = ProgressBar.INDETERMINATE_PROGRESS }
+                Model.UpdateStatus.Connecting -> Platform.runLater {
+                    dialog.progress = ProgressBar.INDETERMINATE_PROGRESS
+                    dialog.message = message
+                }
                 //ZXDBUtil.UpdateStatus.Downloading -> TODO()
                 //ZXDBUtil.UpdateStatus.Converting -> TODO()
-                ZXDBUtil.UpdateStatus.Completed -> Platform.runLater {
+                Model.UpdateStatus.Completed -> Platform.runLater {
                     initModels()
                     dialog.hide()
                 }
 
-                ZXDBUtil.UpdateStatus.Error -> Platform.runLater { dialog.hide() }
+                Model.UpdateStatus.Error -> Platform.runLater { dialog.hide() }
 
                 else -> Platform.runLater {
                     dialog.progress = progress.toDouble()

@@ -14,6 +14,7 @@ import kotlin.reflect.jvm.jvmErasure
 class SQL(private val conn: Connection) {
     companion object {
         fun getTableName(cls: KClass<*>): String? = cls.findAnnotation<Table>()?.name
+
         /** primero busca [@Query], luego [@Table]. */
         fun getQuery(cls: KClass<*>): String? = cls.findAnnotation<Query>()?.query
                 ?: "SELECT * FROM ${getTableName(cls)}"
@@ -25,6 +26,10 @@ class SQL(private val conn: Connection) {
         conn.createStatement().use { stmt ->
             stmt?.executeQuery(query)?.use { rs -> f(rs) }
         }
+    }
+
+    fun <T : Any> select(cls: KClass<T>, f: (row: T) -> Unit) {
+        select(query = null, cls = cls, f = f)
     }
 
     fun <T : Any> select(query: String? = null, cls: KClass<T>, f: (row: T) -> Unit) {

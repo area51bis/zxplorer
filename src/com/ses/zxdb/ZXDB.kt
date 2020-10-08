@@ -40,6 +40,7 @@ object ZXDB {
             DownloadServer("/zxdb/sinclair/", SPECTRUM_COMPUTING_ORG)
     )
 
+    /*
     private var LOAD_TABLES = arrayOf(
             // enumeration tables
             Extension::class,
@@ -49,6 +50,7 @@ object ZXDB {
 
             Entry::class
     )
+    */
     private val tables: HashMap<KClass<*>, Table<*>> = HashMap()
 
     private lateinit var conn: Connection
@@ -61,7 +63,7 @@ object ZXDB {
 
     fun open(): Boolean = try {
         conn = DriverManager.getConnection("jdbc:sqlite:$DB_NAME")
-        for (t in LOAD_TABLES) readTable(t)
+        //for (t in LOAD_TABLES) readTable(t)
         true
     } catch (e: Exception) {
         false
@@ -74,6 +76,8 @@ object ZXDB {
         }
         tables.clear();
     }
+
+    fun sql(): SQL = SQL(conn)
 
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> getTable(cls: KClass<T>): Table<T> {

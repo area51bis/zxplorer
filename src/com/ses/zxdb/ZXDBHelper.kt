@@ -5,6 +5,8 @@ import com.ses.zxdb.dao.*
 val Entry.downloads: List<Download> get() = ZXDB.getDownloads(id)
 val Entry.genre: GenreType? get() = ZXDB.getGenre(genretype_id)
 val Entry.machineType: MachineType? get() = ZXDB.getTable(MachineType::class)[machinetype_id]
+val Entry.availableType: AvailableType? get() = ZXDB.getTable(AvailableType::class)[availabletype_id]
+val Entry.language: Language? get() = ZXDB.getTable(Language::class)[language_id]
 
 val Download.fullUrl: String get() = ZXDB.getDownloadServerUrl(file_link)
 val Download.fileName: String get() = file_link.substringAfterLast("/")

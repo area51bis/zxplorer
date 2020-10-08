@@ -1,4 +1,4 @@
-package com.ses.app.zxlauncher
+package com.ses.app.zxlauncher.model
 
 import com.ses.net.Http
 import com.ses.zxdb.ZXDB
@@ -9,16 +9,27 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 
-object ZXDBUtil {
-    private const val UNCATEGORIZED_CATEGORY_NAME = "Uncategorized"
+object Model {
+    const val NULL_YEAR_STRING = "Unknown"
+    const val NULL_GENRE_STRING = "Uncategorized"
+    const val NULL_AVAILABLE_STRING = "Unknown"
 
-    fun getCategoryName(genre: GenreType?) = genre?.text ?: UNCATEGORIZED_CATEGORY_NAME
+    private var _rows: List<EntryRow>? = null
+    val entryRows: List<EntryRow>
+        get() = _rows ?: ArrayList<EntryRow>().also { list ->
+            ZXDB.sql().select(EntryRow::class) { entry ->
+                list.add(entry)
+            }
+            _rows = list.apply { sortBy { e -> e.title } }
+        }
+
+    fun getCategoryName(genre: GenreType?) = genre?.text ?: NULL_GENRE_STRING
 
     fun getCategoryPath(name: String?): List<String> {
         return name
                 ?.replace("(.*) Game:".toRegex(), "Game: \$1:")
                 ?.split(": ?".toRegex())
-                ?: listOf(UNCATEGORIZED_CATEGORY_NAME)
+                ?: listOf(NULL_GENRE_STRING)
     }
 
     fun getCategoryPath(entry: Entry): List<String> {
@@ -66,6 +77,8 @@ object ZXDBUtil {
 
             // sustituir fichero
             ZXDB.close()
+            _rows = null
+
             sqliteFile.delete()
             sqliteTempFile.renameTo(sqliteFile)
 

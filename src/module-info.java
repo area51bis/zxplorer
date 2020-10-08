@@ -11,6 +11,7 @@ module app {
     requires kotlinx.coroutines.core;
 
     exports com.ses.zxdb.dao;
+    exports com.ses.app.zxlauncher.model;
     exports com.ses.app.zxlauncher.ui;
 
     opens com.ses.app.zxlauncher;

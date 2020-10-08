@@ -1,8 +1,8 @@
 package com.ses.app.zxlauncher.filters
 
-import com.ses.zxdb.dao.Entry
+import com.ses.app.zxlauncher.model.EntryRow
 
-class EntryTitleFilter : Filter<Entry> {
+class EntryTitleFilter : Filter<EntryRow> {
     var text: String?
         set(value) {
             regex = if ((value != null) && (value.isNotEmpty())) {
@@ -10,7 +10,6 @@ class EntryTitleFilter : Filter<Entry> {
             } else {
                 null
             }
-            value
         }
     private val isRegEx: Boolean
     private var regex: Regex? = null
@@ -20,7 +19,7 @@ class EntryTitleFilter : Filter<Entry> {
         this.isRegEx = isRegEx
     }
 
-    override fun check(o: Entry): Boolean {
-        return regex?.matches(o.title!!) ?: true
+    override fun check(o: EntryRow): Boolean {
+        return regex?.matches(o.title) ?: true
     }
 }
