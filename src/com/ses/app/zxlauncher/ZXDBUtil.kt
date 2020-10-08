@@ -1,30 +1,32 @@
 package com.ses.app.zxlauncher
 
-import com.ses.app.zxlauncher.ui.ProgressDialog
 import com.ses.net.Http
 import com.ses.zxdb.ZXDB
 import com.ses.zxdb.converter.MySQLConverter
 import com.ses.zxdb.dao.Entry
 import com.ses.zxdb.dao.GenreType
-import javafx.application.Platform
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 
 object ZXDBUtil {
+    private const val UNCATEGORIZED_CATEGORY_NAME = "Uncategorized"
+
+    fun getCategoryName(genre: GenreType?) = genre?.text ?: UNCATEGORIZED_CATEGORY_NAME
+
     fun getCategoryPath(name: String?): List<String> {
         return name
                 ?.replace("(.*) Game:".toRegex(), "Game: \$1:")
                 ?.split(": ?".toRegex())
-                ?: emptyList()
+                ?: listOf(UNCATEGORIZED_CATEGORY_NAME)
     }
 
     fun getCategoryPath(entry: Entry): List<String> {
         return getCategoryPath(ZXDB.getGenre(entry.genretype_id)?.text)
     }
 
-    fun getCategoryPath(genre: GenreType): List<String> {
-        return getCategoryPath(genre.text)
+    fun getCategoryPath(genre: GenreType?): List<String> {
+        return getCategoryPath(genre?.text)
     }
 
     enum class UpdateStatus {

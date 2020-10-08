@@ -14,34 +14,43 @@ import kotlin.reflect.jvm.jvmErasure
 class SQL(private val conn: Connection) {
     companion object {
         fun getTableName(cls: KClass<*>): String? = cls.findAnnotation<Table>()?.name
+        fun getQuery(cls: KClass<*>): String? = cls.findAnnotation<Query>()?.query
         fun getKeyProperty(cls: KClass<*>): KProperty<*>? = cls.members.find { it.hasAnnotation<Key>() } as KProperty<*>
     }
 
-    fun <T : Any> select(columns: String = "*", from: String? = null, where: String? = null, orderBy: String? = null, cls: KClass<T>, f: (row: T) -> Unit) {
-        val table = from ?: cls.findAnnotation<Table>()?.name
+    fun select(query: String, f: (row: ResultSet) -> Unit) {
+        conn.createStatement().use { stmt ->
+            stmt?.executeQuery(query)?.use { rs -> f(rs) }
+        }
+    }
+
+    fun <T : Any> select(query: String? = null, cls: KClass<T>, f: (row: T) -> Unit) {
+        select(query ?: getQuery(cls)!!) { rs ->
+            val columsInfo = getColumnsMap(cls).values
+            @Suppress("UNCHECKED_CAST") val ctor: () -> T = cls.primaryConstructor as () -> T
+
+            while (rs.next()) {
+                val row: T = ctor()
+
+                columsInfo.forEach {
+                    it.read(row, rs)
+                }
+
+                f(row)
+            }
+        }
+    }
+
+    fun <T : Any> select(columns: Array<String> = arrayOf("*"), from: String? = null, where: String? = null, orderBy: String? = null, cls: KClass<T>, f: (row: T) -> Unit) {
+        val table = from ?: getTableName(cls)
 
         if (table != null) {
-            val query = StringBuilder("SELECT $columns FROM $table").apply {
+            val query = StringBuilder("SELECT ${columns.joinToString()} FROM $table").apply {
                 if (where != null) append(" WHERE $where")
                 if (orderBy != null) append(" ORDER BY $orderBy")
             }.toString()
 
-            conn.createStatement().use { stmt ->
-                stmt?.executeQuery(query)?.use { rs ->
-                    val columsInfo = getColumnsMap(cls).values
-                    @Suppress("UNCHECKED_CAST") val ctor: () -> T = cls.primaryConstructor as () -> T
-
-                    while (rs.next()) {
-                        val row: T = ctor()
-
-                        columsInfo.forEach {
-                            it.read(row, rs)
-                        }
-
-                        f(row)
-                    }
-                }
-            }
+            select(query, cls, f)
         }
     }
 
@@ -61,10 +70,10 @@ class SQL(private val conn: Connection) {
     }
 }
 
-val RS_DEFAULT_GETTER: (ResultSet, Int) -> Any? = { rs, i -> rs.getBoolean(i) }
+val RS_DEFAULT_GETTER: (ResultSet, Int) -> Any? = { rs, i -> rs.getObject(i) }
 val RS_GETTERS: HashMap<KClass<*>, (ResultSet, Int) -> Any?> = hashMapOf(
         Byte::class to { rs, i -> rs.getByte(i) },
-        Int::class to { rs, i -> rs.getInt(i) },
+        Int::class to { rs, i -> if (rs.getObject(i) != null) rs.getInt(i) else null },
         Long::class to { rs, i -> rs.getLong(i) },
         Float::class to { rs, i -> rs.getFloat(i) },
         Double::class to { rs, i -> rs.getDouble(i) },

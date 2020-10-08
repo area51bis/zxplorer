@@ -197,8 +197,7 @@ class MainController : Initializable {
     private fun createTable() {
         tableView.columns.clear()
         tableView.addColumn<Entry, String>("Title") { ReadOnlyStringWrapper(it.value.title) }
-        tableView.addColumn<Entry, String>("Category") { ReadOnlyStringWrapper(it.value.genre?.text) }
-        //tableView.addColumn<Entry, String>("Title") { it.value.titleProp }
+        tableView.addColumn<Entry, String>("Category") { ReadOnlyStringWrapper(ZXDBUtil.getCategoryName(it.value.genre)) }
     }
 
     private fun createDownloadsTable() {
