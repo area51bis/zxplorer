@@ -30,10 +30,10 @@ class EntryRow {
     //@Column var book_pages: String? = null
 
     @Column("release_year") var releaseYear: Int? = null
-    val releaseYearString: String
-        get() = releaseYear?.toString() ?: Model.NULL_YEAR_STRING
+    val releaseYearString: String get() = releaseYear?.toString() ?: Model.NULL_YEAR_STRING
 
     val machineType: MachineType? by lazy { ZXDB.getTable(MachineType::class)[machineTypeId] }
+    val machineTypeString: String get() = machineType?.text ?: Model.NULL_MACHINE_TYPE_STRING
     val genreType: GenreType? by lazy { ZXDB.getTable(GenreType::class)[genreTypeId] }
     val availableType: AvailableType? by lazy { ZXDB.getTable(AvailableType::class)[availableTypeId] }
     val availabilityString: String get() = availableType?.text ?: Model.NULL_AVAILABLE_STRING
@@ -55,9 +55,7 @@ class EntryRow {
         }
     }
 
-    val categoryName: String
-        get() = genreType?.text ?: Model.NULL_GENRE_STRING
+    val categoryName: String get() = genreType?.text ?: Model.NULL_GENRE_STRING
 
-    val categoryPath: List<String>
-        get() = Model.getCategoryPath(genreType)
+    val categoryPath: List<String> get() = Model.getCategoryPath(genreType)
 }

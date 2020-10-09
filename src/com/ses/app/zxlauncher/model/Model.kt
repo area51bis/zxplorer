@@ -13,6 +13,7 @@ object Model {
     const val NULL_YEAR_STRING = "Unknown"
     const val NULL_GENRE_STRING = "Uncategorized"
     const val NULL_AVAILABLE_STRING = "Unknown"
+    const val NULL_MACHINE_TYPE_STRING = "None"
 
     private var _rows: List<EntryRow>? = null
     val entryRows: List<EntryRow>

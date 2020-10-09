@@ -5,7 +5,7 @@ import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
 class Table<T>(cls: KClass<*>) {
-    private val _rows: HashMap<Any, T> = HashMap()
+    private val _rows: LinkedHashMap<Any, T> = LinkedHashMap()
     val rows: Iterable<T> get() = _rows.values
 
     private val keyProperty: KProperty<*>? = SQL.getKeyProperty(cls)

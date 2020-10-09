@@ -22,7 +22,7 @@ class SQL(private val conn: Connection) {
         fun getKeyProperty(cls: KClass<*>): KProperty<*>? = cls.members.find { it.hasAnnotation<Key>() } as KProperty<*>
     }
 
-    fun select(query: String, f: (row: ResultSet) -> Unit) {
+    fun select(query: String, f: (rs: ResultSet) -> Unit) {
         conn.createStatement().use { stmt ->
             stmt?.executeQuery(query)?.use { rs -> f(rs) }
         }

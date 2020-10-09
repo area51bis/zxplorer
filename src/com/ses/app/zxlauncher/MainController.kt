@@ -6,8 +6,10 @@ import com.ses.app.zxlauncher.model.EntryRow
 import com.ses.app.zxlauncher.model.Model
 import com.ses.app.zxlauncher.ui.ProgressDialog
 import com.ses.zxdb.*
+import com.ses.zxdb.dao.AvailableType
 import com.ses.zxdb.dao.Download
 import com.ses.zxdb.dao.GenreType
+import com.ses.zxdb.dao.MachineType
 import javafx.application.Platform
 import javafx.beans.property.ReadOnlyIntegerProperty
 import javafx.beans.property.ReadOnlyIntegerWrapper
@@ -123,16 +125,19 @@ class MainController : Initializable {
         treeView.root.isExpanded = true
 
         // crear los nodos en el orden de las categorías
-        ZXDB.getTable(GenreType::class).rows.forEach { genre ->
-            getCategoryNode(genre.text)
-        }
-        getCategoryNode("Year")
-        getCategoryNode("Availability")
+        ZXDB.getTable(GenreType::class).rows.forEach { getCategoryNode(it.text) }
+
+        // year
+        getTreeNode("Year")
+
+        // machine
+        ZXDB.getTable(MachineType::class).rows.forEach { getTreeNode(listOf("Machine", it.text)) }
+
+        // availability
+        ZXDB.getTable(AvailableType::class).rows.forEach { getTreeNode(listOf("Availability", it.text)) }
 
         // añadir las entradas a los nodos
-        Model.entryRows.forEach { entry ->
-            addTreeEntry(entry)
-        }
+        Model.entryRows.forEach { addTreeEntry(it) }
     }
 
     private fun selectTreeNode(item: TreeItem<String>) {
@@ -176,31 +181,23 @@ class MainController : Initializable {
         addTreeEntry(entry, entry.categoryPath)
         addTreeEntry(entry, listOf("Year", entry.releaseYearString), true)
         addTreeEntry(entry, listOf("Availability", entry.availabilityString))
+        if (entry.machineTypeId != null) addTreeEntry(entry, listOf("Machine", entry.machineTypeString))
     }
 
     private fun addTreeEntry(entry: EntryRow, path: List<String>, sortNodes: Boolean = false) {
-        var node = treeView.root as TreeGenreItem
-
-        path.forEach { pathPart ->
-            val n = node.children.find { item -> item.value == pathPart }
-
-            if (n != null) {
-                node = n as TreeGenreItem
-            } else {
-                TreeGenreItem(pathPart).also { cat ->
-                    node.children.add(cat)
-                    if( sortNodes ) node.children.sortBy { item -> item.value }
-                    node = cat
-                }
-            }
-
-            node.addEntry(entry)
-        }
+        getTreeNode(path, sortNodes).addEntry(entry)
     }
 
     /** Obtiene un nodo de una categoría, creando los necesarios. */
     private fun getCategoryNode(name: String): TreeGenreItem {
-        val path: List<String> = Model.getCategoryPath(name)
+        return getTreeNode(Model.getCategoryPath(name))
+    }
+
+    private fun getTreeNode(path: String, sortNodes: Boolean = false): TreeGenreItem {
+        return getTreeNode(path.split("|"), sortNodes)
+    }
+
+    private fun getTreeNode(path: List<String>, sortNodes: Boolean = false): TreeGenreItem {
         var node = treeView.root
 
         path.forEach { pathPart ->
@@ -211,7 +208,7 @@ class MainController : Initializable {
             } else {
                 TreeGenreItem(pathPart).also { cat ->
                     node.children.add(cat)
-                    //node.children.sortBy { item -> item.value }
+                    if (sortNodes) node.children.sortBy { item -> item.value }
                     node = cat
                 }
             }

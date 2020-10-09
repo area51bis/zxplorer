@@ -15,7 +15,7 @@ class Program(val id: String, val name: String, val path: String, val args: Stri
 
     fun launch(file: File) {
         if (unzip) {
-            var unzippedFile: File? = null
+            var unzippedFile: File?
 
             //TODO: sacar a una función / extensión
             ZipFile(file).use { zip ->

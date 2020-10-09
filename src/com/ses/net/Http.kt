@@ -32,13 +32,13 @@ class Http {
     private var errorMessage: String? = null
 
     fun getBytes(progressHandler: HttpProgressHandler? = null): ByteArray? {
-        try {
-            ByteArrayOutputStream().use {
-                request(it, progressHandler)
-                return it.toByteArray()
-            }
+        return try {
+            val buf = ByteArrayOutputStream()
+            buf.use { request(it, progressHandler) }
+            if (errorCode == 0) progressHandler?.invoke(Status.Completed, 1f)
+            buf.toByteArray()
         } catch (e: Exception) {
-            return null
+            null
         }
     }
 
@@ -51,6 +51,7 @@ class Http {
         BufferedOutputStream(file.outputStream()).use {
             request(it, progressHandler)
         }
+        if (errorCode == 0) progressHandler?.invoke(Status.Completed, 1f)
     }
 
     private fun request(output: OutputStream, progressHandler: HttpProgressHandler? = null) {
@@ -148,8 +149,6 @@ class Http {
             }
 
             errorCode = 0
-
-            progressHandler?.invoke(Status.Completed, 1f)
         }
     }
 
