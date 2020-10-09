@@ -2,6 +2,7 @@ package com.ses.zxdb
 
 import com.ses.sql.SQL
 import com.ses.zxdb.dao.*
+import java.io.File
 import java.sql.Connection
 import java.sql.DriverManager
 import kotlin.reflect.KClass
@@ -62,9 +63,14 @@ object ZXDB {
     */
 
     fun open(): Boolean = try {
-        conn = DriverManager.getConnection("jdbc:sqlite:$DB_NAME")
-        //for (t in LOAD_TABLES) readTable(t)
-        true
+        if (File(DB_NAME).exists()) {
+            conn = DriverManager.getConnection("jdbc:sqlite:$DB_NAME")
+            //for (t in LOAD_TABLES) readTable(t)
+            //TODO comprobar que la base de datos es válida
+            true
+        } else {
+            false
+        }
     } catch (e: Exception) {
         false
     }

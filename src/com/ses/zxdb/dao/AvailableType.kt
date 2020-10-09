@@ -1,8 +1,10 @@
 package com.ses.zxdb.dao
 
+import com.ses.sql.Query
 import com.ses.sql.Table
 
 @Table("availabletypes")
+@Query("SELECT * FROM availabletypes WHERE id!='*'")
 class AvailableType: EnumerationTable<String>() {
     companion object {
         const val AVAILABLE = "A"
