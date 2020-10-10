@@ -10,6 +10,7 @@
       <entry name="!?*.flex" />
       <entry name="!?*.kt" />
       <entry name="!?*.clj" />
+      <entry name="!?*.png" />
     </wildcardResourcePatterns>
   </component>
 </project>

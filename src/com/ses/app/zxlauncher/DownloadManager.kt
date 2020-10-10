@@ -6,6 +6,8 @@ import com.ses.zxdb.dao.Download
 import com.ses.zxdb.fileName
 import com.ses.zxdb.fullUrl
 import javafx.application.Platform
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.File
 
 class DownloadManager {
@@ -28,18 +30,20 @@ class DownloadManager {
             show()
         }
 
-        Http().apply {
-            file.parentFile.mkdirs()
-            request = download.fullUrl
+        GlobalScope.launch {
+            Http().apply {
+                file.parentFile.mkdirs()
+                request = download.fullUrl
 
-            getFile(file) { status, progress ->
-                when (status) {
-                    Http.Status.Connecting -> Platform.runLater { dialog.message = "Connecting..." }
-                    Http.Status.Connected -> Platform.runLater { dialog.message = "Downloading '${download.fileName}'..." }
-                    Http.Status.Completed -> completion(file)
+                getFile(file) { status, progress ->
+                    when (status) {
+                        Http.Status.Connecting -> Platform.runLater { dialog.message = "Connecting..." }
+                        Http.Status.Connected -> Platform.runLater { dialog.message = "Downloading '${download.fileName}'..." }
+                        Http.Status.Completed -> completion(file)
+                    }
                 }
+                Platform.runLater { dialog.hide() }
             }
-            Platform.runLater { dialog.hide() }
         }
     }
 

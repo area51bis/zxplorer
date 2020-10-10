@@ -11,9 +11,7 @@ import com.ses.zxdb.dao.Download
 import com.ses.zxdb.dao.GenreType
 import com.ses.zxdb.dao.MachineType
 import javafx.application.Platform
-import javafx.beans.property.ReadOnlyIntegerProperty
-import javafx.beans.property.ReadOnlyIntegerWrapper
-import javafx.beans.property.ReadOnlyStringWrapper
+import javafx.beans.property.*
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
@@ -21,6 +19,9 @@ import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
 import javafx.scene.Parent
 import javafx.scene.control.*
+import javafx.scene.control.cell.PropertyValueFactory
+import javafx.scene.image.Image
+import javafx.scene.image.ImageView
 import javafx.scene.input.ContextMenuEvent
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
@@ -61,6 +62,12 @@ class MainController : Initializable {
 
     @FXML
     lateinit var downloadsTableView: TableView<Download>
+
+    @FXML
+    lateinit var previewImage: ImageView
+
+    @FXML
+    lateinit var statusLabel: Label
 
     private var filters: ArrayList<Filter<EntryRow>> = ArrayList()
     private val downloadManager = DownloadManager()
@@ -108,6 +115,8 @@ class MainController : Initializable {
             } else {
                 tableView.items.clear()
             }
+
+            statusLabel.text = "${tableView.items.size} items"
         }
 
         // al seleccionar un elemento de la lista, actualizar la lista de descargas
@@ -128,7 +137,7 @@ class MainController : Initializable {
         ZXDB.getTable(GenreType::class).rows.forEach { getCategoryNode(it.text) }
 
         // year
-        getTreeNode("Year")
+        val yearNode = getTreeNode("Year")
 
         // machine
         ZXDB.getTable(MachineType::class).rows.forEach { getTreeNode(listOf("Machine", it.text)) }
@@ -138,6 +147,9 @@ class MainController : Initializable {
 
         // añadir las entradas a los nodos
         Model.entryRows.forEach { addTreeEntry(it) }
+
+        // ordenar años
+        yearNode.children.sortBy { it.value }
     }
 
     private fun selectTreeNode(item: TreeItem<String>) {
@@ -185,7 +197,11 @@ class MainController : Initializable {
     }
 
     private fun addTreeEntry(entry: EntryRow, path: List<String>, sortNodes: Boolean = false) {
-        getTreeNode(path, sortNodes).addEntry(entry)
+        val p = ArrayList<String>()
+        for (s in path) {
+            p.add(s)
+            getTreeNode(p).addEntry(entry)
+        }
     }
 
     /** Obtiene un nodo de una categoría, creando los necesarios. */
@@ -237,12 +253,36 @@ class MainController : Initializable {
     }
 
     private fun createDownloadsTable() {
-        downloadsTableView.columns.clear()
-        downloadsTableView.addColumn<Download, String>("D") { ReadOnlyStringWrapper(downloadManager.exists(it.value).toString()) }
-        downloadsTableView.addColumn<Download, String>("Name") { ReadOnlyStringWrapper(it.value.fileName) }
-        downloadsTableView.addColumn<Download, String>("Type") { ReadOnlyStringWrapper(it.value.fileType.text) }
-        downloadsTableView.addColumn<Download, String>("Format") { ReadOnlyStringWrapper(it.value.extension?.text) }
-        downloadsTableView.addColumn<Download, String>("Machine") { ReadOnlyStringWrapper(it.value.machineType?.text) }
+        val cloudImage = Image(javaClass.getResourceAsStream("/cloud.png"))
+        val downloadedImage = Image(javaClass.getResourceAsStream("/check.png"))
+
+        with(downloadsTableView.columns) {
+            // esta no es la forma...
+            add(TableColumn<Download, ImageView>("Donwloaded").apply {
+                cellValueFactory = Callback {
+                    val imageView = ImageView()
+                    ReadOnlyObjectWrapper(imageView.apply {
+                        image = if (downloadManager.exists(it.value)) downloadedImage else cloudImage
+                    })
+                }
+            })
+
+            add(TableColumn<Download, String>("Name").apply {
+                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.fileName) }
+            })
+
+            add(TableColumn<Download, String>("Type").apply {
+                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.fileType.text) }
+            })
+
+            add(TableColumn<Download, String>("Format").apply {
+                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.extension?.text) }
+            })
+
+            add(TableColumn<Download, String>("Machine").apply {
+                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.machineType?.text) }
+            })
+        }
 
         downloadsTableView.items = FXCollections.observableArrayList()
 
@@ -361,13 +401,8 @@ class MainController : Initializable {
     private fun getDownload(download: Download, program: Program? = null) {
         //println("getDownload: ${download.fileName}")
         downloadManager.download(download) { file ->
-            if (program != null) {
-                val extension = download.extension
-                if (extension != null) {
-                    //println("open with ${program.name}")
-                    program.launch(file)
-                }
-            }
+            downloadsTableView.refresh()
+            program?.launch(file)
         }
     }
 }

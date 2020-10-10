@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -10,6 +11,7 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -46,32 +48,40 @@
             </AnchorPane>
           <AnchorPane maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <SplitPane dividerPositions="0.8" prefHeight="424.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <SplitPane dividerPositions="0.8" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="733.0" prefWidth="1019.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
-                      <AnchorPane maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="-Infinity" prefHeight="160.0" prefWidth="200.0">
+                      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="160.0">
                            <children>
-                              <SplitPane dividerPositions="0.8" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="400.0" prefWidth="768.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <items>
-                                  <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="160.0">
-                                       <children>
-                                          <TableView fx:id="tableView" onMouseClicked="#onTableRowClick" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                  <AnchorPane minHeight="200.0" minWidth="100.0" prefHeight="200.0" prefWidth="160.0" SplitPane.resizableWithParent="false">
-                                       <children>
-                                          <TableView fx:id="downloadsTableView" onContextMenuRequested="#onDownloadsTableContextMenuRequested" onMouseClicked="#onDownloadsTableRowClick" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                </items>
-                              </SplitPane>
+                              <TableView fx:id="tableView" onMouseClicked="#onTableRowClick" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="200.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false" />
+                        <SplitPane dividerPositions="0.7" SplitPane.resizableWithParent="false">
+                           <items>
+                            <AnchorPane minHeight="200.0" minWidth="100.0" prefHeight="200.0" prefWidth="160.0">
+                                 <children>
+                                    <TableView fx:id="downloadsTableView" onContextMenuRequested="#onDownloadsTableContextMenuRequested" onMouseClicked="#onDownloadsTableRowClick" prefHeight="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" SplitPane.resizableWithParent="false">
+                                 <children>
+                                    <ImageView fx:id="previewImage" fitHeight="200.0" fitWidth="302.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                        </SplitPane>
                     </items>
                   </SplitPane>
                </children>
             </AnchorPane>
         </items>
       </SplitPane>
+      <ToolBar prefHeight="32.0" prefWidth="200.0">
+         <items>
+            <Label fx:id="statusLabel" />
+         </items>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </ToolBar>
   </children>
 </VBox>
