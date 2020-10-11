@@ -1,0 +1,8 @@
+{
+    "order": 1,
+    "id": "zxspin",
+    "name": "ZXSpin",
+    "path": "D:\\emu\\spectrum\\zxspin\\zxspin.exe",
+    "args": "${filePath}",
+    "ext": ["tzx", "tap", "z80"]
+}

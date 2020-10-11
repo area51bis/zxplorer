@@ -5,6 +5,8 @@ import java.io.File
 import java.util.zip.ZipFile
 
 class Program(val id: String, val name: String, val path: String, val args: String = "\${filePath}", val ext: Array<String> = emptyArray(), val unzip: Boolean = false) {
+    var order = 0
+
     private val cmd: ArrayList<String> = ArrayList()
     private val dir = File(path).parentFile
 

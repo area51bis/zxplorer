@@ -1,0 +1,9 @@
+{
+    "order": 2,
+    "id": "zesarux",
+    "name": "ZEsarUX",
+    "path": "D:\\emu\\spectrum\\zesarux\\zesarux.exe",
+    "args": "--realloadfast --realtape ${filePath}",
+    "ext": ["tzx", "tap", "z80"],
+    "unzip": true
+}

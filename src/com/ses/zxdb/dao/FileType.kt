@@ -5,6 +5,8 @@ import com.ses.sql.Table
 @Table("filetypes")
 class FileType: EnumerationTable<Int>() {
     companion object {
+        const val REMOTE_LINK: Int = 0
+
         const val LOADING_SCREEN: Int = 1
         const val RUNNING_SCREEN: Int = 2
         const val OPENNING_SCREEN: Int = 3

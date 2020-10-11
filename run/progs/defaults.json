@@ -1,0 +1,10 @@
+[
+    {
+        "ext": ["z80"],
+        "program": "zxspin"
+    },
+    {
+        "ext": ["tzx","tap"],
+        "program": "zesarux"
+    }
+]

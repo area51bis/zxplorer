@@ -4,8 +4,10 @@ import com.ses.sql.Column
 import com.ses.sql.Query
 import com.ses.zxdb.*
 import com.ses.zxdb.dao.*
+import java.util.*
+import kotlin.collections.ArrayList
 
-@Query("SELECT r.release_year, e.* FROM entries e INNER JOIN releases r WHERE r.entry_id=e.id AND r.release_seq=0")
+@Query("SELECT r.release_year, r.release_month, e.* FROM entries e INNER JOIN releases r WHERE r.entry_id=e.id AND r.release_seq=0")
 class EntryRow {
     @Column("id") var id: Int = 0
     @Column("title") lateinit var title: String
@@ -30,7 +32,30 @@ class EntryRow {
     //@Column var book_pages: String? = null
 
     @Column("release_year") var releaseYear: Int? = null
+    @Column("release_month") var releaseMonth: Int? = null
     val releaseYearString: String get() = releaseYear?.toString() ?: Model.NULL_YEAR_STRING
+    val releaseDateString: String get() {
+        if (releaseYear != null) {
+            return if( releaseMonth != null ) {
+                "$releaseMonth/$releaseYear"
+            } else {
+                releaseYear.toString()
+            }
+        }
+        return Model.NULL_YEAR_STRING
+    }
+    val releaseDate: Date? by lazy {
+        var date: Date? = null
+        if(releaseYear != null) {
+            with(Calendar.getInstance()) {
+                if( releaseYear != null) set(Calendar.YEAR, releaseYear!!)
+                if( releaseMonth != null) set(Calendar.MONTH, releaseMonth!!)
+                date = time
+            }
+        }
+
+        date
+    }
 
     val machineType: MachineType? by lazy { ZXDB.getTable(MachineType::class)[machineTypeId] }
     val machineTypeString: String get() = machineType?.text ?: Model.NULL_MACHINE_TYPE_STRING

@@ -11,26 +11,33 @@ import com.ses.zxdb.dao.Download
 import com.ses.zxdb.dao.GenreType
 import com.ses.zxdb.dao.MachineType
 import javafx.application.Platform
-import javafx.beans.property.*
+import javafx.beans.property.ObjectProperty
+import javafx.beans.property.ReadOnlyObjectWrapper
+import javafx.beans.property.ReadOnlyStringWrapper
+import javafx.beans.property.SimpleObjectProperty
+import javafx.beans.value.ObservableObjectValue
+import javafx.beans.value.ObservableValue
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
+import javafx.scene.Node
 import javafx.scene.Parent
 import javafx.scene.control.*
-import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.input.ContextMenuEvent
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
+import javafx.scene.layout.AnchorPane
+import javafx.scene.layout.Region
 import javafx.scene.layout.VBox
 import javafx.stage.WindowEvent
 import javafx.util.Callback
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.File
 import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
@@ -65,6 +72,7 @@ class MainController : Initializable {
 
     @FXML
     lateinit var previewImage: ImageView
+    private val selectedImage = SimpleObjectProperty<Image>()
 
     @FXML
     lateinit var statusLabel: Label
@@ -78,8 +86,8 @@ class MainController : Initializable {
         App.mainStage.addEventFilter(WindowEvent.WINDOW_SHOWN) { ev ->
             if (ZXDB.open()) {
                 initModels()
-            } else {
-                updateZXDB()
+                //} else {
+                //    updateZXDB()
             }
         }
     }
@@ -127,6 +135,21 @@ class MainController : Initializable {
                 downloadsTableView.items.clear()
             }
         }
+
+        downloadsTableView.selectionModel.selectedItemProperty().addListener { _, _, download ->
+            when (download?.extension?.ext) {
+                ".bmp", ".gif", ".jpg", ".png" -> if (downloadManager.exists(download)) {
+                    val file = downloadManager.getFile(download)
+                    selectedImage.value = file.toImage()
+                }
+                else -> selectedImage.value = null
+            }
+        }
+
+        // "truco" para hacer que la imagen crezca
+        previewImage.fitWidthProperty().bind( (previewImage.parent as Region).widthProperty() )
+        previewImage.fitHeightProperty().bind( (previewImage.parent as Region).heightProperty() )
+        previewImage.imageProperty().bind(selectedImage)
     }
 
     private fun createTree() {
@@ -243,8 +266,27 @@ class MainController : Initializable {
             add(TableColumn<EntryRow, String>("Category").apply {
                 cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.categoryName) }
             })
+            /*
             add(TableColumn<EntryRow, String>("Year").apply {
                 cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.releaseYearString) }
+            })
+            */
+            add(TableColumn<EntryRow, Date>("Date").apply {
+                cellValueFactory = Callback { p -> ReadOnlyObjectWrapper(p.value.releaseDate) }
+                cellFactory = Callback {
+                    object : TableCell<EntryRow, Date>() {
+                        override fun updateItem(date: Date?, empty: Boolean) {
+                            text = if (date!=null || empty) {
+                                null
+                            } else {
+                                date.toString()
+                            }
+                        }
+                    }
+                }
+            })
+            add(TableColumn<EntryRow, String>("Machine").apply {
+                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.machineType?.text) }
             })
             add(TableColumn<EntryRow, String>("Availability").apply {
                 cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.availabilityString) }
@@ -253,30 +295,26 @@ class MainController : Initializable {
     }
 
     private fun createDownloadsTable() {
-        val cloudImage = Image(javaClass.getResourceAsStream("/cloud.png"))
-        val downloadedImage = Image(javaClass.getResourceAsStream("/check.png"))
-
         with(downloadsTableView.columns) {
-            // esta no es la forma...
-            add(TableColumn<Download, ImageView>("Donwloaded").apply {
-                cellValueFactory = Callback {
-                    val imageView = ImageView()
-                    ReadOnlyObjectWrapper(imageView.apply {
-                        image = if (downloadManager.exists(it.value)) downloadedImage else cloudImage
-                    })
-                }
-            })
+            clear()
 
             add(TableColumn<Download, String>("Name").apply {
-                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.fileName) }
+                //cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.fileName) }
+                cellFactory = Callback { FileDownloadTableCell(downloadManager) }
             })
 
             add(TableColumn<Download, String>("Type").apply {
                 cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.fileType.text) }
             })
 
+            /*
             add(TableColumn<Download, String>("Format").apply {
                 cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.extension?.text) }
+            })
+            */
+
+            add(TableColumn<Download, String>("Year").apply {
+                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.release_year?.toString()) }
             })
 
             add(TableColumn<Download, String>("Machine").apply {
@@ -307,6 +345,7 @@ class MainController : Initializable {
 
     @FXML
     fun menuUpdateDatabaseAction() {
+
         updateZXDB()
     }
 
@@ -402,7 +441,30 @@ class MainController : Initializable {
         //println("getDownload: ${download.fileName}")
         downloadManager.download(download) { file ->
             downloadsTableView.refresh()
+            if (download.isImage) selectedImage.value = file.toImage()
             program?.launch(file)
+        }
+    }
+}
+
+class FileDownloadTableCell(private val downloadManager: DownloadManager) : TableCell<Download, String>() {
+    private val cloudImage = Image(javaClass.getResourceAsStream("/cloud.png"))
+    private val downloadedImage = Image(javaClass.getResourceAsStream("/check.png"))
+
+    private val iconView = ImageView()
+
+    init {
+        graphic = iconView
+    }
+
+    override fun updateItem(value: String?, empty: Boolean) {
+        val download = tableRow?.item
+        if (empty || (download == null)) {
+            text = null
+            iconView.image = null
+        } else {
+            text = download.fileName
+            iconView.image = if (downloadManager.exists(download)) downloadedImage else cloudImage
         }
     }
 }
