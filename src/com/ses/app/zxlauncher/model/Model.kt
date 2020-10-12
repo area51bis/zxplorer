@@ -73,7 +73,7 @@ object Model {
             // convertir a sqlite
             progressHandler?.invoke(UpdateStatus.Converting, 0.0f, "Converting")
             MySQLConverter(mySqlFile.absolutePath, sqliteTempFile.absolutePath).convert { progress, tableName ->
-                progressHandler?.invoke(UpdateStatus.Converting, progress, "Converting table $tableName...")
+                progressHandler?.invoke(UpdateStatus.Converting, progress, "Converting: $tableName...")
             }
 
             // sustituir fichero

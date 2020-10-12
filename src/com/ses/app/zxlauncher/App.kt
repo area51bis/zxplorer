@@ -7,6 +7,13 @@ import java.io.File
 
 // https://github.com/zxdb/ZXDB/raw/master/ZXDB_mysql.sql
 
+// ZXLauncher
+// ZXDatabase
+// ZXBrowser
+// SpeccyDB
+// ZXDBrowser
+//
+
 class App : Application() {
     companion object {
         val workingDir = File(System.getProperty("user.dir"))
@@ -21,8 +28,8 @@ class App : Application() {
         val scene = Scene(MainController.load())
         mainScene = scene
 
-        primaryStage?.apply {
-            title = "ZX Launcher"
+        primaryStage.apply {
+            title = FULL_APP_NAME
             this.scene = scene
             show()
         }

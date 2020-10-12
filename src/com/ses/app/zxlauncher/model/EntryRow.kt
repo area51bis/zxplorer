@@ -33,29 +33,10 @@ class EntryRow {
 
     @Column("release_year") var releaseYear: Int? = null
     @Column("release_month") var releaseMonth: Int? = null
+    @Column("release_day") var releaseDay: Int? = null
     val releaseYearString: String get() = releaseYear?.toString() ?: Model.NULL_YEAR_STRING
-    val releaseDateString: String get() {
-        if (releaseYear != null) {
-            return if( releaseMonth != null ) {
-                "$releaseMonth/$releaseYear"
-            } else {
-                releaseYear.toString()
-            }
-        }
-        return Model.NULL_YEAR_STRING
-    }
-    val releaseDate: Date? by lazy {
-        var date: Date? = null
-        if(releaseYear != null) {
-            with(Calendar.getInstance()) {
-                if( releaseYear != null) set(Calendar.YEAR, releaseYear!!)
-                if( releaseMonth != null) set(Calendar.MONTH, releaseMonth!!)
-                date = time
-            }
-        }
 
-        date
-    }
+    val releaseDate: ReleaseDate by lazy { ReleaseDate(releaseYear, releaseMonth, releaseDay) }
 
     val machineType: MachineType? by lazy { ZXDB.getTable(MachineType::class)[machineTypeId] }
     val machineTypeString: String get() = machineType?.text ?: Model.NULL_MACHINE_TYPE_STRING

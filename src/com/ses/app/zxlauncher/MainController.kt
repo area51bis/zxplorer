@@ -4,25 +4,19 @@ import com.ses.app.zxlauncher.filters.EntryTitleFilter
 import com.ses.app.zxlauncher.filters.Filter
 import com.ses.app.zxlauncher.model.EntryRow
 import com.ses.app.zxlauncher.model.Model
+import com.ses.app.zxlauncher.model.ReleaseDate
 import com.ses.app.zxlauncher.ui.ProgressDialog
 import com.ses.zxdb.*
-import com.ses.zxdb.dao.AvailableType
-import com.ses.zxdb.dao.Download
-import com.ses.zxdb.dao.GenreType
-import com.ses.zxdb.dao.MachineType
+import com.ses.zxdb.dao.*
 import javafx.application.Platform
-import javafx.beans.property.ObjectProperty
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.beans.property.SimpleObjectProperty
-import javafx.beans.value.ObservableObjectValue
-import javafx.beans.value.ObservableValue
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
-import javafx.scene.Node
 import javafx.scene.Parent
 import javafx.scene.control.*
 import javafx.scene.image.Image
@@ -30,14 +24,13 @@ import javafx.scene.image.ImageView
 import javafx.scene.input.ContextMenuEvent
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
-import javafx.scene.layout.AnchorPane
 import javafx.scene.layout.Region
 import javafx.scene.layout.VBox
 import javafx.stage.WindowEvent
 import javafx.util.Callback
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.io.File
+import java.net.URI
 import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
@@ -147,8 +140,8 @@ class MainController : Initializable {
         }
 
         // "truco" para hacer que la imagen crezca
-        previewImage.fitWidthProperty().bind( (previewImage.parent as Region).widthProperty() )
-        previewImage.fitHeightProperty().bind( (previewImage.parent as Region).heightProperty() )
+        previewImage.fitWidthProperty().bind((previewImage.parent as Region).widthProperty())
+        previewImage.fitHeightProperty().bind((previewImage.parent as Region).heightProperty())
         previewImage.imageProperty().bind(selectedImage)
     }
 
@@ -266,24 +259,8 @@ class MainController : Initializable {
             add(TableColumn<EntryRow, String>("Category").apply {
                 cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.categoryName) }
             })
-            /*
-            add(TableColumn<EntryRow, String>("Year").apply {
-                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.releaseYearString) }
-            })
-            */
-            add(TableColumn<EntryRow, Date>("Date").apply {
+            add(TableColumn<EntryRow, ReleaseDate>("Date").apply {
                 cellValueFactory = Callback { p -> ReadOnlyObjectWrapper(p.value.releaseDate) }
-                cellFactory = Callback {
-                    object : TableCell<EntryRow, Date>() {
-                        override fun updateItem(date: Date?, empty: Boolean) {
-                            text = if (date!=null || empty) {
-                                null
-                            } else {
-                                date.toString()
-                            }
-                        }
-                    }
-                }
             })
             add(TableColumn<EntryRow, String>("Machine").apply {
                 cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.machineType?.text) }
@@ -345,8 +322,20 @@ class MainController : Initializable {
 
     @FXML
     fun menuUpdateDatabaseAction() {
+        val button = Alert(Alert.AlertType.CONFIRMATION).apply {
+            title = "Update"
+            headerText = "You're going to download and update the database"
+            contentText = "Are you sure?"
+        }.showAndWait().orElse(ButtonType.CANCEL)
 
-        updateZXDB()
+        if (button == ButtonType.OK) {
+            updateZXDB()
+        }
+    }
+
+    @FXML
+    fun menuQuit() {
+        Platform.exit()
     }
 
     private fun updateZXDB() {
@@ -382,8 +371,8 @@ class MainController : Initializable {
     fun menuAboutAction() {
         Alert(Alert.AlertType.INFORMATION).apply {
             title = "About"
-            headerText = null
-            contentText = "ZXLauncher 0.001"
+            headerText = FULL_APP_NAME
+            contentText = null
         }.showAndWait()
     }
 
@@ -438,6 +427,15 @@ class MainController : Initializable {
     }
 
     private fun getDownload(download: Download, program: Program? = null) {
+        if (download.fileType.id == FileType.REMOTE_LINK) {
+            try {
+                java.awt.Desktop.getDesktop().browse(URI(download.file_link))
+            } catch (e: Exception) {
+                //
+            }
+            return
+        }
+
         //println("getDownload: ${download.fileName}")
         downloadManager.download(download) { file ->
             downloadsTableView.refresh()
