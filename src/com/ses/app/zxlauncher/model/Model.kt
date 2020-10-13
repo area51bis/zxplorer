@@ -1,5 +1,6 @@
 package com.ses.app.zxlauncher.model
 
+import com.ses.app.zxlauncher.T
 import com.ses.net.Http
 import com.ses.zxdb.ZXDB
 import com.ses.zxdb.converter.MySQLConverter
@@ -61,9 +62,9 @@ object Model {
                 request = "https://github.com/zxdb/ZXDB/raw/master/ZXDB_mysql.sql"
                 getFile(mySqlFile) { status, progress ->
                     when (status) {
-                        Http.Status.Connecting -> progressHandler?.invoke(UpdateStatus.Connecting, 0.0f, "Connecting")
-                        Http.Status.Connected -> progressHandler?.invoke(UpdateStatus.Downloading, 0.0f, "Downloading")
-                        Http.Status.Downloading -> progressHandler?.invoke(UpdateStatus.Downloading, progress, "Downloading")
+                        Http.Status.Connecting -> progressHandler?.invoke(UpdateStatus.Connecting, 0.0f, T("connecting_"))
+                        Http.Status.Connected -> progressHandler?.invoke(UpdateStatus.Downloading, 0.0f, T("downloading"))
+                        Http.Status.Downloading -> progressHandler?.invoke(UpdateStatus.Downloading, progress, T("downloading"))
                         //Http.Status.Completed
                         Http.Status.Error -> progressHandler?.invoke(UpdateStatus.Error, progress, "Error")
                     }
@@ -71,9 +72,9 @@ object Model {
             }
 
             // convertir a sqlite
-            progressHandler?.invoke(UpdateStatus.Converting, 0.0f, "Converting")
+            progressHandler?.invoke(UpdateStatus.Converting, 0.0f, T("converting"))
             MySQLConverter(mySqlFile.absolutePath, sqliteTempFile.absolutePath).convert { progress, tableName ->
-                progressHandler?.invoke(UpdateStatus.Converting, progress, "Converting: $tableName...")
+                progressHandler?.invoke(UpdateStatus.Converting, progress, T("converting_table_fmt").format(tableName))
             }
 
             // sustituir fichero
@@ -86,7 +87,7 @@ object Model {
             // recargar base de datos y refrescar los datos
             ZXDB.open()
 
-            progressHandler?.invoke(UpdateStatus.Completed, 1.0f, "Completed")
+            progressHandler?.invoke(UpdateStatus.Completed, 1.0f, T("completed"))
         }
     }
 }

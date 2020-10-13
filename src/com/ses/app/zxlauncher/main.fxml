@@ -20,22 +20,22 @@
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" text="%file">
           <items>
-                  <MenuItem mnemonicParsing="false" onAction="#menuUpdateDatabaseAction" text="Update database" />
-            <MenuItem mnemonicParsing="false" onAction="#menuQuit" text="Quit" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuUpdateDatabaseAction" text="%update_database" />
+            <MenuItem mnemonicParsing="false" onAction="#menuQuit" text="%exit" />
           </items>
         </Menu>
-        <Menu mnemonicParsing="false" text="Help">
+        <Menu mnemonicParsing="false" text="%help">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#menuAboutAction" text="About..." />
+            <MenuItem mnemonicParsing="false" onAction="#menuAboutAction" text="%about_" />
           </items>
         </Menu>
       </menus>
     </MenuBar>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-            <Label text="Search" />
+            <Label text="%search" />
             <TextField fx:id="searchTextField" onKeyTyped="#onSearchTextChanged" />
             <ToggleButton fx:id="searchRegExToggleButton" mnemonicParsing="false" text="RegEx" visible="false" />
         </items>

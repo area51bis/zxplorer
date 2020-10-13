@@ -1,7 +1,7 @@
 package com.ses.app.zxlauncher.ui
 
+import com.ses.app.zxlauncher.fxmlLoader
 import javafx.fxml.FXML
-import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
 import javafx.scene.Scene
 import javafx.scene.control.Label
@@ -49,7 +49,7 @@ class ProgressDialog : Initializable {
 
     companion object {
         fun create(): ProgressDialog {
-            val loader = FXMLLoader(ProgressDialog::class.java.getResource("progressdialog.fxml"))
+            val loader = fxmlLoader("progressdialog.fxml")
             val scene = Scene(loader.load())
             scene.fill = Color.TRANSPARENT // para bordes redondeados
             val dialog: ProgressDialog = loader.getController()

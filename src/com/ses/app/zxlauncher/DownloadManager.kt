@@ -25,7 +25,7 @@ class DownloadManager {
         }
 
         val dialog = ProgressDialog.create().apply {
-            title = "Download"
+            title = T("download")
             message = download.fileName
             show()
         }
@@ -37,8 +37,8 @@ class DownloadManager {
 
                 getFile(file) { status, progress ->
                     when (status) {
-                        Http.Status.Connecting -> Platform.runLater { dialog.message = "Connecting..." }
-                        Http.Status.Connected -> Platform.runLater { dialog.message = "Downloading '${download.fileName}'..." }
+                        Http.Status.Connecting -> Platform.runLater { dialog.message = T("connecting_") }
+                        Http.Status.Connected -> Platform.runLater { dialog.message = T("downloading_fmt").format(download.fileName) }
                         Http.Status.Completed -> completion(file)
                     }
                 }

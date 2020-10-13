@@ -15,7 +15,6 @@ import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
-import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
 import javafx.scene.Parent
 import javafx.scene.control.*
@@ -39,7 +38,7 @@ import kotlin.collections.ArrayList
 class MainController : Initializable {
     companion object {
         fun load(): Parent {
-            val loader = FXMLLoader(MainController::class.java.getResource("main.fxml"))
+            val loader = fxmlLoader("main.fxml")
             return loader.load()
         }
     }
@@ -79,15 +78,21 @@ class MainController : Initializable {
         App.mainStage.addEventFilter(WindowEvent.WINDOW_SHOWN) { ev ->
             if (ZXDB.open()) {
                 initModels()
-                //} else {
-                //    updateZXDB()
+            } else {
+                if (Alert(Alert.AlertType.CONFIRMATION).apply {
+                            title = T("error")
+                            headerText = T("no_database_found")
+                            contentText = T("download_database_q")
+                        }.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+                    updateZXDB()
+                }
             }
         }
     }
 
     private fun initModels() {
         val dialog = ProgressDialog.create().apply {
-            title = "Loading..."
+            title = T("loading")
             progress = ProgressBar.INDETERMINATE_PROGRESS
             show()
         }
@@ -117,7 +122,7 @@ class MainController : Initializable {
                 tableView.items.clear()
             }
 
-            statusLabel.text = "${tableView.items.size} items"
+            statusLabel.text = T("items_count_fmt").format(tableView.items.size)
         }
 
         // al seleccionar un elemento de la lista, actualizar la lista de descargas
@@ -153,13 +158,13 @@ class MainController : Initializable {
         ZXDB.getTable(GenreType::class).rows.forEach { getCategoryNode(it.text) }
 
         // year
-        val yearNode = getTreeNode("Year")
+        val yearNode = getTreeNode(T("year"))
 
         // machine
-        ZXDB.getTable(MachineType::class).rows.forEach { getTreeNode(listOf("Machine", it.text)) }
+        ZXDB.getTable(MachineType::class).rows.forEach { getTreeNode(listOf(T("machine"), it.text)) }
 
         // availability
-        ZXDB.getTable(AvailableType::class).rows.forEach { getTreeNode(listOf("Availability", it.text)) }
+        ZXDB.getTable(AvailableType::class).rows.forEach { getTreeNode(listOf(T("availability"), it.text)) }
 
         // añadir las entradas a los nodos
         Model.entryRows.forEach { addTreeEntry(it) }
@@ -207,9 +212,9 @@ class MainController : Initializable {
     private fun addTreeEntry(entry: EntryRow) {
         (treeView.root as TreeGenreItem).addEntry(entry)
         addTreeEntry(entry, entry.categoryPath)
-        addTreeEntry(entry, listOf("Year", entry.releaseYearString), true)
-        addTreeEntry(entry, listOf("Availability", entry.availabilityString))
-        if (entry.machineTypeId != null) addTreeEntry(entry, listOf("Machine", entry.machineTypeString))
+        addTreeEntry(entry, listOf(T("year"), entry.releaseYearString), true)
+        addTreeEntry(entry, listOf(T("availability"), entry.availabilityString))
+        if (entry.machineTypeId != null) addTreeEntry(entry, listOf(T("machine"), entry.machineTypeString))
     }
 
     private fun addTreeEntry(entry: EntryRow, path: List<String>, sortNodes: Boolean = false) {
@@ -253,19 +258,19 @@ class MainController : Initializable {
         with(tableView.columns) {
             clear()
 
-            add(TableColumn<EntryRow, String>("Title").apply {
+            add(TableColumn<EntryRow, String>(T("title")).apply {
                 cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.title) }
             })
-            add(TableColumn<EntryRow, String>("Category").apply {
+            add(TableColumn<EntryRow, String>(T("genre")).apply {
                 cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.categoryName) }
             })
-            add(TableColumn<EntryRow, ReleaseDate>("Date").apply {
+            add(TableColumn<EntryRow, ReleaseDate>(T("date")).apply {
                 cellValueFactory = Callback { p -> ReadOnlyObjectWrapper(p.value.releaseDate) }
             })
-            add(TableColumn<EntryRow, String>("Machine").apply {
+            add(TableColumn<EntryRow, String>(T("machine")).apply {
                 cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.machineType?.text) }
             })
-            add(TableColumn<EntryRow, String>("Availability").apply {
+            add(TableColumn<EntryRow, String>(T("availability")).apply {
                 cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.availabilityString) }
             })
         }
@@ -275,26 +280,26 @@ class MainController : Initializable {
         with(downloadsTableView.columns) {
             clear()
 
-            add(TableColumn<Download, String>("Name").apply {
+            add(TableColumn<Download, String>(T("name")).apply {
                 //cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.fileName) }
                 cellFactory = Callback { FileDownloadTableCell(downloadManager) }
             })
 
-            add(TableColumn<Download, String>("Type").apply {
+            add(TableColumn<Download, String>(T("type")).apply {
                 cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.fileType.text) }
             })
 
             /*
-            add(TableColumn<Download, String>("Format").apply {
+            add(TableColumn<Download, String>(T("format")).apply {
                 cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.extension?.text) }
             })
             */
 
-            add(TableColumn<Download, String>("Year").apply {
+            add(TableColumn<Download, String>(T("year")).apply {
                 cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.release_year?.toString()) }
             })
 
-            add(TableColumn<Download, String>("Machine").apply {
+            add(TableColumn<Download, String>(T("machine")).apply {
                 cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.machineType?.text) }
             })
         }
@@ -323,9 +328,9 @@ class MainController : Initializable {
     @FXML
     fun menuUpdateDatabaseAction() {
         val button = Alert(Alert.AlertType.CONFIRMATION).apply {
-            title = "Update"
-            headerText = "You're going to download and update the database"
-            contentText = "Are you sure?"
+            title = T("update")
+            headerText = T("download_database_warning")
+            contentText = T("are_you_sure")
         }.showAndWait().orElse(ButtonType.CANCEL)
 
         if (button == ButtonType.OK) {
@@ -340,7 +345,7 @@ class MainController : Initializable {
 
     private fun updateZXDB() {
         val dialog = ProgressDialog.create().apply {
-            title = "Updating database"
+            title = T("updating_database")
             show()
         }
 
@@ -370,7 +375,7 @@ class MainController : Initializable {
     @FXML
     fun menuAboutAction() {
         Alert(Alert.AlertType.INFORMATION).apply {
-            title = "About"
+            title = T("about")
             headerText = FULL_APP_NAME
             contentText = null
         }.showAndWait()
@@ -403,16 +408,18 @@ class MainController : Initializable {
             clear()
 
             // opción descargar
-            add(MenuItem("Download").apply {
-                setOnAction {
-                    getDownload(download)
-                }
-            })
+            if (!downloadManager.exists(download)) {
+                add(MenuItem(T("download")).apply {
+                    setOnAction {
+                        getDownload(download)
+                    }
+                })
+            }
 
             // menú "abrir con..." con los programas soportados
             val list = Config.getPrograms(download)
             if (list.isNotEmpty()) {
-                add(Menu("Open with...").also { menu ->
+                add(Menu(T("open_with_")).also { menu ->
                     list.forEach { program ->
                         menu.items.add(MenuItem(program.name).apply {
                             setOnAction {
