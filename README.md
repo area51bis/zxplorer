@@ -1,7 +1,7 @@
-#### Descripción
+### Descripción
 **ZXBrowser** es una aplicación para explorar, descargar y ejecutar el contenido de la base de datos de Spectrum ZXDB.
 
-#### ¿Por qué?
+### ¿Por qué?
 De vez en cuando me apetece recordar los viejos juegos del Spectrum y, por supuesto, todos los nuevos que van saliendo
 (que últimamente no son pocos...).
 
@@ -18,13 +18,13 @@ La verdad es que la idea viene de lejos. De hecho tengo una vieja versión por a
 Ahora tengo una versión medianamente decente que me gustaría compartir con todos los amantes del Spectrum y espero que
 les guste y les sea tan útil como a mí.
 
-#### Requisitos
+### Requisitos
 Se necesita Java 11 (aunque a mí me funciona con la versión 1.8 de Oracle) y JavaFX.
 De momento hay dos versiones:
 - [ZXBrowser.jar](https://github.com/area51bis/zxbrowser/blob/main/bin/ZXBrowser.zip): Requiere tener instalado JavaFX.
 - [ZXBrowser-win.jar](https://github.com/area51bis/zxbrowser/blob/main/bin/ZXBrowser-win.zip): Versión para Windows que incluye JavaFX.
 
-#### Instrucciones
+### Instrucciones
 El programa es bastante sencillo por ahora. Basta con ejecutarlo, descargar la base datos de ZXDB y comenzar a explorar.
 
 La ventana muestra a la izquierda un _**arbol de categorías**_ que permite explorar por género, año, etc.
@@ -43,7 +43,7 @@ A la derecha de las descargas se muestran las imágenes si están descargadas.
 
 También hay una caja de texto arriba para buscar rápidamente **en la categoría seleccionada**.
 
-#### Configurar programas
+### Configurar programas
 Lo siento pero, por ahora, la configuración es totalmente manual. Más adelante se podrá configurar todo desde la
 aplicación.
 
