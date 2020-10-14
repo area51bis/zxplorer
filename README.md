@@ -21,8 +21,8 @@ les guste y les sea tan útil como a mí.
 #### Requisitos
 Se necesita Java 11 (aunque a mí me funciona con la versión 1.8 de Oracle) y JavaFX.
 De momento hay dos versiones:
-- ZXBrowser.jar: Requiere tener instalado JavaFX.
-- ZXBrowser-win.jar: Versión para Windows que incluye JavaFX.
+- [ZXBrowser.jar](https://github.com/area51bis/zxbrowser/blob/main/bin/ZXBrowser.zip): Requiere tener instalado JavaFX.
+- [ZXBrowser-win.jar](https://github.com/area51bis/zxbrowser/blob/main/bin/ZXBrowser-win.zip): Versión para Windows que incluye JavaFX.
 
 #### Instrucciones
 El programa es bastante sencillo por ahora. Basta con ejecutarlo, descargar la base datos de ZXDB y comenzar a explorar.
