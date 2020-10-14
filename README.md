@@ -1,6 +1,8 @@
 ### Descripción
 **ZXBrowser** es una aplicación para explorar, descargar y ejecutar el contenido de la base de datos de Spectrum ZXDB.
 
+![](https://github.com/area51bis/zxbrowser/blob/main/screenshot.jpg)
+
 ### ¿Por qué?
 De vez en cuando me apetece recordar los viejos juegos del Spectrum y, por supuesto, todos los nuevos que van saliendo
 (que últimamente no son pocos...).
