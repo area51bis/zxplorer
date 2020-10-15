@@ -4,8 +4,8 @@ data class ReleaseDate(val releaseYear: Int? = null, val releaseMonth: Int? = nu
     val str: String? by lazy {
         if (releaseYear != null)
             StringBuilder().apply {
-                if (releaseDay != null) append(String.format("%02d/", releaseDay))
-                if (releaseMonth != null) append(String.format("%02d/", releaseMonth))
+                if (releaseDay != null) append("%02d/".format(releaseDay))
+                if (releaseMonth != null) append("%02d/".format(releaseMonth))
                 append(releaseYear)
             }.toString()
         else null

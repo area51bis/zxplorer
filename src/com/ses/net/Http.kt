@@ -48,10 +48,14 @@ class Http {
     }
 
     fun getFile(file: File, progressHandler: HttpProgressHandler? = null) {
-        BufferedOutputStream(file.outputStream()).use {
-            request(it, progressHandler)
+        try {
+            BufferedOutputStream(file.outputStream()).use {
+                request(it, progressHandler)
+            }
+            if (errorCode == 0) progressHandler?.invoke(Status.Completed, 1f)
+        } catch (e: Exception) {
+            progressHandler?.invoke(Status.Error, 0f)
         }
-        if (errorCode == 0) progressHandler?.invoke(Status.Completed, 1f)
     }
 
     private fun request(output: OutputStream, progressHandler: HttpProgressHandler? = null) {

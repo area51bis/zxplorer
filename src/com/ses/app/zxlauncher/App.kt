@@ -1,26 +1,14 @@
 package com.ses.app.zxlauncher
 
 import javafx.application.Application
-import javafx.collections.FXCollections
-import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Stage
 import java.io.File
 import java.util.*
-import kotlin.reflect.KClass
-
-// https://github.com/zxdb/ZXDB/raw/master/ZXDB_mysql.sql
-
-// ZXLauncher
-// ZXDatabase
-// ZXBrowser
-// SpeccyDB
-// ZXDBrowser
-//
 
 class App : Application() {
     companion object {
-        val strings = ResourceBundle.getBundle("strings")
+        val strings = ResourceBundle.getBundle("strings")!!
         val workingDir = File(System.getProperty("user.dir"))
 
         lateinit var mainStage: Stage

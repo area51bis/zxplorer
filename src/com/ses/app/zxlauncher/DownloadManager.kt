@@ -14,7 +14,7 @@ class DownloadManager {
     var rootDir = App.workingDir // directorio raíz
     var downloadDir: File = File(rootDir, "zxdb") // directorio de descargas
 
-    fun getFile(download: Download): File = File(downloadDir, download.file_link!!)
+    fun getFile(download: Download): File = File(downloadDir, download.file_link)
 
     fun download(download: Download, completion: (file: File) -> Unit) {
         val file = getFile(download)

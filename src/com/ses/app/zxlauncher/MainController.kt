@@ -92,7 +92,7 @@ class MainController : Initializable {
 
     private fun initModels() {
         val dialog = ProgressDialog.create().apply {
-            title = T("loading")
+            title = T("loading_")
             progress = ProgressBar.INDETERMINATE_PROGRESS
             show()
         }
@@ -375,9 +375,9 @@ class MainController : Initializable {
     @FXML
     fun menuAboutAction() {
         Alert(Alert.AlertType.INFORMATION).apply {
-            title = T("about")
+            title = T("about_")
             headerText = FULL_APP_NAME
-            contentText = null
+            contentText = "Programado por sés"
         }.showAndWait()
     }
 

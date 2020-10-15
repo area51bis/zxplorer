@@ -57,6 +57,7 @@ object Model {
         val sqliteTempFile = File(workingDir, "_${ZXDB.DB_NAME}_")
 
         GlobalScope.launch {
+            var downloadComplete: Boolean = false
             // descargar ZXDB_mysql.sql
             Http().apply {
                 request = "https://github.com/zxdb/ZXDB/raw/master/ZXDB_mysql.sql"
@@ -65,11 +66,13 @@ object Model {
                         Http.Status.Connecting -> progressHandler?.invoke(UpdateStatus.Connecting, 0.0f, T("connecting_"))
                         Http.Status.Connected -> progressHandler?.invoke(UpdateStatus.Downloading, 0.0f, T("downloading"))
                         Http.Status.Downloading -> progressHandler?.invoke(UpdateStatus.Downloading, progress, T("downloading"))
-                        //Http.Status.Completed
-                        Http.Status.Error -> progressHandler?.invoke(UpdateStatus.Error, progress, "Error")
+                        Http.Status.Completed -> downloadComplete = true
+                        Http.Status.Error ->  progressHandler?.invoke(UpdateStatus.Error, progress, "Error")
                     }
                 }
             }
+
+            if( !downloadComplete ) return@launch
 
             // convertir a sqlite
             progressHandler?.invoke(UpdateStatus.Converting, 0.0f, T("converting"))

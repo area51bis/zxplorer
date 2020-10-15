@@ -2,10 +2,8 @@ package com.ses.app.zxlauncher.model
 
 import com.ses.sql.Column
 import com.ses.sql.Query
-import com.ses.zxdb.*
+import com.ses.zxdb.ZXDB
 import com.ses.zxdb.dao.*
-import java.util.*
-import kotlin.collections.ArrayList
 
 @Query("SELECT r.release_year, r.release_month, e.* FROM entries e INNER JOIN releases r WHERE r.entry_id=e.id AND r.release_seq=0")
 class EntryRow {
