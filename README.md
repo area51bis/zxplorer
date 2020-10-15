@@ -1,5 +1,5 @@
 ### Descripción
-**ZXBrowser** es una aplicación para explorar, descargar y ejecutar el contenido de la base de datos de Spectrum ZXDB.
+**ZXBrowser** es una aplicación para explorar, descargar y ejecutar el contenido de la base de datos de Spectrum [ZXDB](https://github.com/zxdb/ZXDB).
 
 ![](https://github.com/area51bis/zxbrowser/blob/main/screenshot.jpg)
 
@@ -17,14 +17,11 @@ Por eso decidí que necesitaba algo como ZXBrowser.
 La verdad es que la idea viene de lejos. De hecho tengo una vieja versión por ahí que cargaba los datos del fichero
 **rainbow-wos.zip** (alojado en WoS), pero eso es otra historia...
 
-Ahora tengo una versión medianamente decente que me gustaría compartir con todos los amantes del Spectrum y espero que
+Ahora tengo una versión medianamente decente que me gustaría compartir con todos los amantes del Spectrum, esperando que
 les guste y les sea tan útil como a mí.
 
-### Requisitos
-Se necesita Java 11 (aunque a mí me funciona con la versión 1.8 de Oracle) y JavaFX.
-De momento hay dos versiones:
-- [ZXBrowser.jar](https://github.com/area51bis/zxbrowser/blob/main/bin/ZXBrowser.zip): Requiere tener instalado JavaFX.
-- [ZXBrowser-win.jar](https://github.com/area51bis/zxbrowser/blob/main/bin/ZXBrowser-win.zip): Versión para Windows que incluye JavaFX.
+### Descargas
+https://github.com/area51bis/zxbrowser/releases
 
 ### Instrucciones
 El programa es bastante sencillo por ahora. Basta con ejecutarlo, descargar la base datos de ZXDB y comenzar a explorar.
@@ -44,6 +41,8 @@ defecto.
 A la derecha de las descargas se muestran las imágenes si están descargadas.
 
 También hay una caja de texto arriba para buscar rápidamente **en la categoría seleccionada**.
+
+En cualquier momento se puede actualizar la base de datos desde el menú "*Fichero -> Actualizar base de datos*".
 
 ### Configurar programas
 Lo siento pero, por ahora, la configuración es totalmente manual. Más adelante se podrá configurar todo desde la
@@ -81,3 +80,9 @@ zesarux.json:
 
 Además de los programas, hay un fichero más: "_defaults.json_". Este fichero simplemente indica los programas a usar por
 defecto para cada extensión. O sea, el que se usará al hacer doble clic y el primero en el menú "Abrir con...".
+
+### Agradecimientos
+- A toda la gente que sigue disfrutando del Spectrum y hace posible que esta máquina nunca muera.
+- A la vieja World of Spectrum, en la que tanto tiempo perdí recordando mi infancia y descubriendo juegos que no llegué a conocer.
+- A [El Mundo del Spectrum](http://www.elmundodelspectrum.com/), sobre todo por su Podcast
+- Y, por supuesto, al equipo detrás de [ZXDB](https://github.com/zxdb/ZXDB) sin el que esto no sería posible.
