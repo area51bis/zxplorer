@@ -20,6 +20,6 @@ class EntryTitleFilter : Filter<EntryRow> {
     }
 
     override fun check(o: EntryRow): Boolean {
-        return regex?.matches(o.title) ?: true
+        return regex?.matches(o.getTitle()) ?: true
     }
 }

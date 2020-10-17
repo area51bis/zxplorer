@@ -2,9 +2,8 @@ package com.ses.app.zxlauncher
 
 import com.ses.app.zxlauncher.filters.EntryTitleFilter
 import com.ses.app.zxlauncher.filters.Filter
-import com.ses.app.zxlauncher.model.EntryRow
-import com.ses.app.zxlauncher.model.Model
-import com.ses.app.zxlauncher.model.ReleaseDate
+import com.ses.app.zxlauncher.model.*
+import com.ses.app.zxlauncher.model.zxdb.ZXDBModel
 import com.ses.app.zxlauncher.ui.ProgressDialog
 import com.ses.zxdb.*
 import com.ses.zxdb.dao.*
@@ -60,7 +59,7 @@ class MainController : Initializable {
     lateinit var tableView: TableView<EntryRow>
 
     @FXML
-    lateinit var downloadsTableView: TableView<Download>
+    lateinit var downloadsTableView: TableView<EntryDownload>
 
     @FXML
     lateinit var previewImage: ImageView
@@ -69,6 +68,7 @@ class MainController : Initializable {
     @FXML
     lateinit var statusLabel: Label
 
+    private val model = ZXDBModel()
     private var filters: ArrayList<Filter<EntryRow>> = ArrayList()
     private val downloadManager = DownloadManager()
 
@@ -98,7 +98,7 @@ class MainController : Initializable {
         }
 
         GlobalScope.launch {
-            Model.entryRows
+            model.entryRows
 
             Platform.runLater {
                 createTree()
@@ -116,7 +116,7 @@ class MainController : Initializable {
         // al seleccionar un nodo, actualizar la lista
         treeView.selectionModel.selectedItemProperty().addListener { _, _, item ->
             if (item != null) {
-                val category = item as TreeGenreItem
+                val category = item as TreeNode
                 tableView.items = filterList(category.entries, tableView.items)
             } else {
                 tableView.items.clear()
@@ -128,19 +128,18 @@ class MainController : Initializable {
         // al seleccionar un elemento de la lista, actualizar la lista de descargas
         tableView.selectionModel.selectedItemProperty().addListener { _, _, entry ->
             if (entry != null) {
-                downloadsTableView.items.setAll(entry.downloads)
+                downloadsTableView.items.setAll(entry.getDownloads())
             } else {
                 downloadsTableView.items.clear()
             }
         }
 
         downloadsTableView.selectionModel.selectedItemProperty().addListener { _, _, download ->
-            when (download?.extension?.ext) {
-                ".bmp", ".gif", ".jpg", ".png" -> if (downloadManager.exists(download)) {
-                    val file = downloadManager.getFile(download)
-                    selectedImage.value = file.toImage()
-                }
-                else -> selectedImage.value = null
+            if(download.isImage() && downloadManager.exists(download)) {
+                val file = downloadManager.getFile(download)
+                selectedImage.value = file.toImage()
+            } else {
+                selectedImage.value = null
             }
         }
 
@@ -151,33 +150,20 @@ class MainController : Initializable {
     }
 
     private fun createTree() {
-        treeView.root = TreeGenreItem("ZXDB")
+        treeView.root = TreeNode("All")
+
+        val zxdbNode = model.getTree()
+        treeView.root.children.add(zxdbNode)
+
         treeView.root.isExpanded = true
-
-        // crear los nodos en el orden de las categorías
-        ZXDB.getTable(GenreType::class).rows.forEach { getCategoryNode(it.text) }
-
-        // year
-        val yearNode = getTreeNode(T("year"))
-
-        // machine
-        ZXDB.getTable(MachineType::class).rows.forEach { getTreeNode(listOf(T("machine"), it.text)) }
-
-        // availability
-        ZXDB.getTable(AvailableType::class).rows.forEach { getTreeNode(listOf(T("availability"), it.text)) }
-
-        // añadir las entradas a los nodos
-        Model.entryRows.forEach { addTreeEntry(it) }
-
-        // ordenar años
-        yearNode.children.sortBy { it.value }
+        zxdbNode.isExpanded = true
     }
 
     private fun selectTreeNode(item: TreeItem<String>) {
         if (treeView.selectionModel.selectedItem != item) {
             treeView.selectionModel.select(item)
         } else {
-            tableView.items = filterList((item as TreeGenreItem).entries, tableView.items)
+            tableView.items = filterList((item as TreeNode).entries, tableView.items)
         }
 
         tableView.selectionModel.clearSelection()
@@ -208,70 +194,24 @@ class MainController : Initializable {
         }
     }
 
-    /** Añade una entrada a los nodos correspondientes, creando los necesarios. */
-    private fun addTreeEntry(entry: EntryRow) {
-        (treeView.root as TreeGenreItem).addEntry(entry)
-        addTreeEntry(entry, entry.categoryPath)
-        addTreeEntry(entry, listOf(T("year"), entry.releaseYearString), true)
-        addTreeEntry(entry, listOf(T("availability"), entry.availabilityString))
-        if (entry.machineTypeId != null) addTreeEntry(entry, listOf(T("machine"), entry.machineTypeString))
-    }
-
-    private fun addTreeEntry(entry: EntryRow, path: List<String>, sortNodes: Boolean = false) {
-        val p = ArrayList<String>()
-        for (s in path) {
-            p.add(s)
-            getTreeNode(p).addEntry(entry)
-        }
-    }
-
-    /** Obtiene un nodo de una categoría, creando los necesarios. */
-    private fun getCategoryNode(name: String): TreeGenreItem {
-        return getTreeNode(Model.getCategoryPath(name))
-    }
-
-    private fun getTreeNode(path: String, sortNodes: Boolean = false): TreeGenreItem {
-        return getTreeNode(path.split("|"), sortNodes)
-    }
-
-    private fun getTreeNode(path: List<String>, sortNodes: Boolean = false): TreeGenreItem {
-        var node = treeView.root
-
-        path.forEach { pathPart ->
-            val n = node.children.find { item -> item.value == pathPart }
-
-            if (n != null) {
-                node = n
-            } else {
-                TreeGenreItem(pathPart).also { cat ->
-                    node.children.add(cat)
-                    if (sortNodes) node.children.sortBy { item -> item.value }
-                    node = cat
-                }
-            }
-        }
-
-        return node as TreeGenreItem
-    }
-
     private fun createTable() {
         with(tableView.columns) {
             clear()
 
             add(TableColumn<EntryRow, String>(T("title")).apply {
-                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.title) }
+                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.getTitle()) }
             })
             add(TableColumn<EntryRow, String>(T("genre")).apply {
-                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.categoryName) }
+                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.getGenre()) }
             })
             add(TableColumn<EntryRow, ReleaseDate>(T("date")).apply {
-                cellValueFactory = Callback { p -> ReadOnlyObjectWrapper(p.value.releaseDate) }
+                cellValueFactory = Callback { p -> ReadOnlyObjectWrapper(p.value.getReleaseDate()) }
             })
             add(TableColumn<EntryRow, String>(T("machine")).apply {
-                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.machineType?.text) }
+                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getMachine()) }
             })
             add(TableColumn<EntryRow, String>(T("availability")).apply {
-                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.availabilityString) }
+                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.getAvailability()) }
             })
         }
     }
@@ -280,13 +220,17 @@ class MainController : Initializable {
         with(downloadsTableView.columns) {
             clear()
 
-            add(TableColumn<Download, String>(T("name")).apply {
-                //cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.fileName) }
+            add(TableColumn<EntryDownload, String>(T("·")).apply {
                 cellFactory = Callback { FileDownloadTableCell(downloadManager) }
             })
 
-            add(TableColumn<Download, String>(T("type")).apply {
-                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.fileType.text) }
+            add(TableColumn<EntryDownload, String>(T("name")).apply {
+                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getFileName()) }
+                //cellFactory = Callback { FileDownloadTableCell(downloadManager) }
+            })
+
+            add(TableColumn<EntryDownload, String>(T("type")).apply {
+                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getFileType().text) }
             })
 
             /*
@@ -295,12 +239,12 @@ class MainController : Initializable {
             })
             */
 
-            add(TableColumn<Download, String>(T("year")).apply {
-                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.release_year?.toString()) }
+            add(TableColumn<EntryDownload, String>(T("year")).apply {
+                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.getReleaseYear()?.toString()) }
             })
 
-            add(TableColumn<Download, String>(T("machine")).apply {
-                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.machineType?.text) }
+            add(TableColumn<EntryDownload, String>(T("machine")).apply {
+                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getMachine()) }
             })
         }
 
@@ -349,7 +293,7 @@ class MainController : Initializable {
             show()
         }
 
-        Model.updateDatabase { status, progress, message ->
+        model.updateDatabase { status, progress, message ->
             when (status) {
                 Model.UpdateStatus.Connecting -> Platform.runLater {
                     dialog.progress = ProgressBar.INDETERMINATE_PROGRESS
@@ -433,10 +377,10 @@ class MainController : Initializable {
         downloadsTableView.contextMenu.show(downloadsTableView, e.screenX, e.screenY)
     }
 
-    private fun getDownload(download: Download, program: Program? = null) {
-        if (download.fileType.id == FileType.REMOTE_LINK) {
+    private fun getDownload(download: EntryDownload, program: Program? = null) {
+        if (download.getFileType().id == FileType.REMOTE_LINK) {
             try {
-                java.awt.Desktop.getDesktop().browse(URI(download.file_link))
+                java.awt.Desktop.getDesktop().browse(URI(download.getLink()))
             } catch (e: Exception) {
                 //
             }
@@ -446,13 +390,13 @@ class MainController : Initializable {
         //println("getDownload: ${download.fileName}")
         downloadManager.download(download) { file ->
             downloadsTableView.refresh()
-            if (download.isImage) selectedImage.value = file.toImage()
+            if (download.isImage()) selectedImage.value = file.toImage()
             program?.launch(file)
         }
     }
 }
 
-class FileDownloadTableCell(private val downloadManager: DownloadManager) : TableCell<Download, String>() {
+class FileDownloadTableCell(private val downloadManager: DownloadManager) : TableCell<EntryDownload, String>() {
     private val cloudImage = Image(javaClass.getResourceAsStream("/cloud.png"))
     private val downloadedImage = Image(javaClass.getResourceAsStream("/check.png"))
 
@@ -465,10 +409,10 @@ class FileDownloadTableCell(private val downloadManager: DownloadManager) : Tabl
     override fun updateItem(value: String?, empty: Boolean) {
         val download = tableRow?.item
         if (empty || (download == null)) {
-            text = null
+            //text = null
             iconView.image = null
         } else {
-            text = download.fileName
+            //text = download.fileName
             iconView.image = if (downloadManager.exists(download)) downloadedImage else cloudImage
         }
     }

@@ -13,6 +13,7 @@ module app {
     exports com.ses.zxdb.dao;
     exports com.ses.app.zxlauncher.model;
     exports com.ses.app.zxlauncher.ui;
+    exports com.ses.app.zxlauncher.model.zxdb;
 
     opens com.ses.app.zxlauncher;
 }

@@ -1,45 +1,13 @@
 package com.ses.app.zxlauncher.model
 
-import com.ses.app.zxlauncher.T
-import com.ses.net.Http
-import com.ses.zxdb.ZXDB
-import com.ses.zxdb.converter.MySQLConverter
-import com.ses.zxdb.dao.Entry
-import com.ses.zxdb.dao.GenreType
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.io.File
+typealias UpdateProgressHandler = (status: Model.UpdateStatus, progress: Float, message: String) -> Unit
 
-object Model {
-    const val NULL_YEAR_STRING = "?"
-    const val NULL_GENRE_STRING = "Uncategorized"
-    const val NULL_AVAILABLE_STRING = "Unknown"
-    const val NULL_MACHINE_TYPE_STRING = "None"
-
-    private var _rows: List<EntryRow>? = null
-    val entryRows: List<EntryRow>
-        get() = _rows ?: ArrayList<EntryRow>().also { list ->
-            ZXDB.sql().select(EntryRow::class) { entry ->
-                list.add(entry)
-            }
-            _rows = list.apply { sortBy { e -> e.title } }
-        }
-
-    fun getCategoryName(genre: GenreType?) = genre?.text ?: NULL_GENRE_STRING
-
-    fun getCategoryPath(name: String?): List<String> {
-        return name
-                ?.replace("(.*) Game:".toRegex(), "Game: \$1:")
-                ?.split(": ?".toRegex())
-                ?: listOf(NULL_GENRE_STRING)
-    }
-
-    fun getCategoryPath(entry: Entry): List<String> {
-        return getCategoryPath(ZXDB.getGenre(entry.genretype_id)?.text)
-    }
-
-    fun getCategoryPath(genre: GenreType?): List<String> {
-        return getCategoryPath(genre?.text)
+abstract class Model {
+    companion object {
+        const val NULL_YEAR_STRING = "?"
+        const val NULL_GENRE_STRING = "Uncategorized"
+        const val NULL_AVAILABLE_STRING = "Unknown"
+        const val NULL_MACHINE_TYPE_STRING = "None"
     }
 
     enum class UpdateStatus {
@@ -50,47 +18,11 @@ object Model {
         Error
     }
 
-    fun updateDatabase(progressHandler: ((status: UpdateStatus, progress: Float, message: String) -> Unit)?) {
-        val workingDir = File(System.getProperty("user.dir"))
-        val mySqlFile = File(workingDir, "ZXDB_mysql.sql")
-        val sqliteFile = File(workingDir, ZXDB.DB_NAME)
-        val sqliteTempFile = File(workingDir, "_${ZXDB.DB_NAME}_")
+    val entryRows: List<EntryRow> by lazy { getRows() }
 
-        GlobalScope.launch {
-            var downloadComplete: Boolean = false
-            // descargar ZXDB_mysql.sql
-            Http().apply {
-                request = "https://github.com/zxdb/ZXDB/raw/master/ZXDB_mysql.sql"
-                getFile(mySqlFile) { status, progress ->
-                    when (status) {
-                        Http.Status.Connecting -> progressHandler?.invoke(UpdateStatus.Connecting, 0.0f, T("connecting_"))
-                        Http.Status.Connected -> progressHandler?.invoke(UpdateStatus.Downloading, 0.0f, T("downloading"))
-                        Http.Status.Downloading -> progressHandler?.invoke(UpdateStatus.Downloading, progress, T("downloading"))
-                        Http.Status.Completed -> downloadComplete = true
-                        Http.Status.Error ->  progressHandler?.invoke(UpdateStatus.Error, progress, "Error")
-                    }
-                }
-            }
+    abstract fun getTree() : TreeNode
 
-            if( !downloadComplete ) return@launch
+    abstract fun getRows(): List<EntryRow>
 
-            // convertir a sqlite
-            progressHandler?.invoke(UpdateStatus.Converting, 0.0f, T("converting"))
-            MySQLConverter(mySqlFile.absolutePath, sqliteTempFile.absolutePath).convert { progress, tableName ->
-                progressHandler?.invoke(UpdateStatus.Converting, progress, T("converting_table_fmt").format(tableName))
-            }
-
-            // sustituir fichero
-            ZXDB.close()
-            _rows = null
-
-            sqliteFile.delete()
-            sqliteTempFile.renameTo(sqliteFile)
-
-            // recargar base de datos y refrescar los datos
-            ZXDB.open()
-
-            progressHandler?.invoke(UpdateStatus.Completed, 1.0f, T("completed"))
-        }
-    }
+    abstract fun updateDatabase(progressHandler: UpdateProgressHandler?)
 }
