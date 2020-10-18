@@ -28,6 +28,7 @@ import javafx.stage.WindowEvent
 import javafx.util.Callback
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.io.File
 import java.net.URI
 import java.net.URL
 import java.util.*
@@ -56,10 +57,10 @@ class MainController : Initializable {
     lateinit var treeView: TreeView<String>
 
     @FXML
-    lateinit var tableView: TableView<EntryRow>
+    lateinit var tableView: TableView<ModelEntry>
 
     @FXML
-    lateinit var downloadsTableView: TableView<EntryDownload>
+    lateinit var downloadsTableView: TableView<ModelDownload>
 
     @FXML
     lateinit var previewImage: ImageView
@@ -68,9 +69,8 @@ class MainController : Initializable {
     @FXML
     lateinit var statusLabel: Label
 
-    private val model = ZXDBModel()
-    private var filters: ArrayList<Filter<EntryRow>> = ArrayList()
-    private val downloadManager = DownloadManager()
+    private val model = ZXDBModel(File(App.workingDir, "zxdb"))
+    private var filters: ArrayList<Filter<ModelEntry>> = ArrayList()
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         initObservers()
@@ -98,8 +98,6 @@ class MainController : Initializable {
         }
 
         GlobalScope.launch {
-            model.entryRows
-
             Platform.runLater {
                 createTree()
                 createTable()
@@ -135,8 +133,8 @@ class MainController : Initializable {
         }
 
         downloadsTableView.selectionModel.selectedItemProperty().addListener { _, _, download ->
-            if(download.isImage() && downloadManager.exists(download)) {
-                val file = downloadManager.getFile(download)
+            if(model.isImage(download) && model.isDownloaded(download)) {
+                val file = model.getFile(download)
                 selectedImage.value = file.toImage()
             } else {
                 selectedImage.value = null
@@ -181,7 +179,7 @@ class MainController : Initializable {
         pass
     }
     */
-    private fun filterList(list: ObservableList<EntryRow>, dest: ObservableList<EntryRow>): ObservableList<EntryRow> {
+    private fun filterList(list: ObservableList<ModelEntry>, dest: ObservableList<ModelEntry>): ObservableList<ModelEntry> {
         return list.filterTo(dest.apply { clear() }) {
             var pass = true
             for (f in filters) {
@@ -198,19 +196,19 @@ class MainController : Initializable {
         with(tableView.columns) {
             clear()
 
-            add(TableColumn<EntryRow, String>(T("title")).apply {
+            add(TableColumn<ModelEntry, String>(T("title")).apply {
                 cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.getTitle()) }
             })
-            add(TableColumn<EntryRow, String>(T("genre")).apply {
+            add(TableColumn<ModelEntry, String>(T("genre")).apply {
                 cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.getGenre()) }
             })
-            add(TableColumn<EntryRow, ReleaseDate>(T("date")).apply {
+            add(TableColumn<ModelEntry, ReleaseDate>(T("date")).apply {
                 cellValueFactory = Callback { p -> ReadOnlyObjectWrapper(p.value.getReleaseDate()) }
             })
-            add(TableColumn<EntryRow, String>(T("machine")).apply {
+            add(TableColumn<ModelEntry, String>(T("machine")).apply {
                 cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getMachine()) }
             })
-            add(TableColumn<EntryRow, String>(T("availability")).apply {
+            add(TableColumn<ModelEntry, String>(T("availability")).apply {
                 cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.getAvailability()) }
             })
         }
@@ -220,16 +218,16 @@ class MainController : Initializable {
         with(downloadsTableView.columns) {
             clear()
 
-            add(TableColumn<EntryDownload, String>(T("·")).apply {
-                cellFactory = Callback { FileDownloadTableCell(downloadManager) }
+            add(TableColumn<ModelDownload, String>(T("·")).apply {
+                cellFactory = Callback { FileDownloadTableCell(model) }
             })
 
-            add(TableColumn<EntryDownload, String>(T("name")).apply {
+            add(TableColumn<ModelDownload, String>(T("name")).apply {
                 cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getFileName()) }
                 //cellFactory = Callback { FileDownloadTableCell(downloadManager) }
             })
 
-            add(TableColumn<EntryDownload, String>(T("type")).apply {
+            add(TableColumn<ModelDownload, String>(T("type")).apply {
                 cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getFileType().text) }
             })
 
@@ -239,11 +237,11 @@ class MainController : Initializable {
             })
             */
 
-            add(TableColumn<EntryDownload, String>(T("year")).apply {
+            add(TableColumn<ModelDownload, String>(T("year")).apply {
                 cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.getReleaseYear()?.toString()) }
             })
 
-            add(TableColumn<EntryDownload, String>(T("machine")).apply {
+            add(TableColumn<ModelDownload, String>(T("machine")).apply {
                 cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getMachine()) }
             })
         }
@@ -352,7 +350,7 @@ class MainController : Initializable {
             clear()
 
             // opción descargar
-            if (!downloadManager.exists(download)) {
+            if (!model.isDownloaded(download)) {
                 add(MenuItem(T("download")).apply {
                     setOnAction {
                         getDownload(download)
@@ -377,7 +375,7 @@ class MainController : Initializable {
         downloadsTableView.contextMenu.show(downloadsTableView, e.screenX, e.screenY)
     }
 
-    private fun getDownload(download: EntryDownload, program: Program? = null) {
+    private fun getDownload(download: ModelDownload, program: Program? = null) {
         if (download.getFileType().id == FileType.REMOTE_LINK) {
             try {
                 java.awt.Desktop.getDesktop().browse(URI(download.getLink()))
@@ -388,7 +386,7 @@ class MainController : Initializable {
         }
 
         //println("getDownload: ${download.fileName}")
-        downloadManager.download(download) { file ->
+        model.download(download) { file ->
             downloadsTableView.refresh()
             if (download.isImage()) selectedImage.value = file.toImage()
             program?.launch(file)
@@ -396,7 +394,7 @@ class MainController : Initializable {
     }
 }
 
-class FileDownloadTableCell(private val downloadManager: DownloadManager) : TableCell<EntryDownload, String>() {
+class FileDownloadTableCell(private val model: Model) : TableCell<ModelDownload, String>() {
     private val cloudImage = Image(javaClass.getResourceAsStream("/cloud.png"))
     private val downloadedImage = Image(javaClass.getResourceAsStream("/check.png"))
 
@@ -413,7 +411,7 @@ class FileDownloadTableCell(private val downloadManager: DownloadManager) : Tabl
             iconView.image = null
         } else {
             //text = download.fileName
-            iconView.image = if (downloadManager.exists(download)) downloadedImage else cloudImage
+            iconView.image = if (model.isDownloaded(download)) downloadedImage else cloudImage
         }
     }
 }

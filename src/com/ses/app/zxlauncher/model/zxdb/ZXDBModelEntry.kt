@@ -1,6 +1,6 @@
 package com.ses.app.zxlauncher.model.zxdb
 
-import com.ses.app.zxlauncher.model.EntryRow
+import com.ses.app.zxlauncher.model.ModelEntry
 import com.ses.app.zxlauncher.model.Model
 import com.ses.app.zxlauncher.model.ReleaseDate
 import com.ses.sql.Column
@@ -9,7 +9,7 @@ import com.ses.zxdb.ZXDB
 import com.ses.zxdb.dao.*
 
 @Query("SELECT r.release_year, r.release_month, e.* FROM entries e INNER JOIN releases r WHERE r.entry_id=e.id AND r.release_seq=0")
-class ZXDBEntryRow : EntryRow {
+class ZXDBModelEntry : ModelEntry {
     @Column("id") var id: Int = 0
     @Column("title") lateinit var _title: String
 
@@ -54,10 +54,10 @@ class ZXDBEntryRow : EntryRow {
         }
     }
 
-    val _downloads: List<ZXDBEntryDownload> by lazy {
-        ArrayList<ZXDBEntryDownload>().also { list ->
+    val _downloads: List<ZXDBModelDownload> by lazy {
+        ArrayList<ZXDBModelDownload>().also { list ->
             ZXDB.sql().select("SELECT * FROM downloads WHERE entry_id=$id ORDER BY release_seq", Download::class) {
-                list.add(ZXDBEntryDownload(it))
+                list.add(ZXDBModelDownload(it))
             }
         }
     }

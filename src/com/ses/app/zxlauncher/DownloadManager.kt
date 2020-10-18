@@ -1,6 +1,6 @@
 package com.ses.app.zxlauncher
 
-import com.ses.app.zxlauncher.model.EntryDownload
+import com.ses.app.zxlauncher.model.ModelDownload
 import com.ses.app.zxlauncher.ui.ProgressDialog
 import com.ses.net.Http
 import javafx.application.Platform
@@ -8,13 +8,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 
-class DownloadManager {
-    var rootDir = App.workingDir // directorio raíz
-    var downloadDir: File = File(rootDir, "zxdb") // directorio de descargas
+class DownloadManager(val downloadDir: File) {
+    fun getFile(download: ModelDownload): File = File(downloadDir, download.getLink())
 
-    fun getFile(download: EntryDownload): File = File(downloadDir, download.getLink())
-
-    fun download(download: EntryDownload, completion: (file: File) -> Unit) {
+    fun download(download: ModelDownload, completion: (file: File) -> Unit) {
         val file = getFile(download)
 
         if (file.exists()) {
@@ -45,5 +42,5 @@ class DownloadManager {
         }
     }
 
-    fun exists(download: EntryDownload): Boolean = getFile(download).exists()
+    fun exists(download: ModelDownload): Boolean = getFile(download).exists()
 }

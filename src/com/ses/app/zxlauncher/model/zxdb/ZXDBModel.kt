@@ -1,10 +1,8 @@
 package com.ses.app.zxlauncher.model.zxdb
 
+import com.ses.app.zxlauncher.DownloadManager
 import com.ses.app.zxlauncher.T
-import com.ses.app.zxlauncher.model.EntryRow
-import com.ses.app.zxlauncher.model.Model
-import com.ses.app.zxlauncher.model.TreeNode
-import com.ses.app.zxlauncher.model.UpdateProgressHandler
+import com.ses.app.zxlauncher.model.*
 import com.ses.net.Http
 import com.ses.zxdb.ZXDB
 import com.ses.zxdb.converter.MySQLConverter
@@ -15,11 +13,13 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 
-class ZXDBModel : Model() {
-    private val rows by lazy {
-        ArrayList<ZXDBEntryRow>().also { list ->
+class ZXDBModel(dir: File) : Model(dir) {
+    private val downloadManager = DownloadManager(dir)
+
+    private val _entries by lazy {
+        ArrayList<ZXDBModelEntry>().also { list ->
             list.clear()
-            ZXDB.sql().select(ZXDBEntryRow::class) { entry ->
+            ZXDB.sql().select(ZXDBModelEntry::class) { entry ->
                 list.add(entry)
             }
             list.sortBy { e -> e.getTitle() }
@@ -42,7 +42,7 @@ class ZXDBModel : Model() {
         ZXDB.getTable(AvailableType::class).rows.forEach { root.getNode(listOf(T("availability"), it.text)) }
 
         // añadir las entradas a los nodos
-        for (row in rows) addTreeEntry(root, row)
+        for (row in _entries) addTreeEntry(root, row)
 
         // ordenar años
         yearNode.children.sortBy { it.value }
@@ -50,7 +50,7 @@ class ZXDBModel : Model() {
         return root;
     }
 
-    override fun getRows(): List<EntryRow> = rows
+    override fun getEntries(): List<ModelEntry> = _entries
 
     private fun getGenrePath(genre: GenreType?): List<String> {
         return genre?.text
@@ -59,10 +59,10 @@ class ZXDBModel : Model() {
                 ?: listOf(NULL_GENRE_STRING)
     }
 
-    fun getCategoryPath(entry: ZXDBEntryRow): List<String> = getGenrePath(entry.genreType)
+    fun getCategoryPath(entry: ZXDBModelEntry): List<String> = getGenrePath(entry.genreType)
 
     /** Añade una entrada a los nodos correspondientes, creando los necesarios. */
-    private fun addTreeEntry(root: TreeNode, entry: ZXDBEntryRow) {
+    private fun addTreeEntry(root: TreeNode, entry: ZXDBModelEntry) {
         root.addEntry(entry)
         addTreeEntry(root, entry, getCategoryPath(entry))
         addTreeEntry(root, entry, listOf(T("year"), entry.releaseYearString))
@@ -70,7 +70,7 @@ class ZXDBModel : Model() {
         if (entry.machineTypeId != null) addTreeEntry(root, entry, listOf(T("machine"), entry.getMachine()))
     }
 
-    private fun addTreeEntry(root: TreeNode, entry: ZXDBEntryRow, path: List<String>) {
+    private fun addTreeEntry(root: TreeNode, entry: ZXDBModelEntry, path: List<String>) {
         val p = ArrayList<String>()
         for (s in path) {
             p.add(s)
@@ -120,4 +120,9 @@ class ZXDBModel : Model() {
             progressHandler?.invoke(UpdateStatus.Completed, 1.0f, T("completed"))
         }
     }
+
+    override fun isImage(download: ModelDownload?): Boolean = (download?.isImage() == true)
+    override fun isDownloaded(download: ModelDownload): Boolean = downloadManager.exists(download)
+    override fun getFile(download: ModelDownload): File = downloadManager.getFile(download)
+    override fun download(download: ModelDownload, completion: (file: File) -> Unit) = downloadManager.download(download, completion)
 }

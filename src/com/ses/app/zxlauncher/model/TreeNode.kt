@@ -5,9 +5,9 @@ import javafx.collections.ObservableList
 import javafx.scene.control.TreeItem
 
 class TreeNode(name: String) : TreeItem<String>(name) {
-    val entries: ObservableList<EntryRow> = FXCollections.observableArrayList()
+    val entries: ObservableList<ModelEntry> = FXCollections.observableArrayList()
 
-    fun addEntry(e: EntryRow) {
+    fun addEntry(e: ModelEntry) {
         entries.add(e)
     }
 
