@@ -69,7 +69,7 @@ class MainController : Initializable {
     @FXML
     lateinit var statusLabel: Label
 
-    private val model = ZXDBModel(File(App.workingDir, "zxdb"))
+    private val model = ZXDBModel("ZXDB", File(App.workingDir, "zxdb"))
     private var filters: ArrayList<Filter<ModelEntry>> = ArrayList()
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
@@ -133,7 +133,8 @@ class MainController : Initializable {
         }
 
         downloadsTableView.selectionModel.selectedItemProperty().addListener { _, _, download ->
-            if(model.isImage(download) && model.isDownloaded(download)) {
+            val model = download.model!!
+            if (model.isImage(download) && model.isDownloaded(download)) {
                 val file = model.getFile(download)
                 selectedImage.value = file.toImage()
             } else {
@@ -219,7 +220,7 @@ class MainController : Initializable {
             clear()
 
             add(TableColumn<ModelDownload, String>(T("·")).apply {
-                cellFactory = Callback { FileDownloadTableCell(model) }
+                cellFactory = Callback { FileDownloadTableCell() }
             })
 
             add(TableColumn<ModelDownload, String>(T("name")).apply {
@@ -349,6 +350,8 @@ class MainController : Initializable {
         downloadsTableView.contextMenu.items.apply {
             clear()
 
+            val model = download.model!!
+
             // opción descargar
             if (!model.isDownloaded(download)) {
                 add(MenuItem(T("download")).apply {
@@ -386,6 +389,7 @@ class MainController : Initializable {
         }
 
         //println("getDownload: ${download.fileName}")
+        val model = download.model!!
         model.download(download) { file ->
             downloadsTableView.refresh()
             if (download.isImage()) selectedImage.value = file.toImage()
@@ -394,7 +398,7 @@ class MainController : Initializable {
     }
 }
 
-class FileDownloadTableCell(private val model: Model) : TableCell<ModelDownload, String>() {
+class FileDownloadTableCell() : TableCell<ModelDownload, String>() {
     private val cloudImage = Image(javaClass.getResourceAsStream("/cloud.png"))
     private val downloadedImage = Image(javaClass.getResourceAsStream("/check.png"))
 
@@ -411,6 +415,7 @@ class FileDownloadTableCell(private val model: Model) : TableCell<ModelDownload,
             iconView.image = null
         } else {
             //text = download.fileName
+            val model = download.model!!
             iconView.image = if (model.isDownloaded(download)) downloadedImage else cloudImage
         }
     }

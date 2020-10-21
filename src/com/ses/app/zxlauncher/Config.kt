@@ -14,44 +14,49 @@ object Config {
     // extensiones soportadas
     private val extensions = HashMap<String, ArrayList<Program>>()
 
+    // bibliotecas
+    private val libraries = ArrayList<Library>()
+
     init {
-        val progsDir = File(App.workingDir, "progs")
-        if (progsDir.exists()) {
-            val progList = ArrayList<Program>()
+        val configFile = File(App.workingDir, "config.json")
+        if (configFile.exists()) {
+            val config = JSONObject(configFile.readText())
 
-            // cargar programas
-            progsDir.listFiles { file -> file.extension == "json" }?.forEach { file ->
-                if (file.nameWithoutExtension != "defaults") {
-                    progList.add(loadProgram(file))
-                }
-            }
-
-            // ordenar lista
-            progList.sortedBy { it.order }.forEach { prog ->
-                // añadir
-                programs[prog.id] = prog
-
-                // añadirle a todas las extensiones
-                prog.ext.forEach {
-                    val extensionPrograms = extensions.getOrPut(it) { ArrayList() }
-                    extensionPrograms.add(prog)
-                }
-            }
-
-            // programas por defecto
-            File(progsDir, "defaults.json").also {
-                if (it.exists()) {
-                    loadDefaults(it)
-                }
-            }
-
+            loadPrograms(config.optJSONArray("programs"))
+            loadDefaults(config.optJSONArray("default_programs"))
+            loadLibraries(config.optJSONArray("libraries"))
         }
     }
 
-    private fun loadDefaults(file: File) {
-        val json = JSONArray(file.readText())
+    private fun loadPrograms(json: JSONArray?) {
+        json?.all<JSONObject>()?.forEach { def ->
+            val prog = loadProgram(def)
+            programs[prog.id] = prog
 
-        json.all<JSONObject>().forEach { def ->
+            prog.ext.forEach { ext ->
+                val extensionPrograms = extensions.getOrPut(ext) { ArrayList() }
+                extensionPrograms.add(prog)
+            }
+        }
+    }
+
+    private fun loadProgram(json: JSONObject): Program {
+        // extensioens soportadas
+        val ext = ArrayList<String>()
+        json.getJSONArray("ext")?.all<String>()?.forEach {
+            ext.add(it)
+        }
+
+        return Program(json.getString("id"),
+                json.getString("name"),
+                json.getString("path"),
+                json.getString("args"),
+                ext.toTypedArray(),
+                json.optBoolean("unzip"))
+    }
+
+    private fun loadDefaults(json: JSONArray?) {
+        json?.all<JSONObject>()?.forEach { def ->
             val programId = def.getString("program")
             programs[programId]?.also { program ->
                 def.optJSONArray("ext")?.all<String>()?.forEach { ext ->
@@ -64,24 +69,11 @@ object Config {
         }
     }
 
-    private fun loadProgram(file: File): Program {
-        val json = JSONObject(file.readText())
-
-        // extensioens soportadas
-        val ext = ArrayList<String>()
-        json.getJSONArray("ext")?.all<String>()?.forEach {
-            ext.add(it)
+    private fun loadLibraries(json: JSONArray?) {
+        json?.all<JSONObject>()?.forEach { o ->
+            val lib = Library(o.getString("type"), o.getString("name"), o.getString("path"))
+            libraries.add(lib)
         }
-        val prog = Program(json.getString("id"),
-                json.getString("name"),
-                json.getString("path"),
-                json.getString("args"),
-                ext.toTypedArray(),
-                json.optBoolean("unzip"))
-        prog.order = json.optInt("order", 1)
-        //programs[prog.id] = prog
-
-        return prog
     }
 
     val allPrograms: Collection<Program> get() = programs.values

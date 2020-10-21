@@ -35,7 +35,9 @@ class SQL(private val conn: Connection) {
     fun <T : Any> select(query: String? = null, cls: KClass<T>, f: (row: T) -> Unit) {
         select(query ?: getQuery(cls)!!) { rs ->
             val columsInfo = getColumnsMap(cls).values
-            @Suppress("UNCHECKED_CAST") val ctor: () -> T = cls.primaryConstructor as () -> T
+            //@Suppress("UNCHECKED_CAST") val ctor: () -> T = cls.primaryConstructor as () -> T
+            // buscar un constructor sin parámetros
+            @Suppress("UNCHECKED_CAST") val ctor: () -> T = cls.constructors.first { it.parameters.isEmpty() } as () -> T
 
             while (rs.next()) {
                 val row: T = ctor()

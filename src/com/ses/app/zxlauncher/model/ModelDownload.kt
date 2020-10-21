@@ -4,14 +4,20 @@ import com.ses.zxdb.dao.Extension
 import com.ses.zxdb.dao.FileType
 
 //TODO ¿cambiar Extension y FileType por tipos externos a ZXDB?
-interface ModelDownload {
-    fun getFileName(): String
-    fun getLink(): String
-    fun getFullUrl(): String
-    fun getExtension(): Extension?
-    fun getFileType(): FileType
-    fun getFormat(): String?
-    fun getReleaseYear(): Int?
-    fun getMachine(): String?
-    fun isImage(): Boolean
+abstract class ModelDownload() {
+    lateinit var model: Model
+
+    constructor(model: Model) : this() {
+        this.model = model
+    }
+
+    abstract fun getFileName(): String
+    abstract fun getLink(): String
+    abstract fun getFullUrl(): String
+    abstract fun getExtension(): Extension?
+    abstract fun getFileType(): FileType
+    abstract fun getFormat(): String?
+    abstract fun getReleaseYear(): Int?
+    abstract fun getMachine(): String?
+    abstract fun isImage(): Boolean
 }

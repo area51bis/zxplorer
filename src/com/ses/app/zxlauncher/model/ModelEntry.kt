@@ -1,11 +1,17 @@
 package com.ses.app.zxlauncher.model
 
-interface ModelEntry {
-    fun getTitle(): String
-    fun getGenre(): String
-    fun getReleaseYear(): Int?
-    fun getReleaseDate(): ReleaseDate
-    fun getMachine(): String
-    fun getAvailability(): String
-    fun getDownloads(): List<ModelDownload>
+abstract class ModelEntry() {
+    lateinit var model: Model
+
+    constructor(model: Model) : this() {
+        this.model = model
+    }
+
+    abstract fun getTitle(): String
+    abstract fun getGenre(): String
+    abstract fun getReleaseYear(): Int?
+    abstract fun getReleaseDate(): ReleaseDate
+    abstract fun getMachine(): String
+    abstract fun getAvailability(): String
+    abstract fun getDownloads(): List<ModelDownload>
 }

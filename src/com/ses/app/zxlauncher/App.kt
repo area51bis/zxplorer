@@ -20,6 +20,7 @@ class App : Application() {
     override fun start(primaryStage: Stage?) {
         Thread.setDefaultUncaughtExceptionHandler { t, e ->
             //Platform.runLater {
+                println(e.stackTraceToString())
                 ErrorDialog.create().show(e)
                 /*
                 Alert(Alert.AlertType.ERROR).apply {

@@ -1,12 +1,13 @@
 package com.ses.app.zxlauncher.model.zxdb
 
+import com.ses.app.zxlauncher.model.Model
 import com.ses.app.zxlauncher.model.ModelDownload
 import com.ses.zxdb.*
 import com.ses.zxdb.dao.Download
 import com.ses.zxdb.dao.Extension
 import com.ses.zxdb.dao.FileType
 
-class ZXDBModelDownload(val download: Download) : ModelDownload {
+class ZXDBModelDownload(model: Model, private val download: Download) : ModelDownload(model) {
     override fun getFileName(): String = download.fileName
     override fun getLink(): String = download.file_link
     override fun getFullUrl(): String = download.fullUrl

@@ -8,8 +8,11 @@ import com.ses.sql.Query
 import com.ses.zxdb.ZXDB
 import com.ses.zxdb.dao.*
 
-@Query("SELECT r.release_year, r.release_month, e.* FROM entries e INNER JOIN releases r WHERE r.entry_id=e.id AND r.release_seq=0")
+@Query("SELECT r.release_year, r.release_month, r.release_day, e.* FROM entries e INNER JOIN releases r WHERE r.entry_id=e.id AND r.release_seq=0")
 class ZXDBModelEntry : ModelEntry {
+    constructor() : super()
+    constructor(model: Model) : super(model)
+
     @Column("id") var id: Int = 0
     @Column("title") lateinit var _title: String
 
@@ -57,7 +60,7 @@ class ZXDBModelEntry : ModelEntry {
     val _downloads: List<ZXDBModelDownload> by lazy {
         ArrayList<ZXDBModelDownload>().also { list ->
             ZXDB.sql().select("SELECT * FROM downloads WHERE entry_id=$id ORDER BY release_seq", Download::class) {
-                list.add(ZXDBModelDownload(it))
+                list.add(ZXDBModelDownload(model, it))
             }
         }
     }

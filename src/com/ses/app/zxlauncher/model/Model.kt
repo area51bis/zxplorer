@@ -11,7 +11,7 @@ Otras bases de datos:
     - FTP: https://www.lemon64.com/
 */
 
-abstract class Model(val dir: File) {
+abstract class Model(val name: String, val dir: File) {
     companion object {
         const val NULL_YEAR_STRING = "?"
         const val NULL_GENRE_STRING = "Uncategorized"

@@ -13,13 +13,14 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 
-class ZXDBModel(dir: File) : Model(dir) {
+class ZXDBModel(name: String, dir: File) : Model(name, dir) {
     private val downloadManager = DownloadManager(dir)
 
     private val _entries by lazy {
         ArrayList<ZXDBModelEntry>().also { list ->
             list.clear()
             ZXDB.sql().select(ZXDBModelEntry::class) { entry ->
+                entry.model = this
                 list.add(entry)
             }
             list.sortBy { e -> e.getTitle() }
