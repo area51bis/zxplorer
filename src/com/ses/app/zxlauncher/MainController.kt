@@ -69,13 +69,13 @@ class MainController : Initializable {
     @FXML
     lateinit var statusLabel: Label
 
-    private val model = ZXDBModel("ZXDB", File(App.workingDir, "zxdb"))
+    //private val model = ZXDBModel("ZXDB", File(App.workingDir, "zxdb"))
     private var filters: ArrayList<Filter<ModelEntry>> = ArrayList()
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         initObservers()
 
-        App.mainStage.addEventFilter(WindowEvent.WINDOW_SHOWN) { ev ->
+        App.mainStage.addEventFilter(WindowEvent.WINDOW_SHOWN) { _ ->
             if (ZXDB.open()) {
                 initModels()
             } else {
@@ -133,13 +133,17 @@ class MainController : Initializable {
         }
 
         downloadsTableView.selectionModel.selectedItemProperty().addListener { _, _, download ->
-            val model = download.model!!
-            if (model.isImage(download) && model.isDownloaded(download)) {
-                val file = model.getFile(download)
-                selectedImage.value = file.toImage()
-            } else {
-                selectedImage.value = null
+            var image: Image? = null
+
+            if (download != null) {
+                val model = download.model
+                if (model.isImage(download) && model.isDownloaded(download)) {
+                    val file = model.getFile(download)
+                    image = file.toImage()
+                }
             }
+
+            selectedImage.value = image
         }
 
         // "truco" para hacer que la imagen crezca
@@ -149,13 +153,16 @@ class MainController : Initializable {
     }
 
     private fun createTree() {
-        treeView.root = TreeNode("All")
+        val root = TreeNode("All")
+        root.isExpanded = true
 
-        val zxdbNode = model.getTree()
-        treeView.root.children.add(zxdbNode)
+        Config.allLibraries.forEach { lib ->
+            val libTree = lib.model.getTree()
+            libTree.isExpanded = true;
+            root.children.add(libTree)
+        }
 
-        treeView.root.isExpanded = true
-        zxdbNode.isExpanded = true
+        treeView.root = root
     }
 
     private fun selectTreeNode(item: TreeItem<String>) {
@@ -287,6 +294,7 @@ class MainController : Initializable {
     }
 
     private fun updateZXDB() {
+        /*
         val dialog = ProgressDialog.create().apply {
             title = T("updating_database")
             show()
@@ -298,8 +306,6 @@ class MainController : Initializable {
                     dialog.progress = ProgressBar.INDETERMINATE_PROGRESS
                     dialog.message = message
                 }
-                //ZXDBUtil.UpdateStatus.Downloading -> TODO()
-                //ZXDBUtil.UpdateStatus.Converting -> TODO()
                 Model.UpdateStatus.Completed -> Platform.runLater {
                     initModels()
                     dialog.hide()
@@ -313,6 +319,7 @@ class MainController : Initializable {
                 }
             }
         }
+        */
     }
 
     @FXML
@@ -325,12 +332,12 @@ class MainController : Initializable {
     }
 
     @FXML
-    fun onSearchTextChanged(e: KeyEvent) {
+    fun onSearchTextChanged() {
         setTextFilter(searchTextField.text)
     }
 
     @FXML
-    fun onTableRowClick(e: MouseEvent) {
+    fun onTableRowClick() {
         //val entry = tableView.selectionModel.selectedItem
         //downloadsTableView.items.setAll(entry.downloads)
     }
@@ -350,7 +357,7 @@ class MainController : Initializable {
         downloadsTableView.contextMenu.items.apply {
             clear()
 
-            val model = download.model!!
+            val model = download.model
 
             // opción descargar
             if (!model.isDownloaded(download)) {

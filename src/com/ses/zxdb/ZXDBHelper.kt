@@ -8,6 +8,7 @@ val Entry.machineType: MachineType? get() = ZXDB.getTable(MachineType::class)[ma
 val Entry.availableType: AvailableType? get() = ZXDB.getTable(AvailableType::class)[availabletype_id]
 val Entry.language: Language? get() = ZXDB.getTable(Language::class)[language_id]
 
+val Download.downloadServer: DownloadServer? get() = ZXDB.getDownloadServer(file_link)
 val Download.fullUrl: String get() = ZXDB.getDownloadServerUrl(file_link)
 val Download.fileName: String get() = file_link.substringAfterLast("/")
 

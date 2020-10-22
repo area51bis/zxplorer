@@ -2,6 +2,7 @@ package com.ses.app.zxlauncher.model
 
 import com.ses.zxdb.dao.Extension
 import com.ses.zxdb.dao.FileType
+import java.io.File
 
 //TODO ¿cambiar Extension y FileType por tipos externos a ZXDB?
 abstract class ModelDownload() {
@@ -11,6 +12,10 @@ abstract class ModelDownload() {
         this.model = model
     }
 
+    fun getFile(): File = File(model.dir, getFilePath())
+
+    /** ruta relativa a la biblioteca/modelo */
+    abstract fun getFilePath(): String
     abstract fun getFileName(): String
     abstract fun getLink(): String
     abstract fun getFullUrl(): String

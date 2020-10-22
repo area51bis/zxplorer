@@ -76,6 +76,8 @@ object Config {
         }
     }
 
+    val allLibraries: Collection<Library> get() = libraries
+
     val allPrograms: Collection<Program> get() = programs.values
 
     fun getDefaultProgram(download: ModelDownload): Program? {

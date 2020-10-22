@@ -9,7 +9,8 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 class DownloadManager(val downloadDir: File) {
-    fun getFile(download: ModelDownload): File = File(downloadDir, download.getLink())
+    //fun getFile(download: ModelDownload): File = File(downloadDir, download.getLink())
+    fun getFile(download: ModelDownload): File = download.getFile()
 
     fun download(download: ModelDownload, completion: (file: File) -> Unit) {
         val file = getFile(download)

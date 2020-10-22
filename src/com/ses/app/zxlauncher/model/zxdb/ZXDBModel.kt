@@ -28,7 +28,7 @@ class ZXDBModel(name: String, dir: File) : Model(name, dir) {
     }
 
     override fun getTree(): TreeNode {
-        val root = TreeNode("ZXDB")
+        val root = TreeNode(name)
 
         // crear los nodos en el orden de las categorías
         ZXDB.getTable(GenreType::class).rows.forEach { root.getNode(getGenrePath(it)) }
