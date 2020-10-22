@@ -11,6 +11,10 @@ class TreeNode(name: String) : TreeItem<String>(name) {
         entries.add(e)
     }
 
+    fun addEntries(list: Collection<ModelEntry>) {
+        entries.addAll(list)
+    }
+
     fun getNode(path: String): TreeNode {
         return getNode(path.split("|"))
     }

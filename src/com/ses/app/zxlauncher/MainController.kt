@@ -94,7 +94,7 @@ class MainController : Initializable {
         val dialog = ProgressDialog.create().apply {
             title = T("loading_")
             progress = ProgressBar.INDETERMINATE_PROGRESS
-            show()
+            show(App.mainStage)
         }
 
         GlobalScope.launch {
@@ -153,13 +153,17 @@ class MainController : Initializable {
     }
 
     private fun createTree() {
-        val root = TreeNode("All")
+        treeView.isShowRoot = true //TODO ¿ocultarlo? ¿hacerlo configurable?
+
+        val root = TreeNode(T("all"))
         root.isExpanded = true
 
         Config.allLibraries.forEach { lib ->
             val libTree = lib.model.getTree()
             libTree.isExpanded = true;
             root.children.add(libTree)
+
+            if (treeView.isShowRoot) root.addEntries(libTree.entries)
         }
 
         treeView.root = root

@@ -65,11 +65,11 @@ class ZXDBModelEntry : ModelEntry {
         }
     }
 
-    override fun getTitle() = _title
-    override fun getGenre() = genreType?.text ?: Model.NULL_GENRE_STRING
+    override fun getTitle(): String = _title
+    override fun getGenre(): String = genreType?.text ?: Model.NULL_GENRE_STRING
     override fun getReleaseYear(): Int? = _releaseYear
-    override fun getReleaseDate() = _releaseDate
-    override fun getMachine() = machineType?.text ?: Model.NULL_MACHINE_TYPE_STRING
-    override fun getAvailability()= availableType?.text ?: Model.NULL_AVAILABLE_STRING
-    override fun getDownloads() = _downloads
+    override fun getReleaseDate(): ReleaseDate = _releaseDate
+    override fun getMachine(): String = machineType?.text ?: Model.NULL_MACHINE_TYPE_STRING
+    override fun getAvailability(): String = availableType?.text ?: Model.NULL_AVAILABLE_STRING
+    override fun getDownloads(): List<ZXDBModelDownload> = _downloads
 }

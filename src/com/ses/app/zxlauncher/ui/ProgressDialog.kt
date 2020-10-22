@@ -4,12 +4,14 @@ import com.ses.app.zxlauncher.fxmlLoader
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.Scene
+import javafx.scene.control.Dialog
 import javafx.scene.control.Label
 import javafx.scene.control.ProgressBar
 import javafx.scene.paint.Color
 import javafx.stage.Modality
 import javafx.stage.Stage
 import javafx.stage.StageStyle
+import javafx.stage.Window
 import java.net.URL
 import java.util.*
 
@@ -43,8 +45,12 @@ class ProgressDialog : Initializable {
 
     private val stage: Stage = Stage().apply {
         initStyle(StageStyle.TRANSPARENT)
+        /*
+        initStyle(StageStyle.UTILITY)
+        setOnCloseRequest { it.consume() }
+        */
         isResizable = false
-        initModality(Modality.APPLICATION_MODAL)
+        initModality(Modality.WINDOW_MODAL)
     }
 
     companion object {
@@ -63,7 +69,8 @@ class ProgressDialog : Initializable {
         message = null
     }
 
-    fun show() {
+    fun show(owner: Window? = null) {
+        if (owner != null) stage.initOwner(owner)
         stage.show()
     }
 
