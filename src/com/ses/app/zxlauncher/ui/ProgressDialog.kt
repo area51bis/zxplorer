@@ -47,8 +47,8 @@ class ProgressDialog : Initializable {
         initStyle(StageStyle.TRANSPARENT)
         /*
         initStyle(StageStyle.UTILITY)
-        setOnCloseRequest { it.consume() }
         */
+        setOnCloseRequest { it.consume() }
         isResizable = false
         initModality(Modality.WINDOW_MODAL)
     }

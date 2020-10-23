@@ -60,7 +60,7 @@ class ZXDBModel(name: String, dir: File) : Model(name, dir) {
                 ?: listOf(NULL_GENRE_STRING)
     }
 
-    fun getCategoryPath(entry: ZXDBModelEntry): List<String> = getGenrePath(entry.genreType)
+    private fun getCategoryPath(entry: ZXDBModelEntry): List<String> = getGenrePath(entry.genreType)
 
     /** Añade una entrada a los nodos correspondientes, creando los necesarios. */
     private fun addTreeEntry(root: TreeNode, entry: ZXDBModelEntry) {

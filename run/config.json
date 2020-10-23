@@ -5,14 +5,14 @@
             "name": "ZXSpin",
             "path": "D:\\emu\\spectrum\\zxspin\\zxspin.exe",
             "args": "${filePath}",
-            "ext": ["tzx", "tap", "z80"]
+            "ext": ["tzx", "tap", "z80","sna"]
         },
         {
             "id": "zesarux",
             "name": "ZEsarUX",
             "path": "D:\\emu\\spectrum\\zesarux\\zesarux.exe",
             "args": "--noconfigfile --realloadfast --realtape ${filePath}",
-            "ext": ["tzx", "tap", "z80"],
+            "ext": ["tzx", "tap", "z80", "sna"],
             "unzip": true
         },
         {
@@ -20,13 +20,13 @@
             "name": "Fuse",
             "path": "/Applications/Fuse.app/Contents/MacOS/Fuse",
             "args": "--auto-load --tape ${filePath}",
-            "ext": ["tzx", "tap"],
+            "ext": ["tzx", "tap", "z80", "sna"],
             "unzip": true
         }
     ],
     "default_programs": [
         {
-            "ext": ["z80"],
+            "ext": ["z80", "sna"],
             "program": "zxspin"
         },
         {
@@ -42,8 +42,8 @@
         },
         {
             "type": "local",
-            "name": "Denied",
-            "path": "D:\\downloads\\spectrum\\games_moi\\denied"
+            "name": "Moi",
+            "path": "D:\\downloads\\spectrum\\games_moi"
         }
     ]
 }

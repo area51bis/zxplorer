@@ -27,6 +27,7 @@ import javafx.scene.layout.VBox
 import javafx.stage.WindowEvent
 import javafx.util.Callback
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
 import java.net.URI
@@ -98,8 +99,11 @@ class MainController : Initializable {
         }
 
         GlobalScope.launch {
+            val rootNode = createTree()
+
             Platform.runLater {
-                createTree()
+                treeView.root = rootNode
+
                 createTable()
                 createDownloadsTable()
 
@@ -152,7 +156,7 @@ class MainController : Initializable {
         previewImage.imageProperty().bind(selectedImage)
     }
 
-    private fun createTree() {
+    private fun createTree(): TreeNode {
         treeView.isShowRoot = true //TODO ¿ocultarlo? ¿hacerlo configurable?
 
         val root = TreeNode(T("all"))
@@ -166,7 +170,7 @@ class MainController : Initializable {
             if (treeView.isShowRoot) root.addEntries(libTree.entries)
         }
 
-        treeView.root = root
+        return root
     }
 
     private fun selectTreeNode(item: TreeItem<String>) {

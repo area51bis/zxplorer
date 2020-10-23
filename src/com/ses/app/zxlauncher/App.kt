@@ -22,13 +22,6 @@ class App : Application() {
             //Platform.runLater {
                 println(e.stackTraceToString())
                 ErrorDialog.create().show(e)
-                /*
-                Alert(Alert.AlertType.ERROR).apply {
-                    title = T("error")
-                    headerText = e.message
-                    //contentText = e.stackTraceToString()
-                }.show()
-                */
             //}
         }
 
