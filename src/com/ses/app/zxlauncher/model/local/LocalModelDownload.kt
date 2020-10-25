@@ -10,7 +10,7 @@ import java.io.File
 class LocalModelDownload(model: Model, file: File) : ModelDownload(model) {
     private val _file: File = file.relativeTo(model.dir)
 
-    private val _extension = ModelFileExtension(_file)
+    private val _extension = ModelFileExtension(getFile())
 
     private val _zxdbExtension = Extension().apply {
         ext = _extension.doubleExtension
@@ -27,6 +27,7 @@ class LocalModelDownload(model: Model, file: File) : ModelDownload(model) {
     override fun getLink(): String = ""
     override fun getFullUrl(): String = ""
     override fun getExtension(): Extension? = _zxdbExtension
+    override fun getRawExtension(): String = _extension.rawExtension
     override fun getFileType(): FileType = _fileType
     override fun getFormat(): String? = _zxdbExtension.text
     override fun getReleaseYear(): Int? = null

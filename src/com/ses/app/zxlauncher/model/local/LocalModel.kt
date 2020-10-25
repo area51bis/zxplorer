@@ -2,7 +2,6 @@ package com.ses.app.zxlauncher.model.local
 
 import com.ses.app.zxlauncher.T
 import com.ses.app.zxlauncher.model.*
-import com.ses.app.zxlauncher.model.zxdb.ZXDBModelEntry
 import java.io.File
 
 class LocalModel(name: String, dir: File) : Model(name, dir) {
@@ -16,7 +15,7 @@ class LocalModel(name: String, dir: File) : Model(name, dir) {
         if (d.isDirectory) {
             d.listFiles()?.forEach { file ->
                 if (file.isFile) {
-                    val key = LocalModelEntry.getFileKey(file)
+                    val key = NameExtractor(file).baseName
                     val entry = _entries.getOrPut(key) { LocalModelEntry(this) }
                     entry.addFile(file)
                 } else {

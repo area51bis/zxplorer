@@ -19,6 +19,7 @@ abstract class ModelDownload() {
     abstract fun getLink(): String
     abstract fun getFullUrl(): String
     abstract fun getExtension(): Extension? //TODO: cambiar por ModelFileExtension
+    abstract fun getRawExtension(): String
     abstract fun getFileType(): FileType    //TODO: ¿cambiar por ModelFileType?
     abstract fun getFormat(): String?
     abstract fun getReleaseYear(): Int?

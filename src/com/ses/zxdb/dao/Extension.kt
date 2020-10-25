@@ -11,8 +11,9 @@ class Extension {
         const val GIF = ".gif"
         const val JPG = ".jpg"
         const val PNG = ".png"
+        const val SCR = ".scr"
 
-        val IMAGE_EXTENSIONS = arrayOf(BMP, GIF, JPG, PNG)
+        val IMAGE_EXTENSIONS = arrayOf(BMP, GIF, JPG, PNG, SCR)
     }
 
     @Key @Column

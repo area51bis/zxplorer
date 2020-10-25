@@ -21,7 +21,7 @@ class Program(val id: String, val name: String, val path: String, val args: Stri
 
             //TODO: sacar a una función / extensión
             ZipFile(file).use { zip ->
-                val entry = zip.entries().nextElement()
+                val entry = zip.entries().toList().first { !it.isDirectory }
                 zip.getInputStream(entry).use { input ->
                     val tempDir = File(App.workingDir, "temp")
                     unzippedFile = File(tempDir, entry.name).also { f->

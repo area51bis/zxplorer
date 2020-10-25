@@ -1,6 +1,7 @@
 package com.ses.app.zxlauncher.model
 
 import java.io.File
+import java.util.zip.ZipFile
 
 class ModelFileExtension {
     companion object {
@@ -26,19 +27,37 @@ class ModelFileExtension {
 
     val isImage: Boolean
 
-    constructor(name: String) {
-        var n = name
-        isCompressed = n.endsWith(".zip")
-        if (isCompressed) n = n.removeSuffix(".zip")
+    constructor(file: File) {
+        var n = file.name
+        var zipExt = "zip"
+        var zipSuffix = ".zip"
+        isCompressed = n.endsWith(zipSuffix, true)
+        if (isCompressed) {
+            zipExt = n.substring(n.length - 3)
+            zipSuffix = n.substring(n.length - 4)
+            n = n.removeSuffix(zipSuffix)
+        }
         var ext = n.substringAfterLast(".", "")
-        if (ext.length == 0 ) ext = "zip"
+        if (ext.isEmpty() && isCompressed) {
+            ZipFile(file).use {
+                for (entry in it.entries()) {
+                    if (!entry.isDirectory) {
+                        ext = entry.name.substringAfterLast(".", "")
+                        break
+                    }
+                }
+            }
 
-        rawExtension = ext
-        singleExtension = if (rawExtension.length == 0) "" else ".$rawExtension"
-        doubleExtension = if (isCompressed && (rawExtension != "zip")) "$singleExtension.zip" else singleExtension
+            rawExtension = ext
+            singleExtension = ".$rawExtension"
+            doubleExtension = zipSuffix
+
+        } else {
+            rawExtension = ext
+            singleExtension = if (rawExtension.isEmpty()) "" else ".$rawExtension"
+            doubleExtension = if (isCompressed && (rawExtension != zipExt)) "$singleExtension$zipSuffix" else singleExtension
+        }
 
         isImage = IMAGE_EXTENSIONS.contains(rawExtension)
     }
-
-    constructor(file: File) : this(file.name)
 }

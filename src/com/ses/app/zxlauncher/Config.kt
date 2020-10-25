@@ -2,7 +2,6 @@ package com.ses.app.zxlauncher
 
 import com.ses.app.zxlauncher.model.ModelDownload
 import com.ses.util.all
-import com.ses.zxdb.rawExtension
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -83,19 +82,19 @@ object Config {
     fun getDefaultProgram(download: ModelDownload): Program? {
         val extension = download.getExtension()
         return if (extension != null) {
-            getDefaultProgram(extension.rawExtension)
+            getDefaultProgram(download.getRawExtension())
         } else {
             null
         }
     }
 
     fun getPrograms(download: ModelDownload): List<Program> {
-        val ext = download.getExtension()?.rawExtension
+        val ext = download.getRawExtension()?.toLowerCase()
         return extensions[ext] ?: emptyList()
     }
 
     fun getDefaultProgram(ext: String): Program? {
-        val list = extensions[ext]
+        val list = extensions[ext.toLowerCase()]
         return if ((list != null) && list.isNotEmpty()) list[0]
         else null
     }

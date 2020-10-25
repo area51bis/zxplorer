@@ -27,6 +27,7 @@ class ZXDBModelDownload(model: Model, private val download: Download) : ModelDow
     override fun getLink(): String = download.file_link
     override fun getFullUrl(): String = download.fullUrl
     override fun getExtension(): Extension? = download.extension
+    override fun getRawExtension(): String = download.extension?.rawExtension ?: ""
     override fun getFileType(): FileType = download.fileType
     override fun getFormat(): String? = download.extension?.text
     override fun getReleaseYear(): Int? = download.release_year

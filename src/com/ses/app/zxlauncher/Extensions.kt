@@ -1,5 +1,6 @@
 package com.ses.app.zxlauncher
 
+import com.ses.zx.SCRImageLoader
 import javafx.beans.value.ObservableValue
 import javafx.fxml.FXMLLoader
 import javafx.scene.control.TableColumn
@@ -37,14 +38,20 @@ val File.doubleExtension: String
 
         var end: Int
         var ext = ""
-        if (_name.endsWith(".zip") ) {
+        if (_name.endsWith(".zip")) {
             end = _name.lastIndex - 4
             ext = ".zip"
         } else {
             end = _name.lastIndex
         }
         val i = _name.lastIndexOf('.', end)
-        return if( i != -1) _name.substring(i) else ext
+        return if (i != -1) _name.substring(i) else ext
     }
 
-fun File.toImage(): Image = inputStream().use { Image(it) }
+fun File.toImage(): Image = inputStream().use {
+    if (!extension.equals("scr", true)) {
+        Image(it)
+    } else {
+        SCRImageLoader().load(it)
+    }
+}

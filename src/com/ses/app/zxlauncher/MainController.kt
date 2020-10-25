@@ -170,6 +170,8 @@ class MainController : Initializable {
             if (treeView.isShowRoot) root.addEntries(libTree.entries)
         }
 
+        root.entries.sortBy { it.getTitle() }
+
         return root
     }
 
@@ -404,7 +406,7 @@ class MainController : Initializable {
         }
 
         //println("getDownload: ${download.fileName}")
-        val model = download.model!!
+        val model = download.model
         model.download(download) { file ->
             downloadsTableView.refresh()
             if (download.isImage()) selectedImage.value = file.toImage()
