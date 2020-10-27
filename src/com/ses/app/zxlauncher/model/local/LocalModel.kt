@@ -15,9 +15,10 @@ class LocalModel(name: String, dir: File) : Model(name, dir) {
         if (d.isDirectory) {
             d.listFiles()?.forEach { file ->
                 if (file.isFile) {
-                    val key = NameExtractor(file).baseName
+                    val download = LocalModelDownload(this, file)
+                    val key = download.nameExtractor.baseName
                     val entry = _entries.getOrPut(key) { LocalModelEntry(this) }
-                    entry.addFile(file)
+                    entry.addFile(download)
                 } else {
                     getFiles(file)
                 }

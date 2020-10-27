@@ -38,7 +38,7 @@
         {
             "type": "zxdb",
             "name": "ZXDB",
-            "path": "D:\\downloads\\spectrum\\World of Spectrum"
+            "path": "zxdb"
         },
         {
             "type": "local",

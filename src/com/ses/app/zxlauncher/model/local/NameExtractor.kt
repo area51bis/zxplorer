@@ -1,18 +1,14 @@
 package com.ses.app.zxlauncher.model.local
 
-import com.ses.app.zxlauncher.model.ModelFileExtension
-import java.io.File
-
-class NameExtractor(private val file: File) {
+class NameExtractor(private val download: LocalModelDownload) {
     val baseName: String by lazy { extractBaseName() }
     val title: String by lazy { extractTitle() }
 
     private val articles = arrayOf("the", "el", "la", "los", "las")
 
     private fun extractBaseName(): String {
-        var name = file.name
-        val ext = ModelFileExtension(file)
-        name = name.removeSuffix(ext.doubleExtension)
+        var name = download.getFileName()
+        name = name.removeSuffix(download.modelExtension.doubleExtension)
 
         val i = name.indexOfAny(charArrayOf('(', '_'))
         return if (i != -1) name.substring(0, i) else name

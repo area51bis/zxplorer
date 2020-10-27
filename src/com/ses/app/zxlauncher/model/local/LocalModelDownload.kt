@@ -10,11 +10,12 @@ import java.io.File
 class LocalModelDownload(model: Model, file: File) : ModelDownload(model) {
     private val _file: File = file.relativeTo(model.dir)
 
-    private val _extension = ModelFileExtension(getFile())
+    val modelExtension by lazy { ModelFileExtension(getFile()) }
+    val nameExtractor by lazy { NameExtractor(this) }
 
     private val _zxdbExtension = Extension().apply {
-        ext = _extension.doubleExtension
-        text = _extension.rawExtension.toUpperCase()
+        ext = modelExtension.doubleExtension
+        text = modelExtension.rawExtension.toUpperCase()
     }
 
     private val _fileType = FileType().apply {
@@ -27,10 +28,10 @@ class LocalModelDownload(model: Model, file: File) : ModelDownload(model) {
     override fun getLink(): String = ""
     override fun getFullUrl(): String = ""
     override fun getExtension(): Extension? = _zxdbExtension
-    override fun getRawExtension(): String = _extension.rawExtension
+    override fun getRawExtension(): String = modelExtension.rawExtension
     override fun getFileType(): FileType = _fileType
     override fun getFormat(): String? = _zxdbExtension.text
     override fun getReleaseYear(): Int? = null
     override fun getMachine(): String? = null
-    override fun isImage(): Boolean = _extension.isImage
+    override fun isImage(): Boolean = modelExtension.isImage
 }

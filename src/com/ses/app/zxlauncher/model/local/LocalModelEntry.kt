@@ -13,13 +13,14 @@ class LocalModelEntry : ModelEntry {
 
     private val _downloads = ArrayList<ModelDownload>()
 
-    fun addFile(file: File) {
+    //fun addFile(file: File) {
+    fun addFile(download: LocalModelDownload) {
         if (_downloads.isEmpty()) {
-            val nameExtractor = NameExtractor(file)
+            val nameExtractor = download.nameExtractor
             key = nameExtractor.baseName
             _title = nameExtractor.title
         }
-        _downloads.add(LocalModelDownload(model, file))
+        _downloads.add(download)
     }
 
     override fun getTitle(): String = _title

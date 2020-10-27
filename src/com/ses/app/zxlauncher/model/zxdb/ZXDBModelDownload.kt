@@ -10,18 +10,19 @@ import java.io.File
 import java.nio.file.Path
 
 class ZXDBModelDownload(model: Model, private val download: Download) : ModelDownload(model) {
-    // file_link = "/pub/sinclair/games/a/AcroJet.tzx.zip"
-    // path = "wos/games/a/AcroJet.tzx.zip"
     /**
-     * Obtiene la ruta al fichero local (relativa a la biblioteca) eliminado el prefijo del servidor y añadiendo su "id":
-     *
-     * file_link = "/pub/sinclair/games/a/AcroJet.tzx.zip"
-     *
-     * path = "wos/games/a/AcroJet.tzx.zip"
+     * Obtiene la ruta al fichero local (relativa a la biblioteca).
      */
     override fun getFilePath(): String {
         val server = download.downloadServer!!
-        return "${server.id}/${File.separatorChar}${download.file_link.removePrefix(server.prefix)}"
+        // file_link = "/pub/sinclair/games/a/AcroJet.tzx.zip"
+        // path = "wos/games/a/AcroJet.tzx.zip"
+        // quita el prefijo del servidor y añade su id.
+        //return "${server.id}${File.separatorChar}${download.file_link.removePrefix(server.prefix).replace('/', File.separatorChar)}"
+
+        // file_link = "/pub/sinclair/games/a/AcroJet.tzx.zip"
+        // path = "pub/sinclair/games/a/AcroJet.tzx.zip"
+        return download.file_link.removePrefix("/").replace('/', File.separatorChar)
     }
     override fun getFileName(): String = download.fileName
     override fun getLink(): String = download.file_link

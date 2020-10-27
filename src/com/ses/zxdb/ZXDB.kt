@@ -24,7 +24,6 @@ object ZXDB {
     fun open(): Boolean = try {
         if (File(DB_NAME).exists()) {
             conn = DriverManager.getConnection("jdbc:sqlite:$DB_NAME")
-            //for (t in LOAD_TABLES) readTable(t)
             //TODO comprobar que la base de datos es válida
             true
         } else {
