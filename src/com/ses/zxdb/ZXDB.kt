@@ -21,15 +21,21 @@ object ZXDB {
 
     private lateinit var conn: Connection
 
+    var isOpened: Boolean = false
+        private set
+
     fun open(): Boolean = try {
         if (File(DB_NAME).exists()) {
             conn = DriverManager.getConnection("jdbc:sqlite:$DB_NAME")
             //TODO comprobar que la base de datos es válida
+            isOpened = true
             true
         } else {
+            isOpened = false
             false
         }
     } catch (e: Exception) {
+        isOpened = false
         false
     }
 
@@ -39,6 +45,7 @@ object ZXDB {
         } catch (e: Exception) {
         }
         tables.clear();
+        isOpened = false
     }
 
     fun sql(): SQL = SQL(conn)
@@ -72,7 +79,7 @@ object ZXDB {
 
     private fun <T : Any> readTable(cls: KClass<T>): Table<T> {
         val table = Table<T>(cls)
-        SQL(conn).select(cls = cls, f = table::addRow)
+        sql().select(cls = cls, f = table::addRow)
         tables[cls] = table
         return table
     }

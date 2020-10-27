@@ -30,25 +30,27 @@ class ZXDBModel(name: String, dir: File) : Model(name, dir) {
     override fun getTree(): TreeNode {
         val root = TreeNode(name)
 
-        // crear los nodos en el orden de las categorías
-        ZXDB.getTable(GenreType::class).rows.forEach { root.getNode(getGenrePath(it)) }
+        if (ZXDB.isOpened) {
+            // crear los nodos en el orden de las categorías
+            ZXDB.getTable(GenreType::class).rows.forEach { root.getNode(getGenrePath(it)) }
 
-        // year
-        val yearNode = root.getNode(T("year"))
+            // year
+            val yearNode = root.getNode(T("year"))
 
-        // machine
-        ZXDB.getTable(MachineType::class).rows.forEach { root.getNode(listOf(T("machine"), it.text)) }
+            // machine
+            ZXDB.getTable(MachineType::class).rows.forEach { root.getNode(listOf(T("machine"), it.text)) }
 
-        // availability
-        ZXDB.getTable(AvailableType::class).rows.forEach { root.getNode(listOf(T("availability"), it.text)) }
+            // availability
+            ZXDB.getTable(AvailableType::class).rows.forEach { root.getNode(listOf(T("availability"), it.text)) }
 
-        // añadir las entradas a los nodos
-        for (row in _entries) addTreeEntry(root, row)
+            // añadir las entradas a los nodos
+            for (row in _entries) addTreeEntry(root, row)
 
-        // ordenar años
-        yearNode.children.sortBy { it.value }
+            // ordenar años
+            yearNode.children.sortBy { it.value }
+        }
 
-        return root;
+        return root
     }
 
     override fun getEntries(): List<ModelEntry> = _entries

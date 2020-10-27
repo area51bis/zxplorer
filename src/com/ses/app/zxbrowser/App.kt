@@ -2,6 +2,7 @@ package com.ses.app.zxbrowser
 
 import com.ses.app.zxbrowser.ui.ErrorDialog
 import javafx.application.Application
+import javafx.application.Platform
 import javafx.scene.Scene
 import javafx.stage.Stage
 import java.io.File
@@ -19,10 +20,10 @@ class App : Application() {
 
     override fun start(primaryStage: Stage?) {
         Thread.setDefaultUncaughtExceptionHandler { t, e ->
-            //Platform.runLater {
-                //println(e.stackTraceToString())
+            Platform.runLater {
+                println(e.stackTraceToString())
                 ErrorDialog().show(e)
-            //}
+            }
         }
 
         mainStage = primaryStage!!

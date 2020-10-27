@@ -1,3 +1,6 @@
 .DS_Store
 /out/
 /run/ZXDB_mysql.sql
+/run/ZXDB.db
+/run/temp
+/run/zxdb

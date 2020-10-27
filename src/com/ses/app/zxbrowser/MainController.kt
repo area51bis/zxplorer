@@ -43,6 +43,9 @@ class MainController : Initializable {
     @FXML
     lateinit var rootView: VBox
 
+    @FXML
+    lateinit var menuLibraries: Menu
+
     // toolbar
     @FXML
     lateinit var searchTextField: TextField
@@ -66,24 +69,42 @@ class MainController : Initializable {
     @FXML
     lateinit var statusLabel: Label
 
-    //private val model = ZXDBModel("ZXDB", File(App.workingDir, "zxdb"))
+    private val zxdbModel = Config.allLibraries.firstOrNull { it.type == "zxdb" }?.model
+
     private var filters: ArrayList<Filter<ModelEntry>> = ArrayList()
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
+        initMenu()
         initObservers()
 
-        App.mainStage.addEventFilter(WindowEvent.WINDOW_SHOWN) { _ ->
-            if (ZXDB.open()) {
-                initModels()
-            } else {
-                if (Alert(Alert.AlertType.CONFIRMATION).apply {
-                            title = T("error")
-                            headerText = T("no_database_found")
-                            contentText = T("download_database_q")
-                        }.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-                    updateZXDB()
+        App.mainStage.addEventFilter(WindowEvent.WINDOW_SHOWN) {
+            if (zxdbModel != null) {
+                if (ZXDB.open()) {
+                    initModels()
+                } else {
+                    if (Alert(Alert.AlertType.CONFIRMATION).apply {
+                                title = T("error")
+                                headerText = T("no_database_found")
+                                contentText = T("download_database_q")
+                            }.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
+                        updateLibrary(zxdbModel)
+                    } else {
+                        initModels()
+                    }
                 }
+            } else {
+                initModels()
             }
+        }
+    }
+
+    private fun initMenu() {
+        for (lib in Config.allLibraries) {
+            val menu = Menu(lib.name)
+            val op = MenuItem(T("update"))
+            menu.items.add(op)
+
+            menuLibraries.items.add(menu)
         }
     }
 
@@ -283,6 +304,7 @@ class MainController : Initializable {
 
     @FXML
     fun menuUpdateDatabaseAction() {
+        if (zxdbModel == null) return
         val button = Alert(Alert.AlertType.CONFIRMATION).apply {
             title = T("update")
             headerText = T("download_database_warning")
@@ -290,7 +312,7 @@ class MainController : Initializable {
         }.showAndWait().orElse(ButtonType.CANCEL)
 
         if (button == ButtonType.OK) {
-            updateZXDB()
+            updateLibrary(zxdbModel)
         }
     }
 
@@ -299,8 +321,7 @@ class MainController : Initializable {
         Platform.exit()
     }
 
-    private fun updateZXDB() {
-        /*
+    private fun updateLibrary(model: Model) {
         val dialog = ProgressDialog.create().apply {
             title = T("updating_database")
             show()
@@ -325,7 +346,6 @@ class MainController : Initializable {
                 }
             }
         }
-        */
     }
 
     @FXML
