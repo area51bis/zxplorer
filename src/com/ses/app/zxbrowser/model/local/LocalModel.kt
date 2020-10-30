@@ -1,14 +1,14 @@
 package com.ses.app.zxbrowser.model.local
 
+import com.ses.app.zxbrowser.I
 import com.ses.app.zxbrowser.T
 import com.ses.app.zxbrowser.model.*
 import java.io.File
 
 class LocalModel(name: String, dir: File) : Model(name, dir) {
     private val _entries = LinkedHashMap<String, LocalModelEntry>()
-
-    init {
-        getFiles(dir)
+    private val root = TreeNode(name).apply {
+        collapsedIcon = I("computer")
     }
 
     private fun getFiles(d: File) {
@@ -27,12 +27,17 @@ class LocalModel(name: String, dir: File) : Model(name, dir) {
     }
 
     override fun getTree(): TreeNode {
-        val root = TreeNode(name)
+        createTree()
+        return root
+    }
+
+    private fun createTree() {
+        _entries.clear()
+        getFiles(dir)
+        root.children.clear()
         for (entry in _entries.values) {
             addTreeEntry(root, entry)
         }
-        //root.addEntries(_entries.values)
-        return root
     }
 
     private fun getCategoryPath(entry: LocalModelEntry): List<String> {
@@ -51,7 +56,10 @@ class LocalModel(name: String, dir: File) : Model(name, dir) {
         val p = ArrayList<String>()
         for (s in path) {
             p.add(s)
-            root.getNode(p).addEntry(entry)
+            root.getNode(p) {
+                it.collapsedIcon = I("folder")
+                it.expandedIcon = I("folder_open")
+            }.addEntry(entry)
         }
     }
 

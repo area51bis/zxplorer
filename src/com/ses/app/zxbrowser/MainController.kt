@@ -432,8 +432,8 @@ class MainController : Initializable {
 }
 
 class FileDownloadTableCell : TableCell<ModelDownload, String>() {
-    private val cloudImage = Image(javaClass.getResourceAsStream("/cloud.png"))
-    private val downloadedImage = Image(javaClass.getResourceAsStream("/check.png"))
+    private val cloudImage = Image("/cloud.png")
+    private val downloadedImage = Image("/file.png")
 
     private val iconView = ImageView()
 

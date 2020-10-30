@@ -26,7 +26,7 @@
             <MenuItem mnemonicParsing="false" onAction="#menuQuit" text="%exit" />
           </items>
         </Menu>
-            <Menu fx:id="menuLibraries" mnemonicParsing="false" text="%libraries" visible="false" />
+            <Menu fx:id="menuLibraries" mnemonicParsing="false" text="%libraries" />
         <Menu mnemonicParsing="false" text="%help">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#menuAboutAction" text="%about_" />

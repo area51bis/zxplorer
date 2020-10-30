@@ -26,11 +26,15 @@ fun <S, T> TableView<S>.addColumn(name: String, callback: Callback<TableColumn.C
 
 fun Any.fxmlLoader(name: String): FXMLLoader = FXMLLoader(javaClass.getResource(name), App.strings)
 
-fun Any.T(key: String): String = try {
+/** Texto localizado. */
+fun T(key: String): String = try {
     App.strings.getString(key)
 } catch (e: Exception) {
     key
 }
+
+/** Icono. */
+fun I(name: String): Image = Image("/$name.png")
 
 val File.doubleExtension: String
     get() {

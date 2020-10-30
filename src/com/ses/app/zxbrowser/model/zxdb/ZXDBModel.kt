@@ -1,6 +1,7 @@
 package com.ses.app.zxbrowser.model.zxdb
 
 import com.ses.app.zxbrowser.DownloadManager
+import com.ses.app.zxbrowser.I
 import com.ses.app.zxbrowser.T
 import com.ses.app.zxbrowser.model.*
 import com.ses.net.Http
@@ -9,6 +10,7 @@ import com.ses.zxdb.converter.MySQLConverter
 import com.ses.zxdb.dao.AvailableType
 import com.ses.zxdb.dao.GenreType
 import com.ses.zxdb.dao.MachineType
+import javafx.scene.image.ImageView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
@@ -27,21 +29,31 @@ class ZXDBModel(name: String, dir: File) : Model(name, dir) {
         }
     }
 
+    private val root: TreeNode = TreeNode(name).apply {
+        collapsedIcon = I("zxdb")
+    }
+
     override fun getTree(): TreeNode {
-        val root = TreeNode(name)
+        createTree()
+
+        return root
+    }
+
+    private fun createTree() {
+        root.children.clear()
 
         if (ZXDB.isOpened) {
             // crear los nodos en el orden de las categorías
-            ZXDB.getTable(GenreType::class).rows.forEach { root.getNode(getGenrePath(it)) }
+            ZXDB.getTable(GenreType::class).rows.forEach { getNode(root, getGenrePath(it)) }
 
             // year
-            val yearNode = root.getNode(T("year"))
+            val yearNode = getNode(root, T("year"))
 
             // machine
-            ZXDB.getTable(MachineType::class).rows.forEach { root.getNode(listOf(T("machine"), it.text)) }
+            ZXDB.getTable(MachineType::class).rows.forEach { getNode(root, listOf(T("machine"), it.text)) }
 
             // availability
-            ZXDB.getTable(AvailableType::class).rows.forEach { root.getNode(listOf(T("availability"), it.text)) }
+            ZXDB.getTable(AvailableType::class).rows.forEach { getNode(root, listOf(T("availability"), it.text)) }
 
             // añadir las entradas a los nodos
             for (row in _entries) addTreeEntry(root, row)
@@ -49,8 +61,20 @@ class ZXDBModel(name: String, dir: File) : Model(name, dir) {
             // ordenar años
             yearNode.children.sortBy { it.value }
         }
+    }
 
-        return root
+    private fun getNode(parent: TreeNode, path: String): TreeNode {
+        return parent.getNode(path) {
+            it.collapsedIcon = I("folder")
+            it.expandedIcon = I("folder_open")
+        }
+    }
+
+    private fun getNode(parent: TreeNode, path: List<String>): TreeNode {
+        return parent.getNode(path) {
+            it.collapsedIcon = I("folder")
+            it.expandedIcon = I("folder_open")
+        }
     }
 
     override fun getEntries(): List<ModelEntry> = _entries
@@ -77,7 +101,7 @@ class ZXDBModel(name: String, dir: File) : Model(name, dir) {
         val p = ArrayList<String>()
         for (s in path) {
             p.add(s)
-            root.getNode(p).addEntry(entry)
+            getNode(root, p).addEntry(entry)
         }
     }
 
