@@ -98,4 +98,8 @@ object Config {
         return if ((list != null) && list.isNotEmpty()) list[0]
         else null
     }
+
+    object general {
+        val showRootNode: Boolean = false
+    }
 }

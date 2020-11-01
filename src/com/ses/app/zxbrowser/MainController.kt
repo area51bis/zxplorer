@@ -174,7 +174,7 @@ class MainController : Initializable {
     }
 
     private fun createTree(): TreeNode {
-        treeView.isShowRoot = true //TODO ¿ocultarlo? ¿hacerlo configurable?
+        treeView.isShowRoot = Config.general.showRootNode
 
         val root = TreeNode(T("all"))
         root.isExpanded = true
@@ -184,10 +184,10 @@ class MainController : Initializable {
             libTree.isExpanded = true;
             root.children.add(libTree)
 
-            if (treeView.isShowRoot) root.addEntries(libTree.entries)
+            if (Config.general.showRootNode) root.addEntries(libTree.entries)
         }
 
-        root.entries.sortBy { it.getTitle() }
+        if (Config.general.showRootNode) root.entries.sortBy { it.getTitle() }
 
         return root
     }

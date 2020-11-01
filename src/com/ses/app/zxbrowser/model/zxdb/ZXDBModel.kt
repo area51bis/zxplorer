@@ -138,6 +138,7 @@ class ZXDBModel(name: String, dir: File) : Model(name, dir) {
             // sustituir fichero
             ZXDB.close()
 
+            mySqlFile.delete()
             sqliteFile.delete()
             sqliteTempFile.renameTo(sqliteFile)
 

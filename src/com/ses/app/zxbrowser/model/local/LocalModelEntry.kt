@@ -12,7 +12,6 @@ class LocalModelEntry : ModelEntry {
 
     private val _downloads = ArrayList<ModelDownload>()
 
-    //fun addFile(file: File) {
     fun addFile(download: LocalModelDownload) {
         if (_downloads.isEmpty()) {
             val nameExtractor = download.nameExtractor
