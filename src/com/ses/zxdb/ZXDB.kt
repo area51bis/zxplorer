@@ -44,7 +44,7 @@ object ZXDB {
             conn.close()
         } catch (e: Exception) {
         }
-        tables.clear();
+        tables.clear()
         isOpened = false
     }
 

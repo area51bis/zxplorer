@@ -4,13 +4,13 @@ import com.ses.app.zxbrowser.filters.EntryTitleFilter
 import com.ses.app.zxbrowser.filters.Filter
 import com.ses.app.zxbrowser.model.*
 import com.ses.app.zxbrowser.ui.ProgressDialog
-import com.ses.zxdb.*
-import com.ses.zxdb.dao.*
+import com.ses.zxdb.dao.FileType
 import javafx.application.Platform
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
+import javafx.collections.ListChangeListener
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -60,23 +60,34 @@ class MainController : Initializable {
     lateinit var tableView: TableView<ModelEntry>
 
     @FXML
+    lateinit var tableStatusLabel: Label
+
+    @FXML
     lateinit var downloadsTableView: TableView<ModelDownload>
+
+    @FXML
+    lateinit var downloadsStatusLabel: Label
 
     @FXML
     lateinit var previewImage: ImageView
     private val selectedImage = SimpleObjectProperty<Image>()
 
     @FXML
-    lateinit var statusLabel: Label
+    lateinit var statusProgress: ProgressBar
 
     private val zxdbModel = Config.allLibraries.firstOrNull { it.type == "zxdb" }?.model
 
     private var filters: ArrayList<Filter<ModelEntry>> = ArrayList()
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
-        initMenu()
-        initObservers()
+        initUI()
 
+        App.mainStage.addEventFilter(WindowEvent.WINDOW_SHOWN) {
+            checkLibraries {
+                initModels()
+            }
+        }
+        /*
         App.mainStage.addEventFilter(WindowEvent.WINDOW_SHOWN) {
             if (zxdbModel != null) {
                 if (ZXDB.open()) {
@@ -96,6 +107,7 @@ class MainController : Initializable {
                 initModels()
             }
         }
+        */
     }
 
     private fun initMenu() {
@@ -108,6 +120,44 @@ class MainController : Initializable {
         }
     }
 
+    private fun initUI() {
+        initMenu()
+
+        createTree()
+        createTable()
+        createDownloadsTable()
+
+        initObservers()
+    }
+
+    private fun initModels() {
+        val root: TreeNode = treeView.root as TreeNode
+
+        root.children.clear()
+
+        statusProgress.apply {
+            isVisible = true
+            progress = ProgressBar.INDETERMINATE_PROGRESS
+        }
+
+        GlobalScope.launch {
+            Config.allLibraries.forEach { lib ->
+                root.children.add(lib.model.root)
+                lib.model.root.isExpanded = true
+                val libTree = lib.model.getTree()
+                libTree.isExpanded = true
+                //root.children.add(libTree)
+
+                if (Config.general.showRootNode) root.addEntries(libTree.entries)
+            }
+
+            if (Config.general.showRootNode) root.entries.sortBy { it.getTitle() }
+
+            Platform.runLater { statusProgress.isVisible = false }
+        }
+    }
+
+    /*
     private fun initModels() {
         val dialog = ProgressDialog.create().apply {
             title = T("loading_")
@@ -130,6 +180,7 @@ class MainController : Initializable {
             }
         }
     }
+    */
 
     private fun initObservers() {
         // al seleccionar un nodo, actualizar la lista
@@ -141,7 +192,7 @@ class MainController : Initializable {
                 tableView.items.clear()
             }
 
-            statusLabel.text = T("items_count_fmt").format(tableView.items.size)
+            //statusLabel.text = T("items_count_fmt").format(tableView.items.size)
         }
 
         // al seleccionar un elemento de la lista, actualizar la lista de descargas
@@ -152,6 +203,10 @@ class MainController : Initializable {
                 downloadsTableView.items.clear()
             }
         }
+
+        tableView.items.addListener(ListChangeListener {
+            tableStatusLabel.text = T("items_count_fmt").format(tableView.items.size)
+        })
 
         downloadsTableView.selectionModel.selectedItemProperty().addListener { _, _, download ->
             var image: Image? = null
@@ -167,13 +222,28 @@ class MainController : Initializable {
             selectedImage.value = image
         }
 
+        downloadsTableView.items.addListener(ListChangeListener {
+            downloadsStatusLabel.text = T("items_count_fmt").format(downloadsTableView.items.size)
+        })
+
         // "truco" para hacer que la imagen crezca
         previewImage.fitWidthProperty().bind((previewImage.parent as Region).widthProperty())
         previewImage.fitHeightProperty().bind((previewImage.parent as Region).heightProperty())
         previewImage.imageProperty().bind(selectedImage)
     }
 
-    private fun createTree(): TreeNode {
+    private fun createTree() {
+        treeView.isShowRoot = Config.general.showRootNode
+
+        val root = TreeNode(T("all"))
+        root.isExpanded = true
+
+        if (Config.general.showRootNode) root.entries.sortBy { it.getTitle() }
+
+        treeView.root = root
+    }
+
+    private fun _createTree(): TreeNode {
         treeView.isShowRoot = Config.general.showRootNode
 
         val root = TreeNode(T("all"))
@@ -181,7 +251,7 @@ class MainController : Initializable {
 
         Config.allLibraries.forEach { lib ->
             val libTree = lib.model.getTree()
-            libTree.isExpanded = true;
+            libTree.isExpanded = true
             root.children.add(libTree)
 
             if (Config.general.showRootNode) root.addEntries(libTree.entries)
@@ -202,18 +272,6 @@ class MainController : Initializable {
         tableView.selectionModel.clearSelection()
     }
 
-    /*
-    private fun filteredList(list: ObservableList<Entry>): FilteredList<Entry> = list.filtered {
-        var pass = true
-        for (f in filters) {
-            if (!f.check(it)) {
-                pass = false
-                break
-            }
-        }
-        pass
-    }
-    */
     private fun filterList(list: ObservableList<ModelEntry>, dest: ObservableList<ModelEntry>): ObservableList<ModelEntry> {
         return list.filterTo(dest.apply { clear() }) {
             var pass = true
@@ -321,13 +379,17 @@ class MainController : Initializable {
         Platform.exit()
     }
 
-    private fun updateLibrary(model: Model) {
+    private fun checkLibraries(whenFinish: (() -> Unit)? = null) {
+        whenFinish?.invoke()
+    }
+
+    private fun updateLibrary(model: Model, whenFinish: (() -> Unit)? = null) {
         val dialog = ProgressDialog.create().apply {
-            title = T("updating_database")
+            title = T("updating_collection")
             show()
         }
 
-        model.updateDatabase { status, progress, message ->
+        model.update { status, progress, message ->
             when (status) {
                 Model.UpdateStatus.Connecting -> Platform.runLater {
                     dialog.progress = ProgressBar.INDETERMINATE_PROGRESS
@@ -336,6 +398,7 @@ class MainController : Initializable {
                 Model.UpdateStatus.Completed -> Platform.runLater {
                     initModels()
                     dialog.hide()
+                    whenFinish?.invoke()
                 }
 
                 Model.UpdateStatus.Error -> Platform.runLater { dialog.hide() }
@@ -448,7 +511,7 @@ class FileDownloadTableCell : TableCell<ModelDownload, String>() {
             iconView.image = null
         } else {
             //text = download.fileName
-            val model = download.model!!
+            val model = download.model
             iconView.image = if (model.isDownloaded(download)) downloadedImage else cloudImage
         }
     }

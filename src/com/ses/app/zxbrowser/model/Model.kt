@@ -27,11 +27,13 @@ abstract class Model(val name: String, val dir: File) {
         Error
     }
 
+    abstract val root: TreeNode
     abstract fun getTree() : TreeNode
 
     abstract fun getEntries(): List<ModelEntry>
 
-    abstract fun updateDatabase(progressHandler: UpdateProgressHandler?)
+    abstract fun needsUpdate(): Boolean
+    abstract fun update(progressHandler: UpdateProgressHandler?)
 
     abstract fun isImage(download: ModelDownload?): Boolean
     abstract fun isDownloaded(download: ModelDownload): Boolean

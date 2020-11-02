@@ -40,7 +40,7 @@ object Config {
     }
 
     private fun loadProgram(json: JSONObject): Program {
-        // extensioens soportadas
+        // extensiones soportadas
         val ext = ArrayList<String>()
         json.getJSONArray("ext")?.all<String>()?.forEach {
             ext.add(it)
@@ -89,7 +89,7 @@ object Config {
     }
 
     fun getPrograms(download: ModelDownload): List<Program> {
-        val ext = download.getRawExtension()?.toLowerCase()
+        val ext = download.getRawExtension().toLowerCase()
         return extensions[ext] ?: emptyList()
     }
 

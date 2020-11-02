@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -52,18 +53,28 @@
                <children>
                   <SplitPane dividerPositions="0.8" maxWidth="1.7976931348623157E308" orientation="VERTICAL" prefHeight="733.0" prefWidth="1019.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
-                      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="160.0">
+                        <VBox>
                            <children>
-                              <TableView fx:id="tableView" onMouseClicked="#onTableRowClick" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <TableView fx:id="tableView" onMouseClicked="#onTableRowClick" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS" />
+                              <Label fx:id="tableStatusLabel">
+                                 <VBox.margin>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                 </VBox.margin>
+                              </Label>
                            </children>
-                        </AnchorPane>
+                        </VBox>
                         <SplitPane dividerPositions="0.7" SplitPane.resizableWithParent="false">
                            <items>
-                            <AnchorPane minHeight="200.0" minWidth="100.0" prefHeight="200.0" prefWidth="160.0">
+                              <VBox>
                                  <children>
-                                    <TableView fx:id="downloadsTableView" onContextMenuRequested="#onDownloadsTableContextMenuRequested" onMouseClicked="#onDownloadsTableRowClick" prefHeight="200.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <TableView fx:id="downloadsTableView" onContextMenuRequested="#onDownloadsTableContextMenuRequested" onMouseClicked="#onDownloadsTableRowClick" prefHeight="200.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS" />
+                                    <Label fx:id="downloadsStatusLabel">
+                                       <VBox.margin>
+                                          <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                       </VBox.margin>
+                                    </Label>
                                  </children>
-                              </AnchorPane>
+                              </VBox>
                               <BorderPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="192.0" prefWidth="256.0" SplitPane.resizableWithParent="false">
                                  <center>
                                     <ImageView fx:id="previewImage" fitHeight="200.0" fitWidth="302.0" pickOnBounds="true" preserveRatio="true" smooth="false" />
@@ -77,13 +88,13 @@
             </AnchorPane>
         </items>
       </SplitPane>
-      <ToolBar prefHeight="32.0" prefWidth="200.0">
-         <items>
-            <Label fx:id="statusLabel" />
-         </items>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </ToolBar>
+      <AnchorPane maxWidth="1.7976931348623157E308" prefHeight="22.0">
+         <children>
+            <ProgressBar fx:id="statusProgress" prefWidth="200.0" progress="0.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+         <padding>
+            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+         </padding>
+      </AnchorPane>
   </children>
 </VBox>

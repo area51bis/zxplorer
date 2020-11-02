@@ -10,7 +10,6 @@ import com.ses.zxdb.converter.MySQLConverter
 import com.ses.zxdb.dao.AvailableType
 import com.ses.zxdb.dao.GenreType
 import com.ses.zxdb.dao.MachineType
-import javafx.scene.image.ImageView
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
@@ -29,8 +28,12 @@ class ZXDBModel(name: String, dir: File) : Model(name, dir) {
         }
     }
 
-    private val root: TreeNode = TreeNode(name).apply {
+    override val root: TreeNode = TreeNode(name).apply {
         collapsedIcon = I("zxdb")
+    }
+
+    init {
+        ZXDB.open()
     }
 
     override fun getTree(): TreeNode {
@@ -79,6 +82,8 @@ class ZXDBModel(name: String, dir: File) : Model(name, dir) {
 
     override fun getEntries(): List<ModelEntry> = _entries
 
+    override fun needsUpdate(): Boolean = !ZXDB.isOpened
+
     private fun getGenrePath(genre: GenreType?): List<String> {
         return genre?.text
                 ?.replace("(.*) Game:".toRegex(), "Game: \$1:")
@@ -105,14 +110,14 @@ class ZXDBModel(name: String, dir: File) : Model(name, dir) {
         }
     }
 
-    override fun updateDatabase(progressHandler: UpdateProgressHandler?) {
+    override fun update(progressHandler: UpdateProgressHandler?) {
         GlobalScope.launch {
             val workingDir = File(System.getProperty("user.dir"))
             val mySqlFile = File(workingDir, "ZXDB_mysql.sql")
             val sqliteFile = File(workingDir, ZXDB.DB_NAME)
             val sqliteTempFile = File(workingDir, "_${ZXDB.DB_NAME}_")
 
-            var downloadComplete: Boolean = false
+            var downloadComplete = false
             // descargar ZXDB_mysql.sql
             Http().apply {
                 request = "https://github.com/zxdb/ZXDB/raw/master/ZXDB_mysql.sql"

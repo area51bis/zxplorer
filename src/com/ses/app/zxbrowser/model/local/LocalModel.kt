@@ -7,7 +7,8 @@ import java.io.File
 
 class LocalModel(name: String, dir: File) : Model(name, dir) {
     private val _entries = LinkedHashMap<String, LocalModelEntry>()
-    private val root = TreeNode(name).apply {
+
+    override val root = TreeNode(name).apply {
         collapsedIcon = I("computer")
     }
 
@@ -66,7 +67,9 @@ class LocalModel(name: String, dir: File) : Model(name, dir) {
 
     override fun getEntries(): List<ModelEntry> = _entries.values.toList()
 
-    override fun updateDatabase(progressHandler: UpdateProgressHandler?) {
+    override fun needsUpdate(): Boolean = false
+
+    override fun update(progressHandler: UpdateProgressHandler?) {
         progressHandler?.invoke(UpdateStatus.Completed, 1.0f, T("completed"))
     }
 

@@ -13,14 +13,18 @@ class LocalModelDownload(model: Model, file: File) : ModelDownload(model) {
     val modelExtension by lazy { ModelFileExtension(getFile()) }
     val nameExtractor by lazy { NameExtractor(this) }
 
-    private val _zxdbExtension = Extension().apply {
-        ext = modelExtension.doubleExtension
-        text = modelExtension.rawExtension.toUpperCase()
+    private val _zxdbExtension: Extension by lazy {
+        Extension().apply {
+            ext = modelExtension.doubleExtension
+            text = modelExtension.rawExtension.toUpperCase()
+        }
     }
 
-    private val _fileType = FileType().apply {
-        id = 8
-        text = _zxdbExtension.text
+    private val _fileType: FileType by lazy {
+        FileType().apply {
+            id = 8
+            text = _zxdbExtension.text
+        }
     }
 
     override fun getFilePath(): String = _file.path
