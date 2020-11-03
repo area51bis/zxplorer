@@ -1,9 +1,0 @@
-{
-    "order": 3,
-    "id": "fuse",
-    "name": "Fuse",
-    "path": "/Applications/Fuse.app/Contents/MacOS/Fuse",
-    "args": "--auto-load --tape ${filePath}",
-    "ext": ["tzx", "tap"],
-    "unzip": true
-}

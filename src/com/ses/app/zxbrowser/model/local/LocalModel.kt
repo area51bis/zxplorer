@@ -67,6 +67,8 @@ class LocalModel(name: String, dir: File) : Model(name, dir) {
 
     override fun getEntries(): List<ModelEntry> = _entries.values.toList()
 
+    override fun canUpdate(): Boolean = false
+
     override fun needsUpdate(): Boolean = false
 
     override fun update(progressHandler: UpdateProgressHandler?) {

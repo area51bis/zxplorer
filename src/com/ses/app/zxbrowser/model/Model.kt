@@ -32,6 +32,7 @@ abstract class Model(val name: String, val dir: File) {
 
     abstract fun getEntries(): List<ModelEntry>
 
+    abstract fun canUpdate(): Boolean
     abstract fun needsUpdate(): Boolean
     abstract fun update(progressHandler: UpdateProgressHandler?)
 

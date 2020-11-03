@@ -11,7 +11,7 @@ class LocalModelDownload(model: Model, file: File) : ModelDownload(model) {
     private val _file: File = file.relativeTo(model.dir)
 
     val modelExtension by lazy { ModelFileExtension(getFile()) }
-    val nameExtractor by lazy { NameExtractor(this) }
+    val nameExtractor by lazy { NameParser(this) }
 
     private val _zxdbExtension: Extension by lazy {
         Extension().apply {

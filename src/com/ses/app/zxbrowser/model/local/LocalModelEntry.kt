@@ -9,14 +9,16 @@ class LocalModelEntry : ModelEntry {
     lateinit var key: String
     private lateinit var _title: String
     private val _releaseDate = ReleaseDate()
+    private lateinit var _machine: String
 
     private val _downloads = ArrayList<ModelDownload>()
 
     fun addFile(download: LocalModelDownload) {
         if (_downloads.isEmpty()) {
-            val nameExtractor = download.nameExtractor
-            key = nameExtractor.baseName
-            _title = nameExtractor.title
+            val nameParser = download.nameExtractor
+            key = nameParser.baseName
+            _title = nameParser.title
+            _machine = if (nameParser.is128) "ZX-Spectrum 128K" else "ZX-Spectrum 48K"
         }
         _downloads.add(download)
     }
@@ -25,7 +27,7 @@ class LocalModelEntry : ModelEntry {
     override fun getGenre(): String = ""
     override fun getReleaseYear(): Int? = null
     override fun getReleaseDate(): ReleaseDate = _releaseDate
-    override fun getMachine(): String = ""
+    override fun getMachine(): String = _machine
     override fun getAvailability(): String = ""
     override fun getDownloads(): List<ModelDownload> = _downloads
 }

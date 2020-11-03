@@ -114,6 +114,10 @@ class MainController : Initializable {
         for (lib in Config.allLibraries) {
             val menu = Menu(lib.name)
             val op = MenuItem(T("update"))
+            op.setOnAction {
+                onUpdateLibraryOption(lib)
+            }
+            op.isDisable = !lib.model.canUpdate()
             menu.items.add(op)
 
             menuLibraries.items.add(menu)
@@ -131,17 +135,31 @@ class MainController : Initializable {
     }
 
     private fun initModels() {
+        val dialog = ProgressDialog.create().apply {
+            title = T("loading_")
+            progress = ProgressBar.INDETERMINATE_PROGRESS
+            show(App.mainStage)
+        }
+
+        ProgressManager.new { progress, status, message ->
+            dialog.progress = progress
+            dialog.message = message
+        }
+
         val root: TreeNode = treeView.root as TreeNode
 
         root.children.clear()
 
+        /*
         statusProgress.apply {
             isVisible = true
             progress = ProgressBar.INDETERMINATE_PROGRESS
         }
+        */
 
         GlobalScope.launch {
             Config.allLibraries.forEach { lib ->
+                ProgressManager.current?.notify(ProgressBar.INDETERMINATE_PROGRESS, null, "${lib.name}...")
                 root.children.add(lib.model.root)
                 lib.model.root.isExpanded = true
                 val libTree = lib.model.getTree()
@@ -153,7 +171,11 @@ class MainController : Initializable {
 
             if (Config.general.showRootNode) root.entries.sortBy { it.getTitle() }
 
-            Platform.runLater { statusProgress.isVisible = false }
+            ProgressManager.current?.end()
+            Platform.runLater {
+                //statusProgress.isVisible = false
+                dialog.hide()
+            }
         }
     }
 
@@ -243,6 +265,7 @@ class MainController : Initializable {
         treeView.root = root
     }
 
+    /*
     private fun _createTree(): TreeNode {
         treeView.isShowRoot = Config.general.showRootNode
 
@@ -261,6 +284,7 @@ class MainController : Initializable {
 
         return root
     }
+    */
 
     private fun selectTreeNode(item: TreeItem<String>) {
         if (treeView.selectionModel.selectedItem != item) {
@@ -360,6 +384,7 @@ class MainController : Initializable {
         selectTreeNode(treeView.selectionModel.selectedItem)
     }
 
+    /*
     @FXML
     fun menuUpdateDatabaseAction() {
         if (zxdbModel == null) return
@@ -373,6 +398,7 @@ class MainController : Initializable {
             updateLibrary(zxdbModel)
         }
     }
+    */
 
     @FXML
     fun menuQuit() {
@@ -380,23 +406,48 @@ class MainController : Initializable {
     }
 
     private fun checkLibraries(whenFinish: (() -> Unit)? = null) {
-        whenFinish?.invoke()
+        checkNextLibrary(Config.allLibraries.toList(), 0, whenFinish)
     }
 
-    private fun updateLibrary(model: Model, whenFinish: (() -> Unit)? = null) {
+    private fun checkNextLibrary(list: List<Library>, index: Int, whenFinish: (() -> Unit)? = null) {
+        if (index < list.size) {
+            val lib = list[index]
+            if (lib.model.needsUpdate()) updateLibrary(lib) {
+                checkNextLibrary(list, index + 1, whenFinish)
+            } else {
+                checkNextLibrary(list, index + 1, whenFinish)
+            }
+        } else {
+            whenFinish?.invoke()
+        }
+    }
+
+    private fun onUpdateLibraryOption(lib: Library) {
+        val button = Alert(Alert.AlertType.CONFIRMATION).apply {
+            title = T("update")
+            headerText = T("update_library_warning_fmt").format(lib.name)
+            contentText = T("are_you_sure")
+        }.showAndWait().orElse(ButtonType.CANCEL)
+
+        if (button == ButtonType.OK) {
+            updateLibrary(lib)
+        }
+    }
+
+    private fun updateLibrary(lib: Library, whenFinish: (() -> Unit)? = null) {
         val dialog = ProgressDialog.create().apply {
-            title = T("updating_collection")
+            title = T("updating_library_fmt").format(lib.name)
             show()
         }
 
-        model.update { status, progress, message ->
+        lib.model.update { status, progress, message ->
             when (status) {
                 Model.UpdateStatus.Connecting -> Platform.runLater {
                     dialog.progress = ProgressBar.INDETERMINATE_PROGRESS
                     dialog.message = message
                 }
                 Model.UpdateStatus.Completed -> Platform.runLater {
-                    initModels()
+                    //initModels()
                     dialog.hide()
                     whenFinish?.invoke()
                 }
@@ -426,17 +477,16 @@ class MainController : Initializable {
     }
 
     @FXML
-    fun onTableRowClick() {
-        //val entry = tableView.selectionModel.selectedItem
-        //downloadsTableView.items.setAll(entry.downloads)
-    }
-
-    @FXML
     fun onDownloadsTableRowClick(e: MouseEvent) {
         val download = downloadsTableView.selectionModel.selectedItem
         if ((download != null) && (e.clickCount == 2)) {
             getDownload(download, Config.getDefaultProgram(download))
         }
+    }
+
+    @FXML
+    fun onTreeContextMenuRequested(e: ContextMenuEvent) {
+        //treeView.contextMenu.show(treeView, e.screenX, e.screenY)
     }
 
     @FXML
@@ -489,14 +539,15 @@ class MainController : Initializable {
         model.download(download) { file ->
             downloadsTableView.refresh()
             if (download.isImage()) selectedImage.value = file.toImage()
-            program?.launch(file)
+            // runLater para capturar bien la excepción y mostrar la ventana de error
+            Platform.runLater { program?.launch(file) }
         }
     }
 }
 
 class FileDownloadTableCell : TableCell<ModelDownload, String>() {
-    private val cloudImage = Image("/cloud.png")
-    private val downloadedImage = Image("/file.png")
+    private val cloudImage = I("cloud")
+    private val downloadedImage = I("file")
 
     private val iconView = ImageView()
 

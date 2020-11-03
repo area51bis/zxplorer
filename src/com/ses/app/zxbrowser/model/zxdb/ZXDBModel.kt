@@ -82,6 +82,8 @@ class ZXDBModel(name: String, dir: File) : Model(name, dir) {
 
     override fun getEntries(): List<ModelEntry> = _entries
 
+    override fun canUpdate(): Boolean = true
+
     override fun needsUpdate(): Boolean = !ZXDB.isOpened
 
     private fun getGenrePath(genre: GenreType?): List<String> {

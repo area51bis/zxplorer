@@ -24,7 +24,7 @@ class ModelFileExtension(file: File) {
 
         var ex = n.substringAfterLast(".", "")
         if (ex.isEmpty() && isCompressed) {
-            println(file.name)
+            //println(file.name)
             ZipFile(file).use {
                 for (entry in it.entries()) {
                     if (!entry.isDirectory) {
@@ -45,7 +45,7 @@ class ModelFileExtension(file: File) {
             val i = name.lastIndexOf('.', name.length - 5)
             if (i != -1) {
                 val singleExtension = name.substring(i + 1, name.length - 4)
-                "$singleExtension.$ext"
+                return@lazy "$singleExtension.$ext"
             }
         }
 
@@ -60,40 +60,4 @@ class ModelFileExtension(file: File) {
     val isCompressed: Boolean by lazy { file.name.toLowerCase().endsWith(".zip") }
 
     val isImage: Boolean by lazy { IMAGE_EXTENSIONS.contains(rawExtension) }
-
-    /*
-    init {
-        var n = file.name
-        var zipExt = "zip"
-        var zipSuffix = ".zip"
-        //isCompressed = n.endsWith(zipSuffix, true)
-        if (isCompressed) {
-            zipExt = n.substring(n.length - 3)
-            zipSuffix = n.substring(n.length - 4)
-            n = n.removeSuffix(zipSuffix)
-        }
-        var ext = n.substringAfterLast(".", "")
-        if (ext.isEmpty() && isCompressed) {
-            println(file.name)
-            ZipFile(file).use {
-                for (entry in it.entries()) {
-                    if (!entry.isDirectory) {
-                        ext = entry.name.substringAfterLast(".", "")
-                        break
-                    }
-                }
-            }
-
-            rawExtension = ext
-            //singleExtension = ".$rawExtension"
-            //doubleExtension = zipSuffix
-
-        } else {
-            rawExtension = ext
-            //singleExtension = if (rawExtension.isEmpty()) "" else ".$rawExtension"
-            //doubleExtension = if (isCompressed && (rawExtension != zipExt)) "$singleExtension$zipSuffix" else singleExtension
-        }
-        isImage = IMAGE_EXTENSIONS.contains(rawExtension)
-    }
-    */
 }

@@ -23,7 +23,6 @@
       <menus>
         <Menu mnemonicParsing="false" text="%file">
           <items>
-                  <MenuItem mnemonicParsing="false" onAction="#menuUpdateDatabaseAction" text="%update_database" />
             <MenuItem mnemonicParsing="false" onAction="#menuQuit" text="%exit" />
           </items>
         </Menu>
@@ -37,7 +36,7 @@
     </MenuBar>
       <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
-            <Label text="%search" />
+            <Label text="%title" />
             <TextField fx:id="searchTextField" onKeyTyped="#onSearchTextChanged" />
             <ToggleButton fx:id="searchRegExToggleButton" mnemonicParsing="false" text="RegEx" visible="false" />
         </items>
@@ -46,7 +45,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="200.0" prefHeight="160.0" prefWidth="100.0" SplitPane.resizableWithParent="false">
                <children>
-                  <TreeView fx:id="treeView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <TreeView fx:id="treeView" onContextMenuRequested="#onTreeContextMenuRequested" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
           <AnchorPane maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -55,7 +54,7 @@
                     <items>
                         <VBox>
                            <children>
-                              <TableView fx:id="tableView" onMouseClicked="#onTableRowClick" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS" />
+                              <TableView fx:id="tableView" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS" />
                               <Label fx:id="tableStatusLabel">
                                  <VBox.margin>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />

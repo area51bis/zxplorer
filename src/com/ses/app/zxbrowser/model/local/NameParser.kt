@@ -1,9 +1,13 @@
 package com.ses.app.zxbrowser.model.local
 
-class NameExtractor(private val download: LocalModelDownload) {
+class NameParser(private val download: LocalModelDownload) {
     val baseName: String by lazy { extractBaseName() }
     val title: String by lazy { extractTitle() }
 
+    val is128: Boolean by lazy {
+        val name = download.getFileName()
+        Regex("128k?", RegexOption.IGNORE_CASE).containsMatchIn(name)
+    }
     private val articles = arrayOf("the", "el", "la", "los", "las")
 
     private fun extractBaseName(): String {
@@ -19,7 +23,6 @@ class NameExtractor(private val download: LocalModelDownload) {
 
         var mode: Int = 0
         for (ch in baseName) {
-            //minúsculas
             when (mode) {
                 0 -> when { // mayúsculas
                     ch.isUpperCase() -> sb.append(ch)

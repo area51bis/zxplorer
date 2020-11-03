@@ -34,23 +34,7 @@ fun T(key: String): String = try {
 }
 
 /** Icono. */
-fun I(name: String): Image = Image("/$name.png")
-
-val File.doubleExtension: String
-    get() {
-        val _name = name.toLowerCase()
-
-        var end: Int
-        var ext = ""
-        if (_name.endsWith(".zip")) {
-            end = _name.lastIndex - 4
-            ext = ".zip"
-        } else {
-            end = _name.lastIndex
-        }
-        val i = _name.lastIndexOf('.', end)
-        return if (i != -1) _name.substring(i) else ext
-    }
+fun I(name: String): Image = App::class.java.getResourceAsStream("/icons/$name.png").use { Image(it) }
 
 fun File.toImage(): Image = inputStream().use {
     if (!extension.equals("scr", true)) {
