@@ -2,11 +2,15 @@ package com.ses.app.zxbrowser
 
 import com.ses.app.zxbrowser.model.ModelDownload
 import com.ses.util.all
+import com.ses.util.clear
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 
 object Config {
+    private val configFile = File(App.workingDir, "config.json")
+    private lateinit var config: JSONObject
+
     // programas soportados
     private val programs = LinkedHashMap<String, Program>()
 
@@ -17,14 +21,41 @@ object Config {
     private val libraries = ArrayList<Library>()
 
     init {
-        val configFile = File(App.workingDir, "config.json")
         if (configFile.exists()) {
-            val config = JSONObject(configFile.readText())
+            config = JSONObject(configFile.readText())
 
             loadPrograms(config.optJSONArray("programs"))
             loadDefaults(config.optJSONArray("default_programs"))
             loadLibraries(config.optJSONArray("libraries"))
         }
+    }
+
+    // cambia la lista de programas
+    fun setPrograms(list: List<Program>) {
+        // reescribe la lista de programas
+        val arr = config.optJSONArray("programs") ?: JSONArray()
+        arr.clear()
+        list.forEach { program ->
+            val o = JSONObject()
+            o.put("id", program.id)
+            o.put("name", program.name)
+            o.put("path", program.path)
+            o.put("args", program.args)
+            o.put("ext", JSONArray(program.ext))
+            if (program.unzip) o.put("unzip", true)
+            arr.put(o)
+        }
+
+        // guarda en disco
+        configFile.writer().use {
+            config.write(it, 4, 0)
+        }
+
+        // recarga
+        programs.clear()
+        extensions.clear()
+        loadPrograms(config.optJSONArray("programs"))
+        loadDefaults(config.optJSONArray("default_programs"))
     }
 
     private fun loadPrograms(json: JSONArray?) {

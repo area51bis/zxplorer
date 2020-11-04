@@ -7,7 +7,7 @@ import java.util.zip.ZipFile
 /**
  * Definición de programa (no tiene porqué ser un emulador).
  */
-class Program(val id: String, val name: String, val path: String, val args: String = "\${filePath}", val ext: Array<String> = emptyArray(), val unzip: Boolean = false) {
+class Program(var id: String, var name: String, var path: String, var args: String = "\${filePath}", var ext: Array<String> = emptyArray(), var unzip: Boolean = false) : Cloneable {
     private val cmd: ArrayList<String> = ArrayList()
     private val dir = File(path).parentFile
 
@@ -25,7 +25,7 @@ class Program(val id: String, val name: String, val path: String, val args: Stri
                 val entry = zip.entries().toList().first { !it.isDirectory }
                 zip.getInputStream(entry).use { input ->
                     val tempDir = File(App.workingDir, "temp")
-                    unzippedFile = File(tempDir, entry.name).also { f->
+                    unzippedFile = File(tempDir, entry.name).also { f ->
                         f.parentFile.mkdirs()
                         //println("Unizipping ${f.absolutePath}")
                         f.outputStream().use { output ->
@@ -51,6 +51,8 @@ class Program(val id: String, val name: String, val path: String, val args: Stri
                 .directory(dir)
                 .start()
     }
+
+    public override fun clone(): Program = Program(id, name, path, args, ext, unzip)
 
     override fun toString(): String {
         return name

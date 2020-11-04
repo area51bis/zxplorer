@@ -1,9 +1,6 @@
 package com.ses.app.zxbrowser.ui
 
-import com.ses.app.zxbrowser.fxmlLoader
 import javafx.fxml.FXML
-import javafx.fxml.Initializable
-import javafx.scene.Scene
 import javafx.scene.control.Label
 import javafx.scene.control.ProgressBar
 import javafx.scene.paint.Color
@@ -14,7 +11,7 @@ import javafx.stage.Window
 import java.net.URL
 import java.util.*
 
-class ProgressDialog : Initializable {
+class ProgressDialog : AppDialog() {
     @FXML
     lateinit var titleLabel: Label
 
@@ -42,38 +39,22 @@ class ProgressDialog : Initializable {
             progressBar.progress = value
         }
 
-    private val stage: Stage = Stage().apply {
-        initStyle(StageStyle.TRANSPARENT)
-        /*
-        initStyle(StageStyle.UTILITY)
-        */
-        setOnCloseRequest { it.consume() }
-        isResizable = false
-        initModality(Modality.WINDOW_MODAL)
-    }
-
     companion object {
-        fun create(): ProgressDialog {
-            val loader = fxmlLoader("progressdialog.fxml")
-            val scene = Scene(loader.load())
-            scene.fill = Color.TRANSPARENT // para bordes redondeados
-            val dialog: ProgressDialog = loader.getController()
-            dialog.stage.scene = scene
-            return dialog
+        fun create() = create<ProgressDialog>("progressdialog.fxml").apply {
+            stage.scene.fill = Color.TRANSPARENT // para bordes redondeados
         }
     }
 
+    override fun createStage(): Stage = super.createStage().apply {
+        initStyle(StageStyle.TRANSPARENT)
+        setOnCloseRequest { it.consume() }
+        isResizable = false
+    }
+
     override fun initialize(location: URL?, resources: ResourceBundle?) {
+        super.initialize(location, resources)
+
         title = null
         message = null
-    }
-
-    fun show(owner: Window? = null) {
-        if (owner != null) stage.initOwner(owner)
-        stage.show()
-    }
-
-    fun hide() {
-        stage.hide()
     }
 }

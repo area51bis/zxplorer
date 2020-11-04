@@ -3,6 +3,7 @@ package com.ses.app.zxbrowser
 import com.ses.app.zxbrowser.filters.EntryTitleFilter
 import com.ses.app.zxbrowser.filters.Filter
 import com.ses.app.zxbrowser.model.*
+import com.ses.app.zxbrowser.ui.EditProgramDialog
 import com.ses.app.zxbrowser.ui.ProgressDialog
 import com.ses.zxdb.dao.FileType
 import javafx.application.Platform
@@ -381,7 +382,9 @@ class MainController : Initializable {
             filters.removeAll { it is EntryTitleFilter }
         }
 
-        selectTreeNode(treeView.selectionModel.selectedItem)
+        treeView.selectionModel.selectedItem?.also {
+            selectTreeNode(it)
+        }
     }
 
     /*
@@ -509,7 +512,7 @@ class MainController : Initializable {
 
             // menú "abrir con..." con los programas soportados
             val list = Config.getPrograms(download)
-            if (list.isNotEmpty()) {
+            //if (list.isNotEmpty()) {
                 add(Menu(T("open_with_")).also { menu ->
                     list.forEach { program ->
                         menu.items.add(MenuItem(program.name).apply {
@@ -518,9 +521,15 @@ class MainController : Initializable {
                             }
                         })
                     }
+                    menu.items.add(MenuItem(T("configure_programs")).apply {
+                        setOnAction {
+                            EditProgramDialog.create().show(App.mainStage)
+                        }
+                    })
                 })
-            }
+            //}
         }
+
         downloadsTableView.contextMenu.show(downloadsTableView, e.screenX, e.screenY)
     }
 

@@ -1,3 +1,5 @@
+@file:Suppress("FunctionName")
+
 package com.ses.app.zxbrowser
 
 import com.ses.zx.SCRImageLoader

@@ -5,7 +5,7 @@
             "name": "ZXSpin",
             "path": "D:\\emu\\spectrum\\zxspin\\zxspin.exe",
             "args": "${filePath}",
-            "ext": ["tzx", "tap", "z80","sna"]
+            "ext": ["tzx", "tap", "z80", "sna"]
         },
         {
             "id": "zesarux",

@@ -10,3 +10,7 @@ class JSONArrayIterator<T>(private val arr: JSONArray, transform: ((Int) -> T)? 
 }
 
 fun <T> JSONArray.all(transform: ((Int) -> T)? = null): Iterator<T> = JSONArrayIterator(this, transform)
+
+fun JSONArray.clear() {
+    while (!isEmpty) remove(0)
+}
