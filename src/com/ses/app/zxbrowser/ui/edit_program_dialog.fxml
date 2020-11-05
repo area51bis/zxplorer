@@ -20,8 +20,8 @@
                <children>
                   <HBox spacing="4.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="26.0" text="+" />
-                        <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="26.0" text="-" />
+                        <Button mnemonicParsing="false" onAction="#onAddClick" prefHeight="26.0" prefWidth="26.0" text="+" />
+                        <Button mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="26.0" prefWidth="26.0" text="-" />
                      </children>
                   </HBox>
                   <ListView fx:id="listView" prefHeight="200.0" prefWidth="150.0" />
@@ -52,7 +52,7 @@
                   <HBox alignment="CENTER_LEFT" spacing="4.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
                         <TextField fx:id="pathText" HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" text="..." />
+                        <Button mnemonicParsing="false" onAction="#onSelectProgramClick" text="..." />
                      </children>
                   </HBox>
                   <Label text="%arguments" GridPane.rowIndex="3" />

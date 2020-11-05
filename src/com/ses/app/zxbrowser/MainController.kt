@@ -408,6 +408,11 @@ class MainController : Initializable {
         Platform.exit()
     }
 
+    @FXML
+    fun menuConfigurePrograms() {
+        EditProgramDialog.create().show(App.mainStage)
+    }
+
     private fun checkLibraries(whenFinish: (() -> Unit)? = null) {
         checkNextLibrary(Config.allLibraries.toList(), 0, whenFinish)
     }

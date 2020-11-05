@@ -23,6 +23,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="%file">
           <items>
+                  <MenuItem mnemonicParsing="false" onAction="#menuConfigurePrograms" text="%configure_programs" />
             <MenuItem mnemonicParsing="false" onAction="#menuQuit" text="%exit" />
           </items>
         </Menu>

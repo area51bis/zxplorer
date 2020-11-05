@@ -1,19 +1,16 @@
 package com.ses.app.zxbrowser.ui
 
 import com.ses.app.zxbrowser.Config
+import com.ses.app.zxbrowser.KnownPrograms
 import com.ses.app.zxbrowser.Program
 import com.ses.app.zxbrowser.T
-import com.ses.app.zxbrowser.fxmlLoader
 import javafx.fxml.FXML
-import javafx.scene.Scene
-import javafx.scene.control.CheckBox
-import javafx.scene.control.ListView
-import javafx.scene.control.TextField
+import javafx.scene.control.*
 import javafx.scene.layout.GridPane
-import javafx.scene.paint.Color
-import javafx.stage.Modality
+import javafx.stage.FileChooser
 import javafx.stage.Stage
 import javafx.stage.StageStyle
+import java.io.File
 import java.net.URL
 import java.util.*
 
@@ -96,11 +93,49 @@ class EditProgramDialog : AppDialog() {
         }
     }
 
+    private fun chooseProgram(dir: File? = null): File? = FileChooser().let { fc ->
+        fc.title = T("select_program")
+        if (dir != null) fc.initialDirectory = dir
+        fc.showOpenDialog(stage)
+    }
+
+    @FXML
+    fun onAddClick() {
+        val file = chooseProgram()
+        if (file != null) {
+            val program = KnownPrograms.get(file)
+            listView.items.add(program)
+            listView.selectionModel.select(program)
+        }
+    }
+
+    @FXML
+    fun onRemoveClick() {
+        if (selectedProgram != null) {
+            val button = Alert(Alert.AlertType.CONFIRMATION).apply {
+                title = T("warning")
+                headerText = T("remove_program_q")
+            }.showAndWait().orElse(ButtonType.CANCEL)
+
+            if (button == ButtonType.OK) {
+                listView.items.remove(selectedProgram)
+                //selectedProgram = null
+            }
+        }
+    }
+
+    @FXML
+    fun onSelectProgramClick() {
+        val file = chooseProgram(File(selectedProgram!!.path).parentFile)
+        if (file != null) pathText.text = file.absolutePath
+    }
+
     @FXML
     fun onCancelClick() {
         hide()
     }
 
+    @FXML
     fun onOkClick() {
         Config.setPrograms(listView.items)
         hide()
