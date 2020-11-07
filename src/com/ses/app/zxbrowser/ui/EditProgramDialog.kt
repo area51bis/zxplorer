@@ -38,6 +38,9 @@ class EditProgramDialog : AppDialog() {
     @FXML
     lateinit var unzipCheck: CheckBox
 
+    @FXML
+    lateinit var defaultsText: TextField
+
     private var selectedProgram: Program? = null
 
     companion object {
@@ -64,6 +67,7 @@ class EditProgramDialog : AppDialog() {
         argsText.textProperty().addListener { _, _, text -> selectedProgram?.args = text }
         extText.textProperty().addListener { _, _, text -> selectedProgram?.ext = text.split(",").map { it.trim() }.toTypedArray() }
         unzipCheck.selectedProperty().addListener { _, _, selected -> selectedProgram?.unzip = selected }
+        defaultsText.textProperty().addListener { _, _, text -> selectedProgram?.defaultFor = text.split(",").map { it.trim() }.toTypedArray() }
 
         updateProgramInfo(null)
     }
@@ -82,6 +86,7 @@ class EditProgramDialog : AppDialog() {
             pathText.text = program.path
             argsText.text = program.args
             extText.text = program.ext.joinToString(",")
+            defaultsText.text = program.defaultFor.joinToString(",")
             unzipCheck.isSelected = program.unzip
         } else {
             idText.text = null
@@ -90,6 +95,7 @@ class EditProgramDialog : AppDialog() {
             argsText.text = null
             extText.text = null
             unzipCheck.isSelected = false
+            defaultsText.text = null
         }
     }
 

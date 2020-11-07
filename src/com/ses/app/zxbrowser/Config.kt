@@ -3,6 +3,7 @@ package com.ses.app.zxbrowser
 import com.ses.app.zxbrowser.model.ModelDownload
 import com.ses.util.all
 import com.ses.util.clear
+import com.ses.util.getArray
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -25,7 +26,7 @@ object Config {
             config = JSONObject(configFile.readText())
 
             loadPrograms(config.optJSONArray("programs"))
-            loadDefaults(config.optJSONArray("default_programs"))
+            //loadDefaults(config.optJSONArray("default_programs"))
             loadLibraries(config.optJSONArray("libraries"))
         }
     }
@@ -43,6 +44,7 @@ object Config {
             o.put("args", program.args)
             o.put("ext", JSONArray(program.ext))
             if (program.unzip) o.put("unzip", true)
+            o.put("default_for", JSONArray(program.defaultFor))
             arr.put(o)
         }
 
@@ -55,7 +57,7 @@ object Config {
         programs.clear()
         extensions.clear()
         loadPrograms(config.optJSONArray("programs"))
-        loadDefaults(config.optJSONArray("default_programs"))
+        //loadDefaults(config.optJSONArray("default_programs"))
     }
 
     private fun loadPrograms(json: JSONArray?) {
@@ -68,23 +70,38 @@ object Config {
                 extensionPrograms.add(prog)
             }
         }
+
+        programs.values.forEach { prog ->
+            prog.defaultFor.forEach { ext ->
+                val list = extensions.getOrPut(ext) { ArrayList() }
+                // ponerle el primero de la lista
+                list.remove(prog)
+                list.add(0, prog)
+            }
+        }
     }
 
     private fun loadProgram(json: JSONObject): Program {
         // extensiones soportadas
+        /*
         val ext = ArrayList<String>()
         json.getJSONArray("ext")?.all<String>()?.forEach {
             ext.add(it)
         }
+        */
 
         return Program(json.getString("id"),
                 json.getString("name"),
                 json.getString("path"),
                 json.getString("args"),
-                ext.toTypedArray(),
-                json.optBoolean("unzip"))
+                //ext.toTypedArray(),
+                json.getArray("ext"),
+                json.optBoolean("unzip")).apply {
+            defaultFor = json.getArray("default_for")
+        }
     }
 
+    /*
     private fun loadDefaults(json: JSONArray?) {
         json?.all<JSONObject>()?.forEach { def ->
             val programId = def.getString("program")
@@ -98,6 +115,7 @@ object Config {
             }
         }
     }
+    */
 
     private fun loadLibraries(json: JSONArray?) {
         json?.all<JSONObject>()?.forEach { o ->

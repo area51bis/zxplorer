@@ -8,10 +8,13 @@ import java.util.zip.ZipFile
  * Definición de programa (no tiene porqué ser un emulador).
  */
 class Program(var id: String, var name: String, var path: String, var args: String = "\${filePath}", var ext: Array<String> = emptyArray(), var unzip: Boolean = false) : Cloneable {
-    private val cmd: ArrayList<String> = ArrayList()
+    var defaultFor: Array<String> = emptyArray()
+    private val cmd = ArrayList<String>()
     private val dir = File(path).parentFile
 
     init {
+        //cmd.add("cmd")
+        //cmd.add("/C")
         cmd.add(path)
         cmd.addAll(args.split("\\s+".toRegex()).toTypedArray())
     }
@@ -44,7 +47,7 @@ class Program(var id: String, var name: String, var path: String, var args: Stri
 
     private fun doLaunch(file: File) {
         val map = mapOf<String, Any>(
-                "filePath" to file.absolutePath
+                "filePath" to quoteArg(file.absolutePath)
         )
 
         ProcessBuilder(cmd.map { it.parse(map) })
@@ -52,7 +55,11 @@ class Program(var id: String, var name: String, var path: String, var args: Stri
                 .start()
     }
 
-    public override fun clone(): Program = Program(id, name, path, args, ext, unzip)
+    private fun quoteArg(arg: String): String = if (arg.contains(' ')) "\"$arg\"" else arg
+
+    public override fun clone(): Program = Program(id, name, path, args, ext.clone(), unzip).also {
+        it.defaultFor = defaultFor.clone()
+    }
 
     override fun toString(): String {
         return name
