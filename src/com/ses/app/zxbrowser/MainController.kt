@@ -76,8 +76,6 @@ class MainController : Initializable {
     @FXML
     lateinit var statusProgress: ProgressBar
 
-    private val zxdbModel = Config.allLibraries.firstOrNull { it.type == "zxdb" }?.model
-
     private var filters: ArrayList<Filter<ModelEntry>> = ArrayList()
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
@@ -180,31 +178,6 @@ class MainController : Initializable {
         }
     }
 
-    /*
-    private fun initModels() {
-        val dialog = ProgressDialog.create().apply {
-            title = T("loading_")
-            progress = ProgressBar.INDETERMINATE_PROGRESS
-            show(App.mainStage)
-        }
-
-        GlobalScope.launch {
-            val rootNode = createTree()
-
-            Platform.runLater {
-                treeView.root = rootNode
-
-                createTable()
-                createDownloadsTable()
-
-                selectTreeNode(treeView.root)
-
-                dialog.hide()
-            }
-        }
-    }
-    */
-
     private fun initObservers() {
         // al seleccionar un nodo, actualizar la lista
         treeView.selectionModel.selectedItemProperty().addListener { _, _, item ->
@@ -265,27 +238,6 @@ class MainController : Initializable {
 
         treeView.root = root
     }
-
-    /*
-    private fun _createTree(): TreeNode {
-        treeView.isShowRoot = Config.general.showRootNode
-
-        val root = TreeNode(T("all"))
-        root.isExpanded = true
-
-        Config.allLibraries.forEach { lib ->
-            val libTree = lib.model.getTree()
-            libTree.isExpanded = true
-            root.children.add(libTree)
-
-            if (Config.general.showRootNode) root.addEntries(libTree.entries)
-        }
-
-        if (Config.general.showRootNode) root.entries.sortBy { it.getTitle() }
-
-        return root
-    }
-    */
 
     private fun selectTreeNode(item: TreeItem<String>) {
         if (treeView.selectionModel.selectedItem != item) {
@@ -387,22 +339,6 @@ class MainController : Initializable {
         }
     }
 
-    /*
-    @FXML
-    fun menuUpdateDatabaseAction() {
-        if (zxdbModel == null) return
-        val button = Alert(Alert.AlertType.CONFIRMATION).apply {
-            title = T("update")
-            headerText = T("download_database_warning")
-            contentText = T("are_you_sure")
-        }.showAndWait().orElse(ButtonType.CANCEL)
-
-        if (button == ButtonType.OK) {
-            updateLibrary(zxdbModel)
-        }
-    }
-    */
-
     @FXML
     fun menuQuit() {
         Platform.exit()
@@ -475,7 +411,7 @@ class MainController : Initializable {
         Alert(Alert.AlertType.INFORMATION).apply {
             title = T("about_")
             headerText = FULL_APP_NAME
-            contentText = "Programado por sés"
+            contentText = COPYRIGHT
         }.showAndWait()
     }
 

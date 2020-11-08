@@ -1,0 +1,9 @@
+{
+    "libraries": [
+        {
+            "type": "zxdb",
+            "name": "ZXDB",
+            "path": "zxdb"
+        }
+    ]
+}

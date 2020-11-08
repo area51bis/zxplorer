@@ -22,12 +22,22 @@ object Config {
     private val libraries = ArrayList<Library>()
 
     init {
-        if (configFile.exists()) {
-            config = JSONObject(configFile.readText())
+        config = if (configFile.exists()) {
+            JSONObject(configFile.readText())
+        } else {
+            val stream = javaClass.getResourceAsStream("/default_config.json")
+            val text = stream.bufferedReader().use { it.readText() }
+            configFile.writeText(text)
+            JSONObject(text)
+        }
 
-            loadPrograms(config.optJSONArray("programs"))
-            //loadDefaults(config.optJSONArray("default_programs"))
-            loadLibraries(config.optJSONArray("libraries"))
+        loadPrograms(config.optJSONArray("programs"))
+        loadLibraries(config.optJSONArray("libraries"))
+    }
+
+    private fun save() {
+        configFile.writer().use {
+            config.write(it, 4, 0)
         }
     }
 
@@ -49,9 +59,7 @@ object Config {
         }
 
         // guarda en disco
-        configFile.writer().use {
-            config.write(it, 4, 0)
-        }
+        save()
 
         // recarga
         programs.clear()
@@ -82,14 +90,6 @@ object Config {
     }
 
     private fun loadProgram(json: JSONObject): Program {
-        // extensiones soportadas
-        /*
-        val ext = ArrayList<String>()
-        json.getJSONArray("ext")?.all<String>()?.forEach {
-            ext.add(it)
-        }
-        */
-
         return Program(json.getString("id"),
                 json.getString("name"),
                 json.getString("path"),
@@ -100,22 +100,6 @@ object Config {
             defaultFor = json.getArray("default_for")
         }
     }
-
-    /*
-    private fun loadDefaults(json: JSONArray?) {
-        json?.all<JSONObject>()?.forEach { def ->
-            val programId = def.getString("program")
-            programs[programId]?.also { program ->
-                def.optJSONArray("ext")?.all<String>()?.forEach { ext ->
-                    val list = extensions.getOrPut(ext) { ArrayList() }
-                    // ponerle el primero de la lista
-                    list.remove(program)
-                    list.add(0, program)
-                }
-            }
-        }
-    }
-    */
 
     private fun loadLibraries(json: JSONArray?) {
         json?.all<JSONObject>()?.forEach { o ->
