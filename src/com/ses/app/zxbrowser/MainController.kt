@@ -517,22 +517,20 @@ class MainController : Initializable {
 
             // menú "abrir con..." con los programas soportados
             val list = Config.getPrograms(download)
-            //if (list.isNotEmpty()) {
-                add(Menu(T("open_with_")).also { menu ->
-                    list.forEach { program ->
-                        menu.items.add(MenuItem(program.name).apply {
-                            setOnAction {
-                                getDownload(download, program)
-                            }
-                        })
-                    }
-                    menu.items.add(MenuItem(T("configure_programs")).apply {
+            add(Menu(T("open_with_")).also { menu ->
+                list.forEach { program ->
+                    menu.items.add(MenuItem(program.name).apply {
                         setOnAction {
-                            EditProgramDialog.create().show(App.mainStage)
+                            getDownload(download, program)
                         }
                     })
+                }
+                menu.items.add(MenuItem(T("configure_programs")).apply {
+                    setOnAction {
+                        EditProgramDialog.create().show(App.mainStage)
+                    }
                 })
-            //}
+            })
         }
 
         downloadsTableView.contextMenu.show(downloadsTableView, e.screenX, e.screenY)

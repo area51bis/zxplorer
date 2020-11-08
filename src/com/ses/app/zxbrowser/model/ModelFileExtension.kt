@@ -45,11 +45,11 @@ class ModelFileExtension(file: File) {
             val i = name.lastIndexOf('.', name.length - 5)
             if (i != -1) {
                 val singleExtension = name.substring(i + 1, name.length - 4)
-                return@lazy "$singleExtension.$ext"
+                return@lazy ".$singleExtension.$ext"
             }
         }
 
-        ext
+        ".$ext"
     }
 
     /** "AcroJet.tzx.zip" -> ".tzx" */

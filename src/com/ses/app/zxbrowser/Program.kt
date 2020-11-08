@@ -1,5 +1,6 @@
 package com.ses.app.zxbrowser
 
+import com.ses.util.SysUtil
 import com.ses.util.parse
 import java.io.File
 import java.util.zip.ZipFile
@@ -13,8 +14,12 @@ class Program(var id: String, var name: String, var path: String, var args: Stri
     private val dir = File(path).parentFile
 
     init {
-        //cmd.add("cmd")
-        //cmd.add("/C")
+        when {
+            SysUtil.isWindows -> {
+                cmd.add("cmd")
+                cmd.add("/C")
+            }
+        }
         cmd.add(path)
         cmd.addAll(args.split("\\s+".toRegex()).toTypedArray())
     }

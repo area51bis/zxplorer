@@ -4,6 +4,8 @@ import com.ses.app.zxbrowser.Config
 import com.ses.app.zxbrowser.KnownPrograms
 import com.ses.app.zxbrowser.Program
 import com.ses.app.zxbrowser.T
+import javafx.application.Platform
+import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import javafx.scene.layout.GridPane
@@ -41,6 +43,7 @@ class EditProgramDialog : AppDialog() {
     @FXML
     lateinit var defaultsText: TextField
 
+    private lateinit var programList: ObservableList<Program>
     private var selectedProgram: Program? = null
 
     companion object {
@@ -56,7 +59,8 @@ class EditProgramDialog : AppDialog() {
         super.initialize(location, resources)
         stage.title = T("configure_programs")
 
-        Config.allPrograms.forEach { listView.items.add(it.clone()) }
+        programList = listView.items
+        Config.allPrograms.forEach { programList.add(it.clone()) }
         listView.selectionModel.selectedItemProperty().addListener { _, _, program ->
             selectProgram(program)
         }
@@ -110,7 +114,7 @@ class EditProgramDialog : AppDialog() {
         val file = chooseProgram()
         if (file != null) {
             val program = KnownPrograms.get(file)
-            listView.items.add(program)
+            programList.add(program)
             listView.selectionModel.select(program)
         }
     }
@@ -124,8 +128,34 @@ class EditProgramDialog : AppDialog() {
             }.showAndWait().orElse(ButtonType.CANCEL)
 
             if (button == ButtonType.OK) {
-                listView.items.remove(selectedProgram)
+                programList.remove(selectedProgram)
                 //selectedProgram = null
+            }
+        }
+    }
+
+    @FXML
+    fun onMoveUp() {
+        val program = selectedProgram
+        if (program != null) {
+            val index = programList.indexOf(program)
+            if (index > 0) {
+                programList.removeAt(index)
+                programList.add(index - 1, program)
+                listView.selectionModel.select(program)
+            }
+        }
+    }
+
+    @FXML
+    fun onMoveDown() {
+        val program = selectedProgram
+        if (program != null) {
+            val index = programList.indexOf(program)
+            if (index < programList.lastIndex) {
+                programList.removeAt(index)
+                programList.add(index + 1, program)
+                listView.selectionModel.select(program)
             }
         }
     }
@@ -142,7 +172,7 @@ class EditProgramDialog : AppDialog() {
     }
 
     @FXML
-    fun onOkClick() {
+    fun onSaveClick() {
         Config.setPrograms(listView.items)
         hide()
     }

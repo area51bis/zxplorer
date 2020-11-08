@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -18,12 +19,24 @@
          <children>
             <VBox spacing="4.0">
                <children>
-                  <HBox spacing="4.0">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#onAddClick" prefHeight="26.0" prefWidth="26.0" text="+" />
-                        <Button mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="26.0" prefWidth="26.0" text="-" />
-                     </children>
-                  </HBox>
+                  <BorderPane>
+                     <left>
+                        <HBox spacing="4.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#onAddClick" prefHeight="26.0" prefWidth="26.0" text="+" />
+                              <Button mnemonicParsing="false" onAction="#onRemoveClick" prefHeight="26.0" prefWidth="26.0" text="-" />
+                           </children>
+                        </HBox>
+                     </left>
+                     <right>
+                        <HBox spacing="4.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#onMoveUp" prefHeight="26.0" text="▲" />
+                              <Button mnemonicParsing="false" onAction="#onMoveDown" prefHeight="26.0" text="▼" />
+                           </children>
+                        </HBox>
+                     </right>
+                  </BorderPane>
                   <ListView fx:id="listView" prefHeight="200.0" prefWidth="150.0" />
                </children>
                <HBox.margin>
@@ -70,8 +83,8 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="4.0" VBox.vgrow="NEVER">
          <children>
-            <Button mnemonicParsing="false" onAction="#onCancelClick" text="%cancel" />
-            <Button mnemonicParsing="false" onAction="#onOkClick" text="%ok" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#onCancelClick" text="%cancel" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#onSaveClick" text="%save" />
          </children>
          <opaqueInsets>
             <Insets />
