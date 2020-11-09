@@ -10,18 +10,15 @@ import java.util.zip.ZipFile
  */
 class Program(var id: String, var name: String, var path: String, var args: String = "\${filePath}", var ext: Array<String> = emptyArray(), var unzip: Boolean = false) : Cloneable {
     var defaultFor: Array<String> = emptyArray()
-    private val cmd = ArrayList<String>()
+    private val cmd: List<String>?
     private val dir = File(path).parentFile
 
     init {
-        when {
-            SysUtil.isWindows -> {
-                cmd.add("cmd")
-                cmd.add("/C")
-            }
+        cmd = when {
+            SysUtil.isWindows -> listOf("cmd", "/C", "$path $args")
+            SysUtil.isLinux -> listOf("/bin/bash", "-c", "$path ${escapeLinuxCommand(args)}")
+            else -> null
         }
-        cmd.add(path)
-        cmd.addAll(args.split("\\s+".toRegex()).toTypedArray())
     }
 
     fun launch(file: File) {
@@ -55,12 +52,16 @@ class Program(var id: String, var name: String, var path: String, var args: Stri
                 "filePath" to quoteArg(file.absolutePath)
         )
 
-        ProcessBuilder(cmd.map { it.parse(map) })
+        println(cmd?.map { it.parse(map) }?.joinToString(separator = " "))
+        ProcessBuilder(cmd?.map { it.parse(map) })
                 .directory(dir)
                 .start()
     }
 
     private fun quoteArg(arg: String): String = if (arg.contains(' ')) "\"$arg\"" else arg
+
+    private fun escapeLinuxCommand(s: String): String = s.replace("\\", "\\\\") // '\' -> '\\'
+            .replace("\"", "\\\\\\\"") // '"' -> '\\\"'
 
     public override fun clone(): Program = Program(id, name, path, args, ext.clone(), unzip).also {
         it.defaultFor = defaultFor.clone()
