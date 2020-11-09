@@ -1,7 +1,9 @@
+# ZXBrowser 0.7
+
 ### Descripción
 **ZXBrowser** es una aplicación para explorar, descargar y ejecutar el contenido de la base de datos de Spectrum [ZXDB](https://github.com/zxdb/ZXDB).
 
-![](https://github.com/area51bis/zxbrowser/blob/main/screenshots/screenshot.jpg)
+![](screenshots/screenshot-0.7.jpg)
 
 ### ¿Por qué?
 De vez en cuando me apetece recordar los viejos juegos del Spectrum y, por supuesto, todos los nuevos que van saliendo
@@ -21,10 +23,13 @@ Ahora tengo una versión medianamente decente que me gustaría compartir con tod
 les guste y les sea tan útil como a mí.
 
 ### Descargas
-https://github.com/area51bis/zxbrowser/releases
+[Binarios](https://github.com/area51bis/zxbrowser/releases)
+
+[Código fuente](https://github.com/area51bis/zxbrowser-jfx)
+
 
 ### Instrucciones
-El programa es bastante sencillo por ahora. Basta con ejecutarlo, descargar la base datos de ZXDB y comenzar a explorar.
+El programa es bastante sencillo. Basta con ejecutarlo y, automáticamente, descargará la base datos de ZXDB.
 
 La ventana muestra a la izquierda un _**arbol de categorías**_ que permite explorar por género, año, etc.
 
@@ -42,31 +47,25 @@ A la derecha de las descargas se muestran las imágenes si están descargadas.
 
 También hay una caja de texto arriba para buscar rápidamente **en la categoría seleccionada**.
 
-En cualquier momento se puede actualizar la base de datos desde el menú "*Fichero -> Actualizar base de datos*".
+En cualquier momento se puede actualizar la base de datos desde el menú "*Biblioteca -> ZXDB -> Actualizar*".
 
-### Configurar programas
-Lo siento pero, por ahora, la configuración es totalmente manual. Más adelante se podrá configurar todo desde la
-aplicación.
+### Programas
+Se pueden definir y asignar programas para cualquier extensión (no sólo emuladores). Esto se puede hacer desde el menú "*Fichero -> Configurar programas*" o desde el menú contextual de las descargas (*Abrir con... -> Configurar programas*).
 
-Cada programa es un fichero **JSON** dentro del directorio _progs_
+![](screenshots/programs_popup.jpg)
+![](screenshots/program_editor.jpg)
 
-Se incluyen tres ficheros de ejemplo:
-- zxspin.json y zesarux.json para Windows
-- fuse.json para Mac
+También se puede editar directamente el fichero `config.json` en la sección "`programs`". Cada programa tiene la siguiente estructura:
 
-Para que funcionen correctamente hay que modificarlos con la ruta correcta al programa para que funcionen. El formato es
-el siguiente: 
-
-zesarux.json:
 ```
 {
-    "order": 2,
     "id": "zesarux",
     "name": "ZEsarUX",
     "path": "D:\\emu\\spectrum\\zesarux\\zesarux.exe",
-    "args": "--realloadfast --realtape ${filePath}",
-    "ext": ["tzx", "tap", "z80"],
-    "unzip": true
+    "args": "--noconfigfile --realloadfast --realtape ${filePath}",
+    "ext": ["tzx", "tap", "z80", "sna"],
+    "unzip": true,
+    "default_for": ["tzx", "tap"]
 }
 ```
 - **order**: Es el orden del emulador en el menú "Abrir con..."
@@ -77,12 +76,33 @@ zesarux.json:
     pero actualmente sólo soporta una: _${filePath}_ que indica el nombre completo a la descarga.
 - **ext**: Lista de extensiones que soporta el programa.
 - **unzip**: Este parámetro es opciones e indica que necesita descomprimirse antes de ejecutarlo.
+- **default_for**: Extensiones que abrirá por defecto (al hacer doble clic).
 
-Además de los programas, hay un fichero más: "_defaults.json_". Este fichero simplemente indica los programas a usar por
-defecto para cada extensión. O sea, el que se usará al hacer doble clic y el primero en el menú "Abrir con...".
+### Bibliotecas
+A partir de la versión 0.7, ZXBrowser soporta distintos tipos de bibliotecas:
+- **ZXDB**: Base de datos ZXDB descargada de forma local.
+- **Local**: Cualquier directorio local de nuestro equipo.
+
+Actualmente sólo se pueden definir en el JSON y el formato es tan sencillo que creo que se explica por sí solo:
+```
+"libraries": [
+    {
+        "type": "zxdb",
+        "name": "ZXDB",
+        "path": "zxdb"
+    },
+    {
+        "type": "local",
+        "name": "My collection",
+        "path": "D:\\downloads\\spectrum\\my_games"
+    }
+```
+- **type**: Tipo de biblioteca. De momento sólo soporta "zxdb" y "local".
+- **name**: Nombre de la biblioteca.
+- **path**: Ruta a la biblioteca (dónde se encuentras y/o descargan los ficheros).
 
 ### Agradecimientos
 - A toda la gente que sigue disfrutando del Spectrum y hace posible que esta máquina nunca muera.
 - A la vieja World of Spectrum, en la que tanto tiempo perdí recordando mi infancia y descubriendo juegos que no llegué a conocer.
-- A [El Mundo del Spectrum](http://www.elmundodelspectrum.com/), sobre todo por su Podcast
+- A [El Mundo del Spectrum](http://www.elmundodelspectrum.com/), sobre todo por su Podcast.
 - Y, por supuesto, al equipo detrás de [ZXDB](https://github.com/zxdb/ZXDB) sin el que esto no sería posible.
