@@ -16,7 +16,8 @@ class Program(var id: String, var name: String, var path: String, var args: Stri
     init {
         cmd = when {
             SysUtil.isWindows -> listOf("cmd", "/C", "$path $args")
-            SysUtil.isLinux -> listOf("/bin/bash", "-c", "$path ${escapeLinuxCommand(args)}")
+            SysUtil.isLinux -> listOf("/bin/bash", "-c", "$path ${escapeLinuxArgs(args)}")
+            SysUtil.isMac -> listOf("open", path, "--args", escapeOSXArgs(args))
             else -> null
         }
     }
@@ -60,8 +61,13 @@ class Program(var id: String, var name: String, var path: String, var args: Stri
 
     private fun quoteArg(arg: String): String = if (arg.contains(' ')) "\"$arg\"" else arg
 
-    private fun escapeLinuxCommand(s: String): String = s.replace("\\", "\\\\") // '\' -> '\\'
+    private fun escapeLinuxArgs(s: String): String = s.replace("\\", "\\\\") // '\' -> '\\'
             .replace("\"", "\\\\\\\"") // '"' -> '\\\"'
+
+    private fun escapeOSXPath(s: String): String = s.replace(" ", "\\ ") // '' -> '\ '
+
+    private fun escapeOSXArgs(s: String): String = s.replace("\\", "\\\\") // '\' -> '\\'
+            .replace("\"", "\\\"") // '"' -> '\"'
 
     public override fun clone(): Program = Program(id, name, path, args, ext.clone(), unzip).also {
         it.defaultFor = defaultFor.clone()
