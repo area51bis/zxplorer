@@ -23,9 +23,6 @@ class EditProgramDialog : AppDialog() {
     lateinit var editView: GridPane
 
     @FXML
-    lateinit var idText: TextField
-
-    @FXML
     lateinit var nameText: TextField
 
     @FXML
@@ -65,7 +62,6 @@ class EditProgramDialog : AppDialog() {
             selectProgram(program)
         }
 
-        idText.textProperty().addListener { _, _, text -> selectedProgram?.id = text }
         nameText.textProperty().addListener { _, _, text -> selectedProgram?.name = text; listView.refresh() }
         pathText.textProperty().addListener { _, _, text -> selectedProgram?.path = text }
         argsText.textProperty().addListener { _, _, text -> selectedProgram?.args = text }
@@ -85,7 +81,6 @@ class EditProgramDialog : AppDialog() {
     private fun updateProgramInfo(program: Program?) {
         editView.isDisable = (program == null)
         if (program != null) {
-            idText.text = program.id
             nameText.text = program.name
             pathText.text = program.path
             argsText.text = program.args
@@ -93,7 +88,6 @@ class EditProgramDialog : AppDialog() {
             defaultsText.text = program.defaultFor.joinToString(",")
             unzipCheck.isSelected = program.unzip
         } else {
-            idText.text = null
             nameText.text = null
             pathText.text = null
             argsText.text = null

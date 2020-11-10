@@ -58,8 +58,6 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="%id" />
-                  <TextField fx:id="idText" GridPane.columnIndex="1" />
                   <Label text="%name" GridPane.rowIndex="1" />
                   <TextField fx:id="nameText" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label text="%path" GridPane.rowIndex="2" />

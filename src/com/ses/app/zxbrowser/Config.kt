@@ -14,7 +14,7 @@ object Config {
     private lateinit var config: JSONObject
 
     // programas soportados
-    private val programs = LinkedHashMap<String, Program>()
+    private val programs = ArrayList<Program>()
 
     // extensiones soportadas
     private val extensions = HashMap<String, ArrayList<Program>>()
@@ -49,13 +49,12 @@ object Config {
         arr.clear()
         list.forEach { program ->
             val o = JSONObject()
-            o.put("id", program.id)
             o.put("name", program.name)
             o.put("path", program.path)
             o.put("args", program.args)
             o.put("ext", JSONArray(program.ext))
             if (program.unzip) o.put("unzip", true)
-            o.put("default_for", JSONArray(program.defaultFor))
+            if (program.defaultFor.isNotEmpty()) o.put("default_for", JSONArray(program.defaultFor))
             arr.put(o)
         }
 
@@ -72,7 +71,7 @@ object Config {
     private fun loadPrograms(json: JSONArray?) {
         json?.all<JSONObject>()?.forEach { def ->
             val prog = loadProgram(def)
-            programs[prog.id] = prog
+            programs.add(prog)
 
             prog.ext.forEach { ext ->
                 val extensionPrograms = extensions.getOrPut(ext) { ArrayList() }
@@ -80,7 +79,7 @@ object Config {
             }
         }
 
-        programs.values.forEach { prog ->
+        programs.forEach { prog ->
             prog.defaultFor.forEach { ext ->
                 val list = extensions.getOrPut(ext) { ArrayList() }
                 // ponerle el primero de la lista
@@ -91,8 +90,7 @@ object Config {
     }
 
     private fun loadProgram(json: JSONObject): Program {
-        return Program(json.getString("id"),
-                json.getString("name"),
+        return Program(json.getString("name"),
                 json.getString("path"),
                 json.getString("args"),
                 //ext.toTypedArray(),
@@ -111,7 +109,7 @@ object Config {
 
     val allLibraries: Collection<Library> get() = libraries
 
-    val allPrograms: Collection<Program> get() = programs.values
+    val allPrograms: Collection<Program> get() = programs
 
     fun getDefaultProgram(download: ModelDownload): Program? {
         val extension = download.getExtension()

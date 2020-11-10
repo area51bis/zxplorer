@@ -8,7 +8,7 @@ import java.util.zip.ZipFile
 /**
  * Definición de programa (no tiene porqué ser un emulador).
  */
-class Program(var id: String, var name: String, var path: String, var args: String = "\${filePath}", var ext: Array<String> = emptyArray(), var unzip: Boolean = false) : Cloneable {
+class Program(var name: String, var path: String, var args: String = "\${filePath}", var ext: Array<String> = emptyArray(), var unzip: Boolean = false) : Cloneable {
     var defaultFor: Array<String> = emptyArray()
     private val cmd: List<String>?
     private val dir = File(path).parentFile
@@ -74,7 +74,7 @@ class Program(var id: String, var name: String, var path: String, var args: Stri
     private fun escapeOSXArgs(s: String): String = s.replace("\\", "\\\\") // '\' -> '\\'
             .replace("\"", "\\\"") // '"' -> '\"'
 
-    public override fun clone(): Program = Program(id, name, path, args, ext.clone(), unzip).also {
+    public override fun clone(): Program = Program(name, path, args, ext.clone(), unzip).also {
         it.defaultFor = defaultFor.clone()
     }
 
