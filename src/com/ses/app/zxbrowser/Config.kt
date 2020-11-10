@@ -4,6 +4,7 @@ import com.ses.app.zxbrowser.model.ModelDownload
 import com.ses.util.all
 import com.ses.util.clear
 import com.ses.util.getArray
+import com.ses.util.getOrCreateJSONArray
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -44,7 +45,7 @@ object Config {
     // cambia la lista de programas
     fun setPrograms(list: List<Program>) {
         // reescribe la lista de programas
-        val arr = config.optJSONArray("programs") ?: JSONArray()
+        val arr = config.getOrCreateJSONArray("programs")
         arr.clear()
         list.forEach { program ->
             val o = JSONObject()

@@ -3,6 +3,8 @@ package com.ses.util
 import org.json.JSONArray
 import org.json.JSONObject
 
+fun JSONObject.getOrCreateJSONArray(key: String) = optJSONArray(key) ?: JSONArray().also { put(key, it) }
+
 inline fun <reified T> JSONObject.getArray(key: String): Array<T> = optJSONArray(key)?.toArray() ?: emptyArray()
 
 @Suppress("UNCHECKED_CAST")
