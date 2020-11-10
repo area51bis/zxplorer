@@ -17,7 +17,7 @@ class Program(var id: String, var name: String, var path: String, var args: Stri
         cmd = when {
             SysUtil.isWindows -> listOf("cmd", "/C", "$path $args")
             SysUtil.isLinux -> listOf("/bin/bash", "-c", "$path ${escapeLinuxArgs(args)}")
-            SysUtil.isMac -> listOf("open", path, "--args", escapeOSXArgs(args))
+            SysUtil.isMac -> listOf("open", "-a", path, "--args", *args.split(" ").map { escapeOSXArgs(it) }.toTypedArray())
             else -> null
         }
     }
@@ -50,7 +50,7 @@ class Program(var id: String, var name: String, var path: String, var args: Stri
 
     private fun doLaunch(file: File) {
         val map = mapOf<String, Any>(
-                "filePath" to quoteArg(file.absolutePath)
+                "filePath" to file.absolutePath
         )
 
         println(cmd?.map { it.parse(map) }?.joinToString(separator = " "))
@@ -59,7 +59,11 @@ class Program(var id: String, var name: String, var path: String, var args: Stri
                 .start()
     }
 
-    private fun quoteArg(arg: String): String = if (arg.contains(' ')) "\"$arg\"" else arg
+    private fun escapePath(path: String): String = if (path.contains(' ')) {
+        if (!SysUtil.isMac) "\"$path\"" else escapeOSXPath(path)
+    } else {
+        path
+    }
 
     private fun escapeLinuxArgs(s: String): String = s.replace("\\", "\\\\") // '\' -> '\\'
             .replace("\"", "\\\\\\\"") // '"' -> '\\\"'
