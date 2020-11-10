@@ -1,4 +1,4 @@
-# ZXBrowser 0.7
+# ZXBrowser 0.7.1
 
 ### Descripción
 **ZXBrowser** es una aplicación para explorar, descargar y ejecutar el contenido de la base de datos de Spectrum [ZXDB](https://github.com/zxdb/ZXDB).
@@ -55,11 +55,17 @@ Se pueden definir y asignar programas para cualquier extensión (no sólo emulad
 ![](screenshots/programs_popup.jpg)
 ![](screenshots/program_editor.jpg)
 
+Al añadir un programa, si es reconocido, se configurará automáticamente con unos parámetros por defecto. Se irá mejorando y ampliando en próximas versiones. De momento reconoce los siguientes programas:
+
+- Fuse.
+- Retro Virtual Machine.
+- ZEsarUX.
+- ZXSpin.
+
 También se puede editar directamente el fichero `config.json` en la sección "`programs`". Cada programa tiene la siguiente estructura:
 
 ```
 {
-    "id": "zesarux",
     "name": "ZEsarUX",
     "path": "D:\\emu\\spectrum\\zesarux\\zesarux.exe",
     "args": "--noconfigfile --realloadfast --realtape ${filePath}",
@@ -68,8 +74,6 @@ También se puede editar directamente el fichero `config.json` en la sección "`
     "default_for": ["tzx", "tap"]
 }
 ```
-- **order**: Es el orden del emulador en el menú "Abrir con..."
-- **id**: Identificador único para el programa.
 - **name**: Nombre que se muestra en el menú.
 - **path**: Ruta completa al ejecutable.
 - **args**: Argumentos que se le pasarán al programa. Aquí se pueden indicar variables en la forma _${nombre_de_variable}_,
