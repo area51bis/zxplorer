@@ -49,18 +49,19 @@ class Program(var id: String, var name: String, var path: String, var args: Stri
     }
 
     private fun doLaunch(file: File) {
+        // parece que mac no necesita nada
         val map = mapOf<String, Any>(
-                "filePath" to file.absolutePath
+                "filePath" to escapePath(file.absolutePath)
         )
 
-        println(cmd?.map { it.parse(map) }?.joinToString(separator = " "))
+        //println(cmd?.map { it.parse(map) }?.joinToString(separator = " "))
         ProcessBuilder(cmd?.map { it.parse(map) })
                 .directory(dir)
                 .start()
     }
 
-    private fun escapePath(path: String): String = if (path.contains(' ')) {
-        if (!SysUtil.isMac) "\"$path\"" else escapeOSXPath(path)
+    private fun escapePath(path: String): String = if (path.contains(' ') && (SysUtil.isWindows || SysUtil.isLinux)) {
+        "\"$path\""
     } else {
         path
     }
