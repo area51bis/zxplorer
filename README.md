@@ -28,7 +28,7 @@ les guste y les sea tan útil como a mí.
 ### Instrucciones
 El programa es bastante sencillo. Basta con ejecutarlo y, automáticamente, descargará la base datos de ZXDB.
 
-La ventana muestra a la izquierda un _**arbol de categorías**_ que permite explorar por género, año, etc.
+La ventana muestra a la izquierda un _**árbol de categorías**_ que permite explorar por género, año, etc.
 
 Al seleccionar una categoría, se mostrará a la derecha un listado con todas las entradas correspondientes. Al
 seleccionar una entrada, se mostrarán debajo las descargas disponibles.
@@ -76,7 +76,7 @@ También se puede editar directamente el fichero `config.json` en la sección "`
 - **args**: Argumentos que se le pasarán al programa. Aquí se pueden indicar variables en la forma _${nombre_de_variable}_,
     pero actualmente sólo soporta una: _${filePath}_ que indica el nombre completo a la descarga.
 - **ext**: Lista de extensiones que soporta el programa.
-- **unzip**: Este parámetro es opciones e indica que necesita descomprimirse antes de ejecutarlo.
+- **unzip**: Este parámetro es opcional e indica que necesita descomprimirse antes de ejecutarlo.
 - **default_for**: Extensiones que abrirá por defecto (al hacer doble clic).
 
 ### Bibliotecas
@@ -97,6 +97,7 @@ Actualmente sólo se pueden definir en el JSON y el formato es tan sencillo que 
         "name": "My collection",
         "path": "D:\\downloads\\spectrum\\my_games"
     }
+]
 ```
 - **type**: Tipo de biblioteca. De momento sólo soporta "zxdb" y "local".
 - **name**: Nombre de la biblioteca.
