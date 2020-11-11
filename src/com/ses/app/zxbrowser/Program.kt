@@ -15,8 +15,8 @@ class Program(var name: String, var path: String, var args: String = "\${filePat
 
     init {
         cmd = when {
-            SysUtil.isWindows -> listOf("cmd", "/C", "$path $args")
-            SysUtil.isLinux -> listOf("/bin/bash", "-c", "$path ${escapeLinuxArgs(args)}")
+            SysUtil.isWindows -> listOf("cmd", "/C", path, args)
+            SysUtil.isLinux -> listOf("/bin/bash", "-c", path, escapeLinuxArgs(args))
             SysUtil.isMac -> listOf("open", path, "--args", *args.split(" ").map { escapeOSXArgs(it) }.toTypedArray())
             else -> null
         }
@@ -54,7 +54,7 @@ class Program(var name: String, var path: String, var args: String = "\${filePat
                 "filePath" to escapePath(file.absolutePath)
         )
 
-        //println(cmd?.map { it.parse(map) }?.joinToString(separator = " "))
+        println(cmd?.map { it.parse(map) }?.joinToString(separator = " "))
         ProcessBuilder(cmd?.map { it.parse(map) })
                 .directory(dir)
                 .start()
