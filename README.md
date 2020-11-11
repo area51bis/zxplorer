@@ -1,4 +1,4 @@
-# ZXBrowser 0.7.1
+# ZXBrowser 0.7.2
 
 ### Descripción
 **ZXBrowser** es una aplicación para explorar, descargar y ejecutar el contenido de la base de datos de Spectrum [ZXDB](https://github.com/zxdb/ZXDB).
