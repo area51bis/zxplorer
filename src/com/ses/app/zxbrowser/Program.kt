@@ -54,7 +54,7 @@ class Program(var name: String, var path: String, var args: String = "\${filePat
                 "filePath" to escapePath(file.absolutePath)
         )
 
-        println(cmd?.map { it.parse(map) }?.joinToString(separator = " "))
+        //println(cmd?.map { it.parse(map) }?.joinToString(separator = " "))
         ProcessBuilder(cmd?.map { it.parse(map) })
                 .directory(dir)
                 .start()
