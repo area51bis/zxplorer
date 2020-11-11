@@ -16,7 +16,7 @@ class Program(var name: String, var path: String, var args: String = "\${filePat
     init {
         cmd = when {
             SysUtil.isWindows -> listOf("cmd", "/C", path, args)
-            SysUtil.isLinux -> listOf("/bin/bash", "-c", path, escapeLinuxArgs(args))
+            SysUtil.isLinux -> listOf("/bin/bash", "-c", "${escapeUnixPath(path)} ${escapeLinuxArgs(args)}")
             SysUtil.isMac -> listOf("open", path, "--args", *args.split(" ").map { escapeOSXArgs(it) }.toTypedArray())
             else -> null
         }
@@ -69,7 +69,7 @@ class Program(var name: String, var path: String, var args: String = "\${filePat
     private fun escapeLinuxArgs(s: String): String = s.replace("\\", "\\\\") // '\' -> '\\'
             .replace("\"", "\\\\\\\"") // '"' -> '\\\"'
 
-    private fun escapeOSXPath(s: String): String = s.replace(" ", "\\ ") // '' -> '\ '
+    private fun escapeUnixPath(s: String): String = s.replace(" ", "\\ ") // '' -> '\ '
 
     private fun escapeOSXArgs(s: String): String = s.replace("\\", "\\\\") // '\' -> '\\'
             .replace("\"", "\\\"") // '"' -> '\"'
