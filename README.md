@@ -23,10 +23,7 @@ Ahora tengo una versión medianamente decente que me gustaría compartir con tod
 les guste y les sea tan útil como a mí.
 
 ### Descargas
-[Binarios](https://github.com/area51bis/zxbrowser/releases)
-
-[Código fuente](https://github.com/area51bis/zxbrowser-jfx)
-
+[Binarios](https://github.com/area51bis/zxbrowser-jfx/releases)
 
 ### Instrucciones
 El programa es bastante sencillo. Basta con ejecutarlo y, automáticamente, descargará la base datos de ZXDB.
