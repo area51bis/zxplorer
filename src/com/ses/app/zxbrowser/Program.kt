@@ -15,7 +15,7 @@ class Program(var name: String, var path: String, var args: String = "\${filePat
 
     init {
         cmd = when {
-            SysUtil.isWindows -> listOf("cmd", "/C", path, args)
+            SysUtil.isWindows -> listOf("cmd", "/S", "/C", "\"${escapePath(path)} $args\"")
             SysUtil.isLinux -> listOf("/bin/bash", "-c", "${escapeUnixPath(path)} ${escapeLinuxArgs(args)}")
             SysUtil.isMac -> listOf("open", path, "--args", *args.split(" ").map { escapeOSXArgs(it) }.toTypedArray())
             else -> null
