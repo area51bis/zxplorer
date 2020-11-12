@@ -443,37 +443,45 @@ class MainController : Initializable {
             val model = download.model
 
             // opción descargar
-            if (!model.isDownloaded(download)) {
-                add(MenuItem(T("download")).apply {
+            if (download.getType() == ModelDownload.Type.File) {
+                if (!model.isDownloaded(download)) {
+                    add(MenuItem(T("download")).apply {
+                        setOnAction {
+                            getDownload(download)
+                        }
+                    })
+                }
+
+                // menú "abrir con..." con los programas soportados
+                val list = Config.getPrograms(download)
+                add(Menu(T("open_with_")).also { menu ->
+                    list.forEach { program ->
+                        menu.items.add(MenuItem(program.name).apply {
+                            setOnAction {
+                                getDownload(download, program)
+                            }
+                        })
+                    }
+                    menu.items.add(MenuItem(T("configure_programs")).apply {
+                        setOnAction {
+                            EditProgramDialog.create().show(App.mainStage)
+                        }
+                    })
+                })
+            } else {
+                add(MenuItem(T("open")).apply {
                     setOnAction {
                         getDownload(download)
                     }
                 })
             }
-
-            // menú "abrir con..." con los programas soportados
-            val list = Config.getPrograms(download)
-            add(Menu(T("open_with_")).also { menu ->
-                list.forEach { program ->
-                    menu.items.add(MenuItem(program.name).apply {
-                        setOnAction {
-                            getDownload(download, program)
-                        }
-                    })
-                }
-                menu.items.add(MenuItem(T("configure_programs")).apply {
-                    setOnAction {
-                        EditProgramDialog.create().show(App.mainStage)
-                    }
-                })
-            })
         }
 
         downloadsTableView.contextMenu.show(downloadsTableView, e.screenX, e.screenY)
     }
 
     private fun getDownload(download: ModelDownload, program: Program? = null) {
-        if (download.getFileType().id == FileType.REMOTE_LINK) {
+        if (download.getType() == ModelDownload.Type.Web) {
             try {
                 java.awt.Desktop.getDesktop().browse(URI(download.getLink()))
             } catch (e: Exception) {
@@ -496,6 +504,7 @@ class MainController : Initializable {
 class FileDownloadTableCell : TableCell<ModelDownload, String>() {
     private val cloudImage = I("cloud")
     private val downloadedImage = I("file")
+    private val webImage = I("web")
 
     private val iconView = ImageView()
 
@@ -505,13 +514,18 @@ class FileDownloadTableCell : TableCell<ModelDownload, String>() {
 
     override fun updateItem(value: String?, empty: Boolean) {
         val download = tableRow?.item
+
         if (empty || (download == null)) {
             //text = null
             iconView.image = null
         } else {
             //text = download.fileName
             val model = download.model
-            iconView.image = if (model.isDownloaded(download)) downloadedImage else cloudImage
+            iconView.image = when {
+                download.getType() == ModelDownload.Type.Web -> webImage
+                model.isDownloaded(download) -> downloadedImage
+                else -> cloudImage
+            }
         }
     }
 }

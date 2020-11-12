@@ -5,6 +5,11 @@ import com.ses.zxdb.dao.FileType
 import java.io.File
 
 abstract class ModelDownload() {
+    enum class Type {
+        File,
+        Web
+    }
+
     lateinit var model: Model
 
     constructor(model: Model) : this() {
@@ -12,6 +17,8 @@ abstract class ModelDownload() {
     }
 
     fun getFile(): File = File(model.dir, getFilePath())
+
+    abstract fun getType(): Type
 
     /** ruta relativa a la biblioteca/modelo */
     abstract fun getFilePath(): String

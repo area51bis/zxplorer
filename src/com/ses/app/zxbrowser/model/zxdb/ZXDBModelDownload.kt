@@ -9,11 +9,13 @@ import com.ses.zxdb.dao.FileType
 import java.io.File
 
 class ZXDBModelDownload(model: Model, private val download: Download) : ModelDownload(model) {
+    override fun getType(): Type = if (download.fileType.id == FileType.REMOTE_LINK) Type.Web else Type.File
+
     /**
      * Obtiene la ruta al fichero local (relativa a la biblioteca).
      */
     override fun getFilePath(): String {
-        val server = download.downloadServer!!
+        //val server = download.downloadServer!!
         // file_link = "/pub/sinclair/games/a/AcroJet.tzx.zip"
         // path = "wos/games/a/AcroJet.tzx.zip"
         // quita el prefijo del servidor y añade su id.

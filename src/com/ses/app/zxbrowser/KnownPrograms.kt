@@ -27,6 +27,6 @@ object KnownPrograms {
         }
         prog.path = file.absolutePath
 
-        return prog
+        return prog.clone()
     }
 }

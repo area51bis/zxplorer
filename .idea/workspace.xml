@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b4907fc0-9ae3-45b2-a941-903078f601e8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/icons/web.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/strings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/strings.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/strings_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/strings_es.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/CTE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/CTE.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/KnownPrograms.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/KnownPrograms.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/MainController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/MainController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/Model.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/Model.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/ModelDownload.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/ModelDownload.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/local/LocalModelDownload.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/local/LocalModelDownload.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxdb/ZXDBModelDownload.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxdb/ZXDBModelDownload.kt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1kCkCc48R2jTYeFjg0UaaxEYAC9" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+  </component>
+  <component name="RunManager">
+    <configuration name="App" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.ses.app.zxbrowser.LauncherKt" />
+      <module name="ZXBrowser" />
+      <option name="WORKING_DIRECTORY" value="run" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b4907fc0-9ae3-45b2-a941-903078f601e8" name="Default Changelist" comment="" />
+      <created>1605211835234</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605211835234</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="422" y="179" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605212354696">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="422" y="179" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605212354696" />
+    <state x="697" y="326" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1605212349311">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="697" y="326" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605212349311" />
+    <state width="1767" height="260" key="GridCell.Tab.0.bottom" timestamp="1605212707136">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1767" height="260" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605212707136" />
+    <state width="1767" height="260" key="GridCell.Tab.0.center" timestamp="1605212707136">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1767" height="260" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605212707136" />
+    <state width="1767" height="260" key="GridCell.Tab.0.left" timestamp="1605212707135">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1767" height="260" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605212707135" />
+    <state width="1767" height="260" key="GridCell.Tab.0.right" timestamp="1605212707136">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1767" height="260" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605212707136" />
+  </component>
+</project>

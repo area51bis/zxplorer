@@ -27,6 +27,8 @@ class LocalModelDownload(model: Model, file: File) : ModelDownload(model) {
         }
     }
 
+    override fun getType(): Type = Type.File
+
     override fun getFilePath(): String = _file.path
     override fun getFileName(): String = _file.name
     override fun getLink(): String = ""
