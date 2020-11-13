@@ -76,8 +76,8 @@ También se puede editar directamente el fichero `config.json` en la sección "`
 - **args**: Argumentos que se le pasarán al programa. Aquí se pueden indicar variables en la forma _${nombre_de_variable}_,
     pero actualmente sólo soporta una: _${filePath}_ que indica el nombre completo a la descarga.
 - **ext**: Lista de extensiones que soporta el programa.
-- **unzip**: Este parámetro es opcional e indica que necesita descomprimirse antes de ejecutarlo.
-- **default_for**: Extensiones que abrirá por defecto (al hacer doble clic).
+- **unzip**: Indica que necesita descomprimirse antes de ejecutarlo. Opcional.
+- **default_for**: Extensiones que abrirá por defecto  al hacer doble clic. Opcional.
 
 ### Bibliotecas
 A partir de la versión 0.7, ZXBrowser soporta distintos tipos de bibliotecas:
@@ -101,7 +101,7 @@ Actualmente sólo se pueden definir en el JSON y el formato es tan sencillo que 
 ```
 - **type**: Tipo de biblioteca. De momento sólo soporta "zxdb" y "local".
 - **name**: Nombre de la biblioteca.
-- **path**: Ruta a la biblioteca (dónde se encuentras y/o descargan los ficheros).
+- **path**: Ruta a la biblioteca (dónde se encuentran y/o descargan los ficheros).
 
 ### Agradecimientos
 - A toda la gente que sigue disfrutando del Spectrum y hace posible que esta máquina nunca muera.
