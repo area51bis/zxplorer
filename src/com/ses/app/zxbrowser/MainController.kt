@@ -5,7 +5,6 @@ import com.ses.app.zxbrowser.filters.Filter
 import com.ses.app.zxbrowser.model.*
 import com.ses.app.zxbrowser.ui.EditProgramDialog
 import com.ses.app.zxbrowser.ui.ProgressDialog
-import com.ses.zxdb.dao.FileType
 import javafx.application.Platform
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
@@ -230,6 +229,9 @@ class MainController : Initializable {
 
     private fun createTree() {
         treeView.isShowRoot = Config.general.showRootNode
+        treeView.setCellFactory {
+            TreeNodeCell(this@MainController::onTreeNodeContextMenu)
+        }
 
         val root = TreeNode(T("all"))
         root.isExpanded = true
@@ -237,6 +239,21 @@ class MainController : Initializable {
         if (Config.general.showRootNode) root.entries.sortBy { it.getTitle() }
 
         treeView.root = root
+    }
+
+    private fun onTreeNodeContextMenu(node: TreeNode?, contextMenu: ContextMenu) {
+        contextMenu.items.clear()
+
+        if (node == null) {
+            contextMenu.items.apply {
+                add(MenuItem("Add library"))
+            }
+        } else if (node.parent == treeView.root) {
+            contextMenu.items.apply {
+                add(MenuItem("Edit"))
+                add(MenuItem("Delete"))
+            }
+        }
     }
 
     private fun selectTreeNode(item: TreeItem<String>) {

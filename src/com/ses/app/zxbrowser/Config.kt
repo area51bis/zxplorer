@@ -11,7 +11,7 @@ import java.io.File
 
 object Config {
     private val configFile = File(App.workingDir, "config.json")
-    private lateinit var config: JSONObject
+    private val config: JSONObject
 
     // programas soportados
     private val programs = ArrayList<Program>()

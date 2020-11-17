@@ -2,22 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b4907fc0-9ae3-45b2-a941-903078f601e8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/icons/web.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/strings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/strings.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/strings_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/strings_es.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/CTE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/CTE.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/KnownPrograms.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/KnownPrograms.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Config.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Config.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Library.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Library.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/MainController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/MainController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/Model.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/Model.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/ModelDownload.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/ModelDownload.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/local/LocalModelDownload.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/local/LocalModelDownload.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxdb/ZXDBModelDownload.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxdb/ZXDBModelDownload.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -29,6 +29,13 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui" />
+    <property name="restartRequiresConfirmation" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\proyectos\github\area51bis\zxbrowser\src\com\ses\app\zxbrowser\ui" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="App" type="Application" factoryName="Application">
@@ -49,32 +56,86 @@
       <option name="presentableId" value="Default" />
       <updated>1605211835234</updated>
     </task>
+    <task id="LOCAL-00001" summary="[!] Corrección de errores.">
+      <created>1605219278145</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1605219278145</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="[!] Corrección de errores." />
+    <option name="LAST_COMMIT_MESSAGE" value="[!] Corrección de errores." />
   </component>
   <component name="WindowStateProjectService">
     <state x="422" y="179" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605212354696">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="422" y="179" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605212354696" />
+    <state x="760" y="240" key="#com.intellij.ide.util.MemberChooser" timestamp="1605649867286">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="760" y="240" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1605649867286" />
     <state x="697" y="326" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1605212349311">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="697" y="326" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1605212349311" />
-    <state width="1767" height="260" key="GridCell.Tab.0.bottom" timestamp="1605212707136">
+    <state x="723" y="227" key="#xdebugger.evaluate" timestamp="1605652443236">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1767" height="260" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605212707136" />
-    <state width="1767" height="260" key="GridCell.Tab.0.center" timestamp="1605212707136">
+    <state x="723" y="227" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1605652443236" />
+    <state x="623" y="111" width="1052" height="853" key="CommitChangelistDialog2" timestamp="1605219276278">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1767" height="260" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605212707136" />
-    <state width="1767" height="260" key="GridCell.Tab.0.left" timestamp="1605212707135">
+    <state x="623" y="111" width="1052" height="853" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1605219276278" />
+    <state width="1767" height="322" key="GridCell.Tab.0.bottom" timestamp="1605652740345">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1767" height="260" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605212707135" />
-    <state width="1767" height="260" key="GridCell.Tab.0.right" timestamp="1605212707136">
+    <state width="1767" height="322" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605652740345" />
+    <state width="1767" height="322" key="GridCell.Tab.0.center" timestamp="1605652740344">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1767" height="260" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605212707136" />
+    <state width="1767" height="322" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605652740344" />
+    <state width="1767" height="322" key="GridCell.Tab.0.left" timestamp="1605652740344">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1767" height="322" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605652740344" />
+    <state width="1767" height="322" key="GridCell.Tab.0.right" timestamp="1605652740344">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1767" height="322" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605652740344" />
+    <state width="1767" height="322" key="GridCell.Tab.1.bottom" timestamp="1605652740345">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1767" height="322" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605652740345" />
+    <state width="1767" height="322" key="GridCell.Tab.1.center" timestamp="1605652740345">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1767" height="322" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605652740345" />
+    <state width="1767" height="322" key="GridCell.Tab.1.left" timestamp="1605652740345">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1767" height="322" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605652740345" />
+    <state width="1767" height="322" key="GridCell.Tab.1.right" timestamp="1605652740345">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="1767" height="322" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605652740345" />
+    <state x="689" y="269" width="540" height="524" key="StructurePopup" timestamp="1605643278380">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="689" y="269" width="540" height="524" key="StructurePopup/0.0.1920.1040@0.0.1920.1040" timestamp="1605643278380" />
+    <state x="560" y="257" key="Vcs.Push.Dialog.v2" timestamp="1605219284507">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="560" y="257" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1605219284507" />
+    <state x="786" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605638769137">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="786" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1605638769137" />
   </component>
 </project>
