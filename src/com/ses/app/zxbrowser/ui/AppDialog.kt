@@ -35,6 +35,11 @@ abstract class AppDialog : Initializable {
         stage.show()
     }
 
+    fun showAndWait(owner: Window? = null) {
+        if (owner != null) stage.initOwner(owner)
+        stage.showAndWait()
+    }
+
     fun hide() {
         stage.hide()
     }

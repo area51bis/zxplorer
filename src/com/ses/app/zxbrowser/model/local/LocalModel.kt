@@ -28,7 +28,9 @@ class LocalModel(name: String, dir: File) : Model(name, dir) {
     }
 
     override fun getTree(): TreeNode {
-        createTree()
+        if (root.children.isEmpty()) {
+            createTree()
+        }
         return root
     }
 

@@ -3,6 +3,7 @@ package com.ses.app.zxbrowser
 import com.ses.app.zxbrowser.filters.EntryTitleFilter
 import com.ses.app.zxbrowser.filters.Filter
 import com.ses.app.zxbrowser.model.*
+import com.ses.app.zxbrowser.ui.EditLibsDialog
 import com.ses.app.zxbrowser.ui.EditProgramDialog
 import com.ses.app.zxbrowser.ui.ProgressDialog
 import javafx.application.Platform
@@ -109,10 +110,10 @@ class MainController : Initializable {
     }
 
     private fun initMenu() {
+        /*
         for (lib in Config.allLibraries) {
             val menu = Menu(lib.name)
-            val op = MenuItem(T("update"))
-            op.setOnAction {
+            val op = menuItem(T("update")) {
                 onUpdateLibraryOption(lib)
             }
             op.isDisable = !lib.model.canUpdate()
@@ -120,6 +121,14 @@ class MainController : Initializable {
 
             menuLibraries.items.add(menu)
         }
+
+        menuLibraries.items.apply {
+            add(SeparatorMenuItem())
+            add(MenuItem(T("edit")).apply {
+                setOnAction { EditLibsDialog.create().show(App.mainStage) }
+            })
+        }
+        */
     }
 
     private fun initUI() {
@@ -145,6 +154,8 @@ class MainController : Initializable {
         }
 
         val root: TreeNode = treeView.root as TreeNode
+
+        treeView.selectionModel.clearSelection() // borra selección para evitar problemas
 
         root.children.clear()
 
@@ -244,16 +255,18 @@ class MainController : Initializable {
     private fun onTreeNodeContextMenu(node: TreeNode?, contextMenu: ContextMenu) {
         contextMenu.items.clear()
 
-        if (node == null) {
-            contextMenu.items.apply {
-                add(MenuItem("Add library"))
-            }
-        } else if (node.parent == treeView.root) {
-            contextMenu.items.apply {
-                add(MenuItem("Edit"))
-                add(MenuItem("Delete"))
+        if (node?.parent == treeView.root) {
+            // miro si es el raíz de alguna biblioteca
+            val lib = Config.allLibraries.find { it.model.root == node }
+            if (lib?.model?.canUpdate() == true) {
+                contextMenu.items.add(menuItem(T("update")) { onUpdateLibraryOption(lib) })
             }
         }
+
+        contextMenu.items.add(menuItem(T("edit_libs")) {
+            EditLibsDialog.create().showAndWait(App.mainStage)
+            initModels()
+        })
     }
 
     private fun selectTreeNode(item: TreeItem<String>) {

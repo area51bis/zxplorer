@@ -167,7 +167,7 @@ class EditProgramDialog : AppDialog() {
 
     @FXML
     fun onSaveClick() {
-        Config.setPrograms(listView.items)
+        Config.setPrograms(programList)
         hide()
     }
 }

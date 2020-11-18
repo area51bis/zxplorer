@@ -5,15 +5,25 @@ import com.ses.app.zxbrowser.model.local.LocalModel
 import com.ses.app.zxbrowser.model.zxdb.ZXDBModel
 import java.io.File
 
-class Library(val type: String, val name: String, val path: String) : Cloneable {
-    val model: Model by lazy {
-        when (type) {
-            "zxdb" -> ZXDBModel(name, File(path))
-            "local" -> LocalModel(name, File(path))
-
-            else -> throw Exception("Invalid library '$type'")
-        }
+class Library(val type: String, var name: String, var path: String, model: Model? = null) : Cloneable {
+    companion object {
+        const val TYPE_ZXDB = "zxdb"
+        const val TYPE_LOCAL = "local"
     }
 
-    public override fun clone(): Library = Library(type, name, path)
+    val model: Model by lazy {
+        model
+                ?: when (type) {
+                    TYPE_ZXDB -> ZXDBModel(name, File(path))
+                    TYPE_LOCAL -> LocalModel(name, File(path))
+
+                    else -> throw Exception("Invalid library '$type'")
+                }
+    }
+
+    override fun toString(): String {
+        return "$name"
+    }
+
+    public override fun clone(): Library = Library(type, name, path, model)
 }

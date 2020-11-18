@@ -100,6 +100,27 @@ object Config {
         }
     }
 
+    // cambia la lista de programas
+    fun setLibraries(list: List<Library>) {
+        // reescribe la lista de programas
+        val arr = config.getOrCreateJSONArray("libraries")
+        arr.clear()
+        list.forEach { lib ->
+            val o = JSONObject()
+            o.put("type", lib.type)
+            o.put("name", lib.name)
+            o.put("path", lib.path)
+            arr.put(o)
+        }
+
+        // guarda en disco
+        save()
+
+        // recarga
+        libraries.clear()
+        libraries.addAll(list)
+    }
+
     private fun loadLibraries(json: JSONArray?) {
         json?.all<JSONObject>()?.forEach { o ->
             val lib = Library(o.getString("type"), o.getString("name"), o.getString("path"))

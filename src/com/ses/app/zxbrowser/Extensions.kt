@@ -4,7 +4,10 @@ package com.ses.app.zxbrowser
 
 import com.ses.zx.SCRImageLoader
 import javafx.beans.value.ObservableValue
+import javafx.event.ActionEvent
+import javafx.event.EventHandler
 import javafx.fxml.FXMLLoader
+import javafx.scene.control.MenuItem
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.image.Image
@@ -44,4 +47,10 @@ fun File.toImage(): Image = inputStream().use {
     } else {
         SCRImageLoader().load(it)
     }
+}
+
+fun menuItem(name: String, action: EventHandler<ActionEvent>? = null): MenuItem {
+    val menuItem = MenuItem(name)
+    if (action != null) menuItem.onAction = action
+    return menuItem
 }
