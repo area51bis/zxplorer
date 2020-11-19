@@ -10,11 +10,11 @@ import javafx.stage.Window
 import java.net.URL
 import java.util.*
 
-abstract class AppDialog : Initializable {
+abstract class AppDialog<R> : Initializable {
     protected val stage: Stage by lazy { createStage() }
 
     companion object {
-        fun <T : AppDialog> create(fxmlName: String): T {
+        fun <T : AppDialog<*>> create(fxmlName: String): T {
             val loader = fxmlLoader(fxmlName)
             val scene = Scene(loader.load())
             val dialog: T = loader.getController()
@@ -30,14 +30,17 @@ abstract class AppDialog : Initializable {
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {}
 
+    open fun getResult(): R? = null
+
     fun show(owner: Window? = null) {
         if (owner != null) stage.initOwner(owner)
         stage.show()
     }
 
-    fun showAndWait(owner: Window? = null) {
+    fun showAndWait(owner: Window? = null): R? {
         if (owner != null) stage.initOwner(owner)
         stage.showAndWait()
+        return getResult()
     }
 
     fun hide() {

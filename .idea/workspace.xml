@@ -1,23 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:main" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="b4907fc0-9ae3-45b2-a941-903078f601e8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/EditLibsDialog.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/edit_libraries_dialog.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/strings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/strings.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/strings_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/strings_es.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Config.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Config.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Extensions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Extensions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Library.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Library.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/MainController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/MainController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/local/LocalModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/local/LocalModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxdb/ZXDBModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxdb/ZXDBModel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/AppDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/AppDialog.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/EditLibsDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/EditLibsDialog.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/EditProgramDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/EditProgramDialog.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/edit_program_dialog.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/edit_program_dialog.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/ProgressDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/ProgressDialog.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,15 +100,46 @@
       <option name="project" value="LOCAL" />
       <updated>1605653039551</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="[+] Edición de bibliotecas.">
+      <created>1605741858093</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1605741858093</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="[!] Corrección de errores." />
     <MESSAGE value="[*] Edición de bibliotecas (WIP)." />
-    <option name="LAST_COMMIT_MESSAGE" value="[*] Edición de bibliotecas (WIP)." />
+    <MESSAGE value="[+] Edición de bibliotecas." />
+    <option name="LAST_COMMIT_MESSAGE" value="[+] Edición de bibliotecas." />
   </component>
   <component name="WindowStateProjectService">
     <state x="422" y="179" width="1092" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1605212354696">
@@ -112,58 +158,58 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="1152" y="200" key="#xdebugger.evaluate/0.0.1920.1040@0.0.1920.1040" timestamp="1605739833967" />
-    <state x="623" y="111" width="1052" height="853" key="CommitChangelistDialog2" timestamp="1605653038063">
+    <state x="623" y="111" width="1052" height="853" key="CommitChangelistDialog2" timestamp="1605741855626">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="623" y="111" width="1052" height="853" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1605653038063" />
-    <state width="1767" height="260" key="GridCell.Tab.0.bottom" timestamp="1605741721078">
+    <state x="623" y="111" width="1052" height="853" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1605741855626" />
+    <state width="1767" height="260" key="GridCell.Tab.0.bottom" timestamp="1605823786610">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1767" height="260" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605741721078" />
-    <state width="1767" height="260" key="GridCell.Tab.0.center" timestamp="1605741721078">
+    <state width="1767" height="260" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605823786610" />
+    <state width="1767" height="260" key="GridCell.Tab.0.center" timestamp="1605823786610">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1767" height="260" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605741721078" />
-    <state width="1767" height="260" key="GridCell.Tab.0.left" timestamp="1605741721078">
+    <state width="1767" height="260" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605823786610" />
+    <state width="1767" height="260" key="GridCell.Tab.0.left" timestamp="1605823786610">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1767" height="260" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605741721078" />
-    <state width="1767" height="260" key="GridCell.Tab.0.right" timestamp="1605741721078">
+    <state width="1767" height="260" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605823786610" />
+    <state width="1767" height="260" key="GridCell.Tab.0.right" timestamp="1605823786610">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1767" height="260" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605741721078" />
-    <state width="1767" height="322" key="GridCell.Tab.1.bottom" timestamp="1605741268175">
+    <state width="1767" height="260" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605823786610" />
+    <state width="1767" height="322" key="GridCell.Tab.1.bottom" timestamp="1605741967971">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1767" height="322" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605741268175" />
-    <state width="1767" height="322" key="GridCell.Tab.1.center" timestamp="1605741268174">
+    <state width="1767" height="322" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1605741967971" />
+    <state width="1767" height="322" key="GridCell.Tab.1.center" timestamp="1605741967971">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1767" height="322" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605741268174" />
-    <state width="1767" height="322" key="GridCell.Tab.1.left" timestamp="1605741268174">
+    <state width="1767" height="322" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1605741967971" />
+    <state width="1767" height="322" key="GridCell.Tab.1.left" timestamp="1605741967970">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1767" height="322" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605741268174" />
-    <state width="1767" height="322" key="GridCell.Tab.1.right" timestamp="1605741268174">
+    <state width="1767" height="322" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1605741967970" />
+    <state width="1767" height="322" key="GridCell.Tab.1.right" timestamp="1605741967971">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1767" height="322" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605741268174" />
-    <state x="689" y="269" width="540" height="524" key="StructurePopup" timestamp="1605643278380">
+    <state width="1767" height="322" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1605741967971" />
+    <state x="689" y="269" width="570" height="524" key="StructurePopup" timestamp="1605823369703">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="689" y="269" width="540" height="524" key="StructurePopup/0.0.1920.1040@0.0.1920.1040" timestamp="1605643278380" />
-    <state x="560" y="257" key="Vcs.Push.Dialog.v2" timestamp="1605219284507">
+    <state x="689" y="269" width="570" height="524" key="StructurePopup/0.0.1920.1040@0.0.1920.1040" timestamp="1605823369703" />
+    <state x="560" y="257" key="Vcs.Push.Dialog.v2" timestamp="1605741879753">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="560" y="257" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1605219284507" />
+    <state x="560" y="257" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1605741879753" />
     <state x="786" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1605638769137">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="786" y="438" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1605638769137" />
-    <state x="676" y="257" width="585" height="534" key="find.popup" timestamp="1605737369131">
+    <state x="676" y="257" width="585" height="534" key="find.popup" timestamp="1605822715430">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="676" y="257" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605737369131" />
+    <state x="676" y="257" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605822715430" />
     <state x="631" y="241" key="search.everywhere.popup" timestamp="1605718913769">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

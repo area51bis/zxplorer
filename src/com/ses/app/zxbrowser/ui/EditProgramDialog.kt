@@ -16,7 +16,7 @@ import java.io.File
 import java.net.URL
 import java.util.*
 
-class EditProgramDialog : AppDialog() {
+class EditProgramDialog : AppDialog<Unit>() {
     @FXML
     lateinit var listView: ListView<Program>
 

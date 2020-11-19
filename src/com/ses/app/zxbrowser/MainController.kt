@@ -258,14 +258,15 @@ class MainController : Initializable {
         if (node?.parent == treeView.root) {
             // miro si es el raíz de alguna biblioteca
             val lib = Config.allLibraries.find { it.model.root == node }
-            if (lib?.model?.canUpdate() == true) {
+            if (lib?.model?.canUpdate() == true) { // mostrar opción si es posible
                 contextMenu.items.add(menuItem(T("update")) { onUpdateLibraryOption(lib) })
             }
         }
 
         contextMenu.items.add(menuItem(T("edit_libs")) {
-            EditLibsDialog.create().showAndWait(App.mainStage)
-            initModels()
+            if (EditLibsDialog.create().showAndWait(App.mainStage) == true) {
+                initModels()
+            }
         })
     }
 

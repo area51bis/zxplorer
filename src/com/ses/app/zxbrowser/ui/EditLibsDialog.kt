@@ -13,7 +13,7 @@ import java.io.File
 import java.net.URL
 import java.util.*
 
-class EditLibsDialog : AppDialog() {
+class EditLibsDialog : AppDialog<Boolean>() {
     @FXML
     lateinit var listView: ListView<Library>
 
@@ -31,6 +31,8 @@ class EditLibsDialog : AppDialog() {
 
     private lateinit var libList: ObservableList<Library>
     private var selectedLibrary: Library? = null
+
+    private var _result = false
 
     companion object {
         fun create() = create<EditLibsDialog>("edit_libraries_dialog.fxml")
@@ -56,6 +58,8 @@ class EditLibsDialog : AppDialog() {
 
         updateProgramInfo(null)
     }
+
+    override fun getResult(): Boolean? = _result
 
     private fun selectLibrary(lib: Library) {
         selectedLibrary = null
@@ -175,6 +179,7 @@ class EditLibsDialog : AppDialog() {
 
     @FXML
     fun onSaveClick() {
+        _result = true;
         Config.setLibraries(libList)
         hide()
     }

@@ -11,7 +11,7 @@ import javafx.stage.Window
 import java.net.URL
 import java.util.*
 
-class ProgressDialog : AppDialog() {
+class ProgressDialog : AppDialog<Unit>() {
     @FXML
     lateinit var titleLabel: Label
 
