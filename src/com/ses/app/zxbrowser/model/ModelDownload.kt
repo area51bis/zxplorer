@@ -32,4 +32,5 @@ abstract class ModelDownload() {
     abstract fun getReleaseYear(): Int?
     abstract fun getMachine(): String?
     abstract fun isImage(): Boolean
+    abstract fun getSource(): String
 }

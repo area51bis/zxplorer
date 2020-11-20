@@ -40,4 +40,5 @@ class LocalModelDownload(model: Model, file: File) : ModelDownload(model) {
     override fun getReleaseYear(): Int? = null
     override fun getMachine(): String? = null
     override fun isImage(): Boolean = modelExtension.isImage
+    override fun getSource(): String = ""
 }

@@ -17,6 +17,7 @@ val Download.fileType: FileType get() = ZXDB.getTable(FileType::class)[filetype_
 val Download.extension: Extension? get() = ZXDB.getTable(Extension::class).rows.firstOrNull { file_link.endsWith(it.ext) }
 val Download.machineType: MachineType? get() = ZXDB.getTable(MachineType::class)[machinetype_id]
 val Download.isImage: Boolean get() = Extension.IMAGE_EXTENSIONS.contains(extension?.ext)
+val Download.sourceType: SourceType? get() = ZXDB.getTable(SourceType::class)[sourcetype_id]
 
 /** `".txz.zip"` -> `"tzx"`. */
 val Extension.rawExtension: String get() = ext.removeSuffix(".zip").removePrefix(".")

@@ -35,4 +35,5 @@ class ZXDBModelDownload(model: Model, private val download: Download) : ModelDow
     override fun getReleaseYear(): Int? = download.release_year
     override fun getMachine(): String? = download.machineType?.text
     override fun isImage(): Boolean = download.isImage
+    override fun getSource(): String = download.sourceType?.text ?: ""
 }

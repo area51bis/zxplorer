@@ -345,6 +345,10 @@ class MainController : Initializable {
             add(TableColumn<ModelDownload, String>(T("machine")).apply {
                 cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getMachine()) }
             })
+
+            add(TableColumn<ModelDownload, String>(T("source")).apply {
+                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getSource()) }
+            })
         }
 
         downloadsTableView.items = FXCollections.observableArrayList()
