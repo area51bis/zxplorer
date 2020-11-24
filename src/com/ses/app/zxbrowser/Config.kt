@@ -123,7 +123,7 @@ object Config {
 
     private fun loadLibraries(json: JSONArray?) {
         json?.all<JSONObject>()?.forEach { o ->
-            val lib = Library(o.getString("type"), o.getString("name"), o.getString("path"))
+            val lib = Library(o.getString("type"), o.getString("name"), o.getString("path"), o.optString("source", null) )
             libraries.add(lib)
         }
     }

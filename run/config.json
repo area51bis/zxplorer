@@ -1,11 +1,9 @@
 {
-    "libraries": [{
-        "path": "zxdb",
-        "name": "ZXDB",
-        "type": "zxdb"
-    }],
     "programs": [
         {
+            "id": "zxspin",
+            "name": "ZXSpin",
+            "path": "D:\\emu\\spectrum\\zxspin\\zxspin.exe",
             "args": "${filePath}",
             "ext": [
                 "tzx",
@@ -13,15 +11,15 @@
                 "z80",
                 "sna"
             ],
-            "path": "D:\\emu\\spectrum\\zxspin\\zxspin.exe",
             "default_for": [
                 "z80",
                 "sna"
-            ],
-            "name": "ZXSpin",
-            "id": "zxspin"
+            ]
         },
         {
+            "id": "zesarux",
+            "name": "ZEsarUX",
+            "path": "D:\\emu\\spectrum\\zesarux\\zesarux.exe",
             "args": "--noconfigfile --realloadfast --realtape ${filePath}",
             "ext": [
                 "tzx",
@@ -29,27 +27,27 @@
                 "z80",
                 "sna"
             ],
-            "path": "D:\\emu\\spectrum\\zesarux\\zesarux.exe",
             "default_for": [
                 "tzx",
                 "tap"
             ],
-            "name": "ZEsarUX",
-            "id": "zesarux",
             "unzip": true
         },
         {
+            "id": "rvm",
+            "name": "Retro Virtual Machine",
+            "path": "D:\\emu\\spectrum\\rvm\\RetroVirtualMachine.exe",
             "args": "-b=zx48k -w -p -c=j\"\"\\n -i ${filePath}",
             "ext": [
                 "tzx",
                 "tap"
             ],
-            "path": "D:\\emu\\spectrum\\rvm\\RetroVirtualMachine.exe",
-            "name": "Retro Virtual Machine",
-            "id": "rvm",
             "unzip": true
         },
         {
+            "name": "Fuse",
+            "id": "fuse",
+            "path": "/Applications/Fuse.app/Contents/MacOS/Fuse",
             "args": "--auto-load --tape ${filePath}",
             "ext": [
                 "tzx",
@@ -57,10 +55,14 @@
                 "z80",
                 "sna"
             ],
-            "path": "/Applications/Fuse.app/Contents/MacOS/Fuse",
-            "name": "Fuse",
-            "id": "fuse",
             "unzip": true
+        }
+    ],
+    "libraries": [
+        {
+            "type": "zxdb",
+            "name": "ZXDB",
+            "path": "zxdb"
         }
     ]
 }

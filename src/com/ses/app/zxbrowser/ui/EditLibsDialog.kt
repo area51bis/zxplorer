@@ -89,7 +89,7 @@ class EditLibsDialog : AppDialog<Boolean>() {
     private val addContextMenu = ContextMenu().apply {
         items.addAll(
                 MenuItem(T("lib_type_zxdb")).apply { setOnAction { addLibrary(Library.TYPE_ZXDB) } },
-                MenuItem(T("lib_type_local")).apply { setOnAction { addLibrary(Library.TYPE_LOCAL) } }
+                MenuItem(T("lib_type_local")).apply { setOnAction { addLibrary(Library.TYPE_LOCAL) } },
         )
     }
 
@@ -97,11 +97,11 @@ class EditLibsDialog : AppDialog<Boolean>() {
         var lib: Library? = null
 
         when (type) {
-            Library.TYPE_ZXDB -> lib = Library(type, "ZXDB", "zxdb")
+            Library.TYPE_ZXDB -> lib = Library(type, "ZXDB", "zxdb", )
             Library.TYPE_LOCAL -> {
                 val dir = chooseDirectory()
                 if (dir != null) {
-                    lib = Library(type, dir.name, dir.absolutePath)
+                    lib = Library(type, dir.name, dir.absolutePath, )
                 }
             }
         }
