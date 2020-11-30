@@ -1,4 +1,4 @@
-# ZXBrowser 0.7.2
+# ZXBrowser 0.8
 
 ### Descripción
 **ZXBrowser** es una aplicación para explorar, descargar y ejecutar el contenido de la base de datos de Spectrum [ZXDB](https://github.com/zxdb/ZXDB).
@@ -84,7 +84,17 @@ A partir de la versión 0.7, ZXBrowser soporta distintos tipos de bibliotecas:
 - **ZXDB**: Base de datos ZXDB descargada de forma local.
 - **Local**: Cualquier directorio local de nuestro equipo.
 
-Actualmente sólo se pueden definir en el JSON y el formato es tan sencillo que creo que se explica por sí solo:
+Se pueden editar mediante el menú contextual del árbol de categorías:
+
+![](screenshots/lib_popup.jpg)
+
+Si se selecciona el nodo raíz de una biblioteca, además se mostrarán las opciones disponibles para dicha biblioteca.
+
+Seleccionando la opción "Editar bibliotecas" se podrán añadir, borrar y modificar las bibliotecas existentes.
+
+![](screenshots/lib_editor.jpg)
+
+Además, se pueden editar directamente en el JSON. El formato es tan sencillo que creo que se explica por sí solo:
 ```
 "libraries": [
     {
