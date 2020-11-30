@@ -26,16 +26,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4907fc0-9ae3-45b2-a941-903078f601e8" name="Default Changelist" comment="[+] Source type.">
-      <change afterPath="$PROJECT_DIR$/src/com/ses/zxdb/dao/SourceType.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/strings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/strings.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/strings_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/strings_es.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/MainController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/MainController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/ModelDownload.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/ModelDownload.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/local/LocalModelDownload.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/local/LocalModelDownload.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxdb/ZXDBModelDownload.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxdb/ZXDBModelDownload.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/zxdb/ZXDBHelper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/zxdb/ZXDBHelper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/CTE.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/CTE.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +51,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RecentsManager">
@@ -227,9 +219,9 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="676" y="257" width="585" height="534" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605822715430" />
-    <state x="631" y="241" key="search.everywhere.popup" timestamp="1605718913769">
+    <state x="631" y="241" width="672" height="678" key="search.everywhere.popup" timestamp="1606740624151">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="631" y="241" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1605718913769" />
+    <state x="631" y="241" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1606740624151" />
   </component>
 </project>
