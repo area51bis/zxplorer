@@ -45,7 +45,7 @@ class EditLibsDialog : AppDialog<Boolean>() {
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         super.initialize(location, resources)
-        stage.title = T("configure_programs")
+        stage.title = T("libraries")
 
         libList = listView.items
         Config.allLibraries.forEach { libList.add(it) }
