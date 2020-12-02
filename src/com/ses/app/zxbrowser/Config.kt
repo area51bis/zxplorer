@@ -1,17 +1,18 @@
 package com.ses.app.zxbrowser
 
+import com.google.gson.*
+import com.google.gson.stream.JsonWriter
 import com.ses.app.zxbrowser.model.ModelDownload
-import com.ses.util.all
-import com.ses.util.clear
-import com.ses.util.getArray
-import com.ses.util.getOrCreateJSONArray
-import org.json.JSONArray
-import org.json.JSONObject
+import com.ses.util.*
 import java.io.File
+import java.io.Writer
 
 object Config {
     private val configFile = File(App.workingDir, "config.json")
-    private val config: JSONObject
+    private val gson = GsonBuilder()
+            .disableHtmlEscaping()
+            .create()
+    private val config: JsonObject
 
     // programas soportados
     private val programs = ArrayList<Program>()
@@ -24,21 +25,25 @@ object Config {
 
     init {
         config = if (configFile.exists()) {
-            JSONObject(configFile.readText())
+            //JSONObject(configFile.readText())
+            JsonParser.parseReader(configFile.reader()).asJsonObject
         } else {
             val stream = javaClass.getResourceAsStream("/default_config.json")
             val text = stream.bufferedReader().use { it.readText() }
             configFile.writeText(text)
-            JSONObject(text)
+            //JSONObject(text)
+            JsonParser.parseString(text).asJsonObject
         }
 
-        loadPrograms(config.optJSONArray("programs"))
-        loadLibraries(config.optJSONArray("libraries"))
+        loadPrograms(config.optJsonArray("programs"))
+        loadLibraries(config.optJsonArray("libraries"))
     }
+
+    private fun jsonWriter(writer: Writer) = JsonWriter(writer).apply { setIndent("    ") }
 
     private fun save() {
         configFile.writer().use {
-            config.write(it, 4, 0)
+            gson.toJson(config, jsonWriter(it))
         }
     }
 
@@ -48,14 +53,14 @@ object Config {
         val arr = config.getOrCreateJSONArray("programs")
         arr.clear()
         list.forEach { program ->
-            val o = JSONObject()
-            o.put("name", program.name)
-            o.put("path", program.path)
-            o.put("args", program.args)
-            o.put("ext", JSONArray(program.ext))
-            if (program.unzip) o.put("unzip", true)
-            if (program.defaultFor.isNotEmpty()) o.put("default_for", JSONArray(program.defaultFor))
-            arr.put(o)
+            val o = JsonObject()
+            o.addProperty("name", program.name)
+            o.addProperty("path", program.path)
+            o.addProperty("args", program.args)
+            o.add("ext", JsonArray(program.ext))
+            if (program.unzip) o.addProperty("unzip", true)
+            if (program.defaultFor.isNotEmpty()) o.add("default_for", JsonArray(program.defaultFor))
+            arr.add(o)
         }
 
         // guarda en disco
@@ -64,13 +69,12 @@ object Config {
         // recarga
         programs.clear()
         extensions.clear()
-        loadPrograms(config.optJSONArray("programs"))
-        //loadDefaults(config.optJSONArray("default_programs"))
+        loadPrograms(config.optJsonArray("programs"))
     }
 
-    private fun loadPrograms(json: JSONArray?) {
-        json?.all<JSONObject>()?.forEach { def ->
-            val prog = loadProgram(def)
+    private fun loadPrograms(json: JsonArray?) {
+        json?.forEach { def ->
+            val prog = loadProgram(def as JsonObject)
             programs.add(prog)
 
             prog.ext.forEach { ext ->
@@ -89,7 +93,7 @@ object Config {
         }
     }
 
-    private fun loadProgram(json: JSONObject): Program {
+    private fun loadProgram(json: JsonObject): Program {
         return Program(json.getString("name"),
                 json.getString("path"),
                 json.getString("args"),
@@ -106,11 +110,11 @@ object Config {
         val arr = config.getOrCreateJSONArray("libraries")
         arr.clear()
         list.forEach { lib ->
-            val o = JSONObject()
-            o.put("type", lib.type)
-            o.put("name", lib.name)
-            o.put("path", lib.path)
-            arr.put(o)
+            val o = JsonObject()
+            o.addProperty("type", lib.type)
+            o.addProperty("name", lib.name)
+            o.addProperty("path", lib.path)
+            arr.add(o)
         }
 
         // guarda en disco
@@ -121,10 +125,12 @@ object Config {
         libraries.addAll(list)
     }
 
-    private fun loadLibraries(json: JSONArray?) {
-        json?.all<JSONObject>()?.forEach { o ->
-            val lib = Library(o.getString("type"), o.getString("name"), o.getString("path"), o.optString("source", null) )
-            libraries.add(lib)
+    private fun loadLibraries(json: JsonArray?) {
+        json?.forEach { o ->
+            if (o is JsonObject) {
+                val lib = Library(o.getString("type"), o.getString("name"), o.getString("path"), o.optString("source", null))
+                libraries.add(lib)
+            }
         }
     }
 

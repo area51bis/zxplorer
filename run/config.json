@@ -1,7 +1,6 @@
 {
     "programs": [
         {
-            "id": "zxspin",
             "name": "ZXSpin",
             "path": "D:\\emu\\spectrum\\zxspin\\zxspin.exe",
             "args": "${filePath}",
@@ -17,7 +16,6 @@
             ]
         },
         {
-            "id": "zesarux",
             "name": "ZEsarUX",
             "path": "D:\\emu\\spectrum\\zesarux\\zesarux.exe",
             "args": "--noconfigfile --realloadfast --realtape ${filePath}",
@@ -27,14 +25,13 @@
                 "z80",
                 "sna"
             ],
+            "unzip": true,
             "default_for": [
                 "tzx",
                 "tap"
-            ],
-            "unzip": true
+            ]
         },
         {
-            "id": "rvm",
             "name": "Retro Virtual Machine",
             "path": "D:\\emu\\spectrum\\rvm\\RetroVirtualMachine.exe",
             "args": "-b=zx48k -w -p -c=j\"\"\\n -i ${filePath}",
@@ -46,7 +43,6 @@
         },
         {
             "name": "Fuse",
-            "id": "fuse",
             "path": "/Applications/Fuse.app/Contents/MacOS/Fuse",
             "args": "--auto-load --tape ${filePath}",
             "ext": [
