@@ -7,6 +7,7 @@ import javafx.scene.control.*
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.GridPane
 import javafx.stage.DirectoryChooser
+import javafx.stage.FileChooser
 import javafx.stage.Stage
 import javafx.stage.StageStyle
 import java.io.File
@@ -56,18 +57,18 @@ class EditLibsDialog : AppDialog<Boolean>() {
         nameText.textProperty().addListener { _, _, text -> selectedLibrary?.name = text; listView.refresh() }
         pathText.textProperty().addListener { _, _, text -> selectedLibrary?.path = text }
 
-        updateProgramInfo(null)
+        updateLibInfo(null)
     }
 
     override fun getResult(): Boolean? = _result
 
     private fun selectLibrary(lib: Library) {
         selectedLibrary = null
-        updateProgramInfo(lib)
+        updateLibInfo(lib)
         selectedLibrary = lib
     }
 
-    private fun updateProgramInfo(program: Library?) {
+    private fun updateLibInfo(program: Library?) {
         editView.isDisable = (program == null)
         if (program != null) {
             typeText.text = program.type
@@ -86,10 +87,17 @@ class EditLibsDialog : AppDialog<Boolean>() {
         chooser.showDialog(stage)
     }
 
+    private fun chooseFile(dir: File? = null): File? = FileChooser().let { fc ->
+        fc.title = T("select_file")
+        if (dir != null) fc.initialDirectory = dir
+        fc.showOpenDialog(stage)
+    }
+
     private val addContextMenu = ContextMenu().apply {
         items.addAll(
                 MenuItem(T("lib_type_zxdb")).apply { setOnAction { addLibrary(Library.TYPE_ZXDB) } },
                 MenuItem(T("lib_type_local")).apply { setOnAction { addLibrary(Library.TYPE_LOCAL) } },
+                MenuItem(T("lib_type_zxc")).apply { setOnAction { addLibrary(Library.TYPE_ZXC) } },
         )
     }
 
@@ -97,11 +105,19 @@ class EditLibsDialog : AppDialog<Boolean>() {
         var lib: Library? = null
 
         when (type) {
-            Library.TYPE_ZXDB -> lib = Library(type, "ZXDB", "zxdb", )
+            Library.TYPE_ZXDB -> lib = Library(type, "ZXDB", "zxdb")
+
             Library.TYPE_LOCAL -> {
                 val dir = chooseDirectory()
                 if (dir != null) {
-                    lib = Library(type, dir.name, dir.absolutePath, )
+                    lib = Library(type, dir.name, dir.absolutePath)
+                }
+            }
+
+            Library.TYPE_ZXC -> {
+                val file = chooseFile()
+                if (file != null) {
+                    lib = Library(type, file.name, file.name, file.absolutePath)
                 }
             }
         }

@@ -5,7 +5,7 @@ import com.ses.app.zxbrowser.T
 import com.ses.app.zxbrowser.model.*
 import java.io.File
 
-class ZXCModel(name: String, dir: File, val source: String) : Model(name, dir) {
+class ZXCModel(name: String, dir: File, val source: String? = null) : Model(name, dir) {
     val file: File = App.localFile("$name.json")
 
     override val root: TreeNode

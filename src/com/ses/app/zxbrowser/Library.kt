@@ -2,6 +2,7 @@ package com.ses.app.zxbrowser
 
 import com.ses.app.zxbrowser.model.Model
 import com.ses.app.zxbrowser.model.local.LocalModel
+import com.ses.app.zxbrowser.model.zxcollection.ZXCModel
 import com.ses.app.zxbrowser.model.zxdb.ZXDBModel
 import java.io.File
 
@@ -9,7 +10,7 @@ class Library(val type: String, var name: String, var path: String, val source: 
     companion object {
         const val TYPE_ZXDB = "zxdb"
         const val TYPE_LOCAL = "local"
-        const val TYPE_ZXCOLLECTION = "zxc"
+        const val TYPE_ZXC = "zxc"
     }
 
     val model: Model by lazy {
@@ -17,7 +18,7 @@ class Library(val type: String, var name: String, var path: String, val source: 
                 ?: when (type) {
                     TYPE_ZXDB -> ZXDBModel(name, File(path))
                     TYPE_LOCAL -> LocalModel(name, File(path))
-                    //TYPE_ZXCOLLECTION ->
+                    TYPE_ZXC -> ZXCModel(name, File(path), source)
 
                     else -> throw Exception("Invalid library '$type'")
                 }
