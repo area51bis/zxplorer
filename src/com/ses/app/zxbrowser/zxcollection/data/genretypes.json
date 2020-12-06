@@ -1,0 +1,450 @@
+[
+    {
+        "id": 1,
+        "text": "Adventure Game: Dungeon Crawl"
+    },
+    {
+        "id": 2,
+        "text": "Adventure Game: Graphic"
+    },
+    {
+        "id": 4,
+        "text": "Adventure Game: RPG"
+    },
+    {
+        "id": 5,
+        "text": "Adventure Game: Text-Only"
+    },
+    {
+        "id": 6,
+        "text": "Adventure Game: Text/Illustrated"
+    },
+    {
+        "id": 7,
+        "text": "Arcade Game: Action"
+    },
+    {
+        "id": 8,
+        "text": "Arcade Game: Adventure"
+    },
+    {
+        "id": 9,
+        "text": "Arcade Game: Gang beat-em-up"
+    },
+    {
+        "id": 10,
+        "text": "Arcade Game: Solo beat-em-up"
+    },
+    {
+        "id": 11,
+        "text": "Arcade Game: Maze"
+    },
+    {
+        "id": 12,
+        "text": "Arcade Game: Pinball"
+    },
+    {
+        "id": 13,
+        "text": "Arcade Game: Platform"
+    },
+    {
+        "id": 14,
+        "text": "Arcade Game: Race 'n' Chase"
+    },
+    {
+        "id": 15,
+        "text": "Arcade Game: Shoot-em-up"
+    },
+    {
+        "id": 16,
+        "text": "Arcade Game: Vehicle Combat"
+    },
+    {
+        "id": 17,
+        "text": "Game: Board"
+    },
+    {
+        "id": 18,
+        "text": "Game: Educational"
+    },
+    {
+        "id": 19,
+        "text": "Game: Flight Simulator"
+    },
+    {
+        "id": 20,
+        "text": "Game: Puzzle"
+    },
+    {
+        "id": 21,
+        "text": "Game: Simulation"
+    },
+    {
+        "id": 22,
+        "text": "Sport Game: Action"
+    },
+    {
+        "id": 23,
+        "text": "Sport Game: Management"
+    },
+    {
+        "id": 24,
+        "text": "Strategy Game: Management"
+    },
+    {
+        "id": 25,
+        "text": "Strategy Game: War"
+    },
+    {
+        "id": 26,
+        "text": "Game: Tactical Combat"
+    },
+    {
+        "id": 27,
+        "text": "Casual Game: Card"
+    },
+    {
+        "id": 28,
+        "text": "Casual Game: Dice"
+    },
+    {
+        "id": 29,
+        "text": "Casual Game: Gambling"
+    },
+    {
+        "id": 30,
+        "text": "Game: Maths"
+    },
+    {
+        "id": 31,
+        "text": "Casual Game: Quiz"
+    },
+    {
+        "id": 32,
+        "text": "Casual Game: Word"
+    },
+    {
+        "id": 33,
+        "text": "Game: undetermined"
+    },
+    {
+        "id": 34,
+        "text": "General: Business"
+    },
+    {
+        "id": 35,
+        "text": "General: Domestic"
+    },
+    {
+        "id": 36,
+        "text": "General: Education"
+    },
+    {
+        "id": 37,
+        "text": "General: Industrial"
+    },
+    {
+        "id": 38,
+        "text": "General: Simulation"
+    },
+    {
+        "id": 39,
+        "text": "Programming: Assembler/Mcode"
+    },
+    {
+        "id": 40,
+        "text": "Programming: BASIC"
+    },
+    {
+        "id": 41,
+        "text": "Programming: General"
+    },
+    {
+        "id": 42,
+        "text": "Utility: Astronomy"
+    },
+    {
+        "id": 43,
+        "text": "Utility: Calendar"
+    },
+    {
+        "id": 44,
+        "text": "Utility: Clip-Art"
+    },
+    {
+        "id": 45,
+        "text": "Utility: Copy/Backup"
+    },
+    {
+        "id": 46,
+        "text": "Utility: Cryptography"
+    },
+    {
+        "id": 47,
+        "text": "Utility: Database/Filing"
+    },
+    {
+        "id": 48,
+        "text": "Utility: Data Compression"
+    },
+    {
+        "id": 49,
+        "text": "Utility: Electronics"
+    },
+    {
+        "id": 50,
+        "text": "Utility: Fonts/UDGs"
+    },
+    {
+        "id": 51,
+        "text": "Utility: Gambling"
+    },
+    {
+        "id": 52,
+        "text": "Utility: Game Creator"
+    },
+    {
+        "id": 53,
+        "text": "Utility: Game Editor"
+    },
+    {
+        "id": 54,
+        "text": "Utility: Graphics"
+    },
+    {
+        "id": 55,
+        "text": "Utility: Hacker/Security"
+    },
+    {
+        "id": 56,
+        "text": "Utility: I/O Handling"
+    },
+    {
+        "id": 57,
+        "text": "Utility: Maths/Science"
+    },
+    {
+        "id": 58,
+        "text": "Utility: Media Admin"
+    },
+    {
+        "id": 59,
+        "text": "Utility: Music"
+    },
+    {
+        "id": 60,
+        "text": "Utility: Prediction"
+    },
+    {
+        "id": 61,
+        "text": "Utility: Print"
+    },
+    {
+        "id": 63,
+        "text": "Utility: Sound/Speech"
+    },
+    {
+        "id": 64,
+        "text": "Utility: Spreadsheet"
+    },
+    {
+        "id": 65,
+        "text": "Utility: Telecom/Network"
+    },
+    {
+        "id": 66,
+        "text": "Utility: Visual/Screen"
+    },
+    {
+        "id": 67,
+        "text": "Utility: Word Processor"
+    },
+    {
+        "id": 68,
+        "text": "Utility: undetermined"
+    },
+    {
+        "id": 69,
+        "text": "Educational (Misc)"
+    },
+    {
+        "id": 70,
+        "text": "Emulator"
+    },
+    {
+        "id": 71,
+        "text": "Music"
+    },
+    {
+        "id": 72,
+        "text": "Demo"
+    },
+    {
+        "id": 73,
+        "text": "Demo: Graphics"
+    },
+    {
+        "id": 74,
+        "text": "Demo: Maths"
+    },
+    {
+        "id": 75,
+        "text": "Demo: Programming"
+    },
+    {
+        "id": 76,
+        "text": "Demo: Sound"
+    },
+    {
+        "id": 77,
+        "text": "Demo: System"
+    },
+    {
+        "id": 78,
+        "text": "Demo: Text"
+    },
+    {
+        "id": 79,
+        "text": "Scene Demo"
+    },
+    {
+        "id": 80,
+        "text": "Compilation"
+    },
+    {
+        "id": 81,
+        "text": "Covertape"
+    },
+    {
+        "id": 82,
+        "text": "Electronic Magazine"
+    },
+    {
+        "id": 83,
+        "text": "e-Book"
+    },
+    {
+        "id": 84,
+        "text": "Book: Hardcover"
+    },
+    {
+        "id": 85,
+        "text": "Book: Paperback"
+    },
+    {
+        "id": 86,
+        "text": "Book: Small paperback"
+    },
+    {
+        "id": 87,
+        "text": "Book: Spiral bound"
+    },
+    {
+        "id": 88,
+        "text": "Book: Plastic card"
+    },
+    {
+        "id": 89,
+        "text": "Book: PDF"
+    },
+    {
+        "id": 90,
+        "text": "Book: undetermined"
+    },
+    {
+        "id": 91,
+        "text": "Hardware: Add-on"
+    },
+    {
+        "id": 92,
+        "text": "Hardware: Cable"
+    },
+    {
+        "id": 93,
+        "text": "Hardware: Cassette"
+    },
+    {
+        "id": 94,
+        "text": "Hardware: Computer"
+    },
+    {
+        "id": 95,
+        "text": "Hardware: Disk"
+    },
+    {
+        "id": 96,
+        "text": "Hardware: Graphics"
+    },
+    {
+        "id": 97,
+        "text": "Hardware: JoyCommon"
+    },
+    {
+        "id": 98,
+        "text": "Hardware: Joystick"
+    },
+    {
+        "id": 99,
+        "text": "Hardware: Keyboard"
+    },
+    {
+        "id": 100,
+        "text": "Hardware: Monitor"
+    },
+    {
+        "id": 101,
+        "text": "Hardware: Mouse"
+    },
+    {
+        "id": 102,
+        "text": "Hardware: Music"
+    },
+    {
+        "id": 103,
+        "text": "Hardware: Network"
+    },
+    {
+        "id": 104,
+        "text": "Hardware: Printer"
+    },
+    {
+        "id": 105,
+        "text": "Hardware: RAM"
+    },
+    {
+        "id": 106,
+        "text": "Hardware: Robot"
+    },
+    {
+        "id": 107,
+        "text": "Hardware: Sound/Speech"
+    },
+    {
+        "id": 108,
+        "text": "Hardware: undetermined"
+    },
+    {
+        "id": 110,
+        "text": "Compilation: Educational"
+    },
+    {
+        "id": 111,
+        "text": "Compilation: Games"
+    },
+    {
+        "id": 112,
+        "text": "Compilation: Magazines"
+    },
+    {
+        "id": 113,
+        "text": "Compilation: Scene Demos"
+    },
+    {
+        "id": 114,
+        "text": "Compilation: Utilities"
+    },
+    {
+        "id": 115,
+        "text": "Box Set"
+    }
+]

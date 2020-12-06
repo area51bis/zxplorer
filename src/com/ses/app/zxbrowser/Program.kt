@@ -30,7 +30,7 @@ class Program(var name: String, var path: String, var args: String = "\${filePat
             ZipFile(file).use { zip ->
                 val entry = zip.entries().toList().first { !it.isDirectory }
                 zip.getInputStream(entry).use { input ->
-                    val tempDir = File(App.workingDir, "temp")
+                    val tempDir = App.localFile("temp")
                     unzippedFile = File(tempDir, entry.name).also { f ->
                         f.parentFile.mkdirs()
                         //println("Unizipping ${f.absolutePath}")

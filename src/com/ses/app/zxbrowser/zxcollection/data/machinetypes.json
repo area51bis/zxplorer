@@ -1,0 +1,118 @@
+[
+    {
+        "id": 1,
+        "text": "ZX-Spectrum 16K"
+    },
+    {
+        "id": 2,
+        "text": "ZX-Spectrum 16K/48K"
+    },
+    {
+        "id": 3,
+        "text": "ZX-Spectrum 48K"
+    },
+    {
+        "id": 4,
+        "text": "ZX-Spectrum 48K/128K"
+    },
+    {
+        "id": 5,
+        "text": "ZX-Spectrum 128K"
+    },
+    {
+        "id": 6,
+        "text": "ZX-Spectrum 128K (load in USR0 mode)"
+    },
+    {
+        "id": 7,
+        "text": "ZX-Spectrum 128 +2"
+    },
+    {
+        "id": 8,
+        "text": "ZX-Spectrum 128 +3"
+    },
+    {
+        "id": 9,
+        "text": "ZX-Spectrum 128 +2A/+3"
+    },
+    {
+        "id": 10,
+        "text": "ZX-Spectrum 128 +2B"
+    },
+    {
+        "id": 11,
+        "text": "Timex TC2048"
+    },
+    {
+        "id": 12,
+        "text": "Timex Tx2068"
+    },
+    {
+        "id": 13,
+        "text": "Timex TC2048/Tx2068"
+    },
+    {
+        "id": 14,
+        "text": "Pentagon 128"
+    },
+    {
+        "id": 15,
+        "text": "Scorpion"
+    },
+    {
+        "id": 16,
+        "text": "SAM CoupÃ©"
+    },
+    {
+        "id": 17,
+        "text": "Sinclair QL"
+    },
+    {
+        "id": 18,
+        "text": "ZX80"
+    },
+    {
+        "id": 19,
+        "text": "ZX81 1K"
+    },
+    {
+        "id": 20,
+        "text": "ZX81 2K"
+    },
+    {
+        "id": 21,
+        "text": "ZX81 16K"
+    },
+    {
+        "id": 22,
+        "text": "ZX81 32K"
+    },
+    {
+        "id": 23,
+        "text": "ZX81 64K"
+    },
+    {
+        "id": 24,
+        "text": "ATM"
+    },
+    {
+        "id": 25,
+        "text": "ZX-Evolution"
+    },
+    {
+        "id": 26,
+        "text": "ZX-UNO"
+    },
+    {
+        "id": 27,
+        "text": "ZX-Spectrum Next"
+    },
+    {
+        "id": 28,
+        "text": "Jupiter ACE"
+    },
+    {
+        "id": 29,
+        "text": "Cambridge Z88"
+    }
+]

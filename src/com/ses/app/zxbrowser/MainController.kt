@@ -3,9 +3,11 @@ package com.ses.app.zxbrowser
 import com.ses.app.zxbrowser.filters.EntryTitleFilter
 import com.ses.app.zxbrowser.filters.Filter
 import com.ses.app.zxbrowser.model.*
+import com.ses.app.zxbrowser.zxcollection.ZXCollection
 import com.ses.app.zxbrowser.ui.EditLibsDialog
 import com.ses.app.zxbrowser.ui.EditProgramDialog
 import com.ses.app.zxbrowser.ui.ProgressDialog
+import com.ses.app.zxbrowser.zxcollection.ReleaseDate
 import javafx.application.Platform
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
@@ -81,32 +83,13 @@ class MainController : Initializable {
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         initUI()
 
+        ZXCollection(App.localFile("yandex2020.json"))
+
         App.mainStage.addEventFilter(WindowEvent.WINDOW_SHOWN) {
             checkLibraries {
                 initModels()
             }
         }
-        /*
-        App.mainStage.addEventFilter(WindowEvent.WINDOW_SHOWN) {
-            if (zxdbModel != null) {
-                if (ZXDB.open()) {
-                    initModels()
-                } else {
-                    if (Alert(Alert.AlertType.CONFIRMATION).apply {
-                                title = T("error")
-                                headerText = T("no_database_found")
-                                contentText = T("download_database_q")
-                            }.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-                        updateLibrary(zxdbModel)
-                    } else {
-                        initModels()
-                    }
-                }
-            } else {
-                initModels()
-            }
-        }
-        */
     }
 
     private fun initMenu() {

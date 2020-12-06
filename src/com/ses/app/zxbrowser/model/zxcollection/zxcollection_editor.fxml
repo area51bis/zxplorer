@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="652.0" prefWidth="856.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ses.app.zxbrowser.model.zxcollection.ZXCollectionEditor">
+   <children>
+      <VBox spacing="2.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TabPane prefHeight="494.0" prefWidth="699.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+              <tabs>
+                <Tab closable="false" text="Main">
+                  <content>
+                        <SplitPane dividerPositions="0.7" maxHeight="1.7976931348623157E308" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                          <items>
+                              <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" text="Entries">
+                                 <content>
+                                    <TableView prefHeight="200.0" prefWidth="200.0">
+                                      <columns>
+                                        <TableColumn minWidth="50.0" prefWidth="200.0" text="Title" />
+                                        <TableColumn minWidth="50.0" prefWidth="120.0" text="Genre" />
+                                          <TableColumn minWidth="50.0" prefWidth="100.0" text="Date" />
+                                          <TableColumn minWidth="50.0" prefWidth="75.0" text="Machines" />
+                                          <TableColumn minWidth="50.0" prefWidth="75.0" text="Availability" />
+                                      </columns>
+                                    </TableView>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" text="Downloads" SplitPane.resizableWithParent="false">
+                                 <content>
+                                    <TableView prefHeight="200.0" prefWidth="200.0">
+                                      <columns>
+                                        <TableColumn maxWidth="26.0" minWidth="26.0" prefWidth="26.0" resizable="false" text="·" />
+                                        <TableColumn minWidth="50.0" prefWidth="200.0" text="Name" />
+                                          <TableColumn minWidth="50.0" prefWidth="100.0" text="Date" />
+                                          <TableColumn minWidth="50.0" prefWidth="120.0" text="Machine" />
+                                      </columns>
+                                    </TableView>
+                                 </content>
+                              </TitledPane>
+                          </items>
+                        </SplitPane>
+                  </content>
+                </Tab>
+                  <Tab closable="false" disable="true" text="Secondary">
+                    <content>
+                        <VBox maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="2.0">
+                           <children>
+                              <ComboBox prefWidth="150.0" />
+                              <TitledPane animated="false" collapsible="false" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <TableView prefHeight="286.0" prefWidth="850.0" />
+                                 </content>
+                              </TitledPane>
+                           </children>
+                           <padding>
+                              <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                           </padding>
+                        </VBox>
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+            <HBox alignment="CENTER_RIGHT" prefWidth="200.0" spacing="2.0" VBox.vgrow="NEVER">
+               <children>
+                  <Button mnemonicParsing="false" text="Cancel" />
+                  <Button mnemonicParsing="false" text="Save" />
+               </children>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

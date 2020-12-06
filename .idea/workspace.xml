@@ -32,16 +32,40 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4907fc0-9ae3-45b2-a941-903078f601e8" name="Default Changelist" comment="[*] Versión 0.8.">
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/com_google_code_gson_gson_2_8_6.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/com_google_code_gson_gson_2_8_6.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/org_json_json_20200518.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxcollection/ZXCModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxcollection/ZXCModelDownload.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxcollection/ZXCModelEntry.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxcollection/ZXCollectionEditor.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxcollection/zxcollection_editor.fxml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/Availability.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/Download.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/Entry.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/FileType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/Genre.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/IdList.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/IdText.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/Language.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/Machine.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/TypeAdapters.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/ZXCollection.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/ZXCollectionHelper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/ZXCollectionInfo.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/data/availabletypes.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/data/filetypes.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/data/genretypes.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/data/languages.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/data/machinetypes.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ZXBrowser.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ZXBrowser.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/App.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Config.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Config.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/ReleaseDate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/ReleaseDate.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/util/JSONUtil.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Library.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Library.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/MainController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/MainController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Program.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Program.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/ModelEntry.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/ModelEntry.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/ModelFileExtension.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/ModelFileExtension.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/ReleaseDate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/ReleaseDate.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/local/LocalModelEntry.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/local/LocalModelEntry.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxdb/ZXDBModelEntry.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxdb/ZXDBModelEntry.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,8 +75,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Class" />
+        <option value="Class" />
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -81,14 +106,16 @@
       <recent name="D:\proyectos\github\area51bis\zxbrowser\src\com\ses\app\zxbrowser\ui" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\proyectos\github\area51bis\zxbrowser\run" />
       <recent name="D:\proyectos\github\area51bis\zxbrowser\src\com\ses\app\zxbrowser\opencollection\data" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.ses.app.zxbrowser.zxcollection" />
       <recent name="com.ses.zxdb.dao" />
       <recent name="com.ses.app.zxbrowser.ui" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.scratch.kts">
     <configuration name="App" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.ses.app.zxbrowser.LauncherKt" />
       <module name="ZXBrowser" />
@@ -97,6 +124,45 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="scratch.kts" type="KotlinStandaloneScriptRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <module name="ZXBrowser" />
+      <option name="filePath" value="$APPLICATION_CONFIG_DIR$/scratches/scratch.kts" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" value="$APPLICATION_CONFIG_DIR$/scratches" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="filePath" value="$APPLICATION_CONFIG_DIR$/scratches/scratch.kts" />
+      <option name="vmParameters" />
+      <option name="alternativeJrePath" />
+      <option name="programParameters" />
+      <option name="passParentEnvs" value="true" />
+      <option name="workingDirectory" value="$APPLICATION_CONFIG_DIR$/scratches" />
+      <option name="isAlternativeJrePathEnabled" value="false" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="WORKING_DIRECTORY" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.scratch.kts" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

@@ -2,7 +2,7 @@ package com.ses.app.zxbrowser.model.zxdb
 
 import com.ses.app.zxbrowser.model.ModelEntry
 import com.ses.app.zxbrowser.model.Model
-import com.ses.app.zxbrowser.model.ReleaseDate
+import com.ses.app.zxbrowser.zxcollection.ReleaseDate
 import com.ses.sql.Column
 import com.ses.sql.Query
 import com.ses.zxdb.ZXDB

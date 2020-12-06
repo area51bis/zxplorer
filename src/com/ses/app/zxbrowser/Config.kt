@@ -8,7 +8,7 @@ import java.io.File
 import java.io.Writer
 
 object Config {
-    private val configFile = File(App.workingDir, "config.json")
+    private val configFile = App.localFile("config.json")
     private val gson = GsonBuilder()
             .disableHtmlEscaping()
             .create()

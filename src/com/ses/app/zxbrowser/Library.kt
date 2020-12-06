@@ -9,7 +9,7 @@ class Library(val type: String, var name: String, var path: String, val source: 
     companion object {
         const val TYPE_ZXDB = "zxdb"
         const val TYPE_LOCAL = "local"
-        const val TYPE_OPENLIB = "openlib"
+        const val TYPE_ZXCOLLECTION = "zxc"
     }
 
     val model: Model by lazy {
@@ -17,6 +17,7 @@ class Library(val type: String, var name: String, var path: String, val source: 
                 ?: when (type) {
                     TYPE_ZXDB -> ZXDBModel(name, File(path))
                     TYPE_LOCAL -> LocalModel(name, File(path))
+                    //TYPE_ZXCOLLECTION ->
 
                     else -> throw Exception("Invalid library '$type'")
                 }

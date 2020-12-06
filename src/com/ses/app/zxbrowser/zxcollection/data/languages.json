@@ -1,0 +1,266 @@
+[
+    {
+        "id": "eu",
+        "text": "Basque"
+    },
+    {
+        "id": "be",
+        "text": "Belarusian"
+    },
+    {
+        "id": "bs",
+        "text": "Bosnian"
+    },
+    {
+        "id": "ca",
+        "text": "Catalan"
+    },
+    {
+        "id": "hr",
+        "text": "Croatian"
+    },
+    {
+        "id": "cs",
+        "text": "Czech"
+    },
+    {
+        "id": "da",
+        "text": "Danish"
+    },
+    {
+        "id": "nl",
+        "text": "Dutch"
+    },
+    {
+        "id": "en",
+        "text": "English"
+    },
+    {
+        "id": "eo",
+        "text": "Esperanto"
+    },
+    {
+        "id": "fi",
+        "text": "Finnish"
+    },
+    {
+        "id": "fr",
+        "text": "French"
+    },
+    {
+        "id": "gl",
+        "text": "Galician"
+    },
+    {
+        "id": "de",
+        "text": "German"
+    },
+    {
+        "id": "el",
+        "text": "Greek"
+    },
+    {
+        "id": "hu",
+        "text": "Hungarian"
+    },
+    {
+        "id": "is",
+        "text": "Icelandic"
+    },
+    {
+        "id": "it",
+        "text": "Italian"
+    },
+    {
+        "id": "la",
+        "text": "Latin"
+    },
+    {
+        "id": "lv",
+        "text": "Latvian"
+    },
+    {
+        "id": "lt",
+        "text": "Lithuanian"
+    },
+    {
+        "id": "?r",
+        "text": "Multi-language: Bosnian, Croatian, Serbian"
+    },
+    {
+        "id": "?l",
+        "text": "Multi-language: Catalan, English, Italian, Spanish"
+    },
+    {
+        "id": "?9",
+        "text": "Multi-language: Catalan, Spanish"
+    },
+    {
+        "id": "?0",
+        "text": "Multi-language: Croatian, English"
+    },
+    {
+        "id": "?1",
+        "text": "Multi-language: Czech, English"
+    },
+    {
+        "id": "?n",
+        "text": "Multi-language: Czech, English, Italian, Polish, Russian, Spanish"
+    },
+    {
+        "id": "?m",
+        "text": "Multi-language: Czech, English, Russian, Slovak"
+    },
+    {
+        "id": "?a",
+        "text": "Multi-language: Czech, English, Slovak"
+    },
+    {
+        "id": "?2",
+        "text": "Multi-language: Dutch, English"
+    },
+    {
+        "id": "?o",
+        "text": "Multi-language: English, Esperanto, Spanish"
+    },
+    {
+        "id": "?k",
+        "text": "Multi-language: English, French"
+    },
+    {
+        "id": "?b",
+        "text": "Multi-language: English, French, German"
+    },
+    {
+        "id": "?s",
+        "text": "Multi-language: English, French, German, Italian, Portuguese, Russian, Spanish, Swedish"
+    },
+    {
+        "id": "?q",
+        "text": "Multi-language: English, French, German, Italian, Portuguese, Spanish"
+    },
+    {
+        "id": "?c",
+        "text": "Multi-language: English, French, German, Italian, Spanish"
+    },
+    {
+        "id": "?e",
+        "text": "Multi-language: English, French, Spanish"
+    },
+    {
+        "id": "?3",
+        "text": "Multi-language: English, German"
+    },
+    {
+        "id": "?h",
+        "text": "Multi-language: English, German, Hungarian, Russian"
+    },
+    {
+        "id": "?d",
+        "text": "Multi-language: English, German, Italian, Portuguese, Spanish"
+    },
+    {
+        "id": "?i",
+        "text": "Multi-language: English, German, Italian, Spanish"
+    },
+    {
+        "id": "?u",
+        "text": "Multi-language: English, Hungarian"
+    },
+    {
+        "id": "?t",
+        "text": "Multi-language: English, Italian"
+    },
+    {
+        "id": "?p",
+        "text": "Multi-language: English, Italian, Polish, Russian, Spanish"
+    },
+    {
+        "id": "?v",
+        "text": "Multi-language: English, Italian, Spanish"
+    },
+    {
+        "id": "?4",
+        "text": "Multi-language: English, Polish"
+    },
+    {
+        "id": "?f",
+        "text": "Multi-language: English, Polish, Russian, Spanish"
+    },
+    {
+        "id": "?5",
+        "text": "Multi-language: English, Portuguese"
+    },
+    {
+        "id": "?6",
+        "text": "Multi-language: English, Russian"
+    },
+    {
+        "id": "?g",
+        "text": "Multi-language: English, Russian, Spanish"
+    },
+    {
+        "id": "?7",
+        "text": "Multi-language: English, Slovak"
+    },
+    {
+        "id": "?8",
+        "text": "Multi-language: English, Spanish"
+    },
+    {
+        "id": "?j",
+        "text": "Multi-language: Latin, Spanish"
+    },
+    {
+        "id": "no",
+        "text": "Norwegian"
+    },
+    {
+        "id": "pl",
+        "text": "Polish"
+    },
+    {
+        "id": "pt",
+        "text": "Portuguese"
+    },
+    {
+        "id": "ro",
+        "text": "Romanian"
+    },
+    {
+        "id": "ru",
+        "text": "Russian"
+    },
+    {
+        "id": "sr",
+        "text": "Serbian"
+    },
+    {
+        "id": "sh",
+        "text": "Serbo-Croatian"
+    },
+    {
+        "id": "sk",
+        "text": "Slovak"
+    },
+    {
+        "id": "sl",
+        "text": "Slovenian"
+    },
+    {
+        "id": "es",
+        "text": "Spanish"
+    },
+    {
+        "id": "sv",
+        "text": "Swedish"
+    },
+    {
+        "id": "tr",
+        "text": "Turkish"
+    },
+    {
+        "id": "y-",
+        "text": "Yugoslavian"
+    }
+]

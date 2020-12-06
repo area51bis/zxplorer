@@ -1,0 +1,286 @@
+[
+    {
+        "id": 0,
+        "text": "Remote link"
+    },
+    {
+        "id": 1,
+        "text": "Loading screen"
+    },
+    {
+        "id": 2,
+        "text": "Running screen"
+    },
+    {
+        "id": 3,
+        "text": "Opening screen"
+    },
+    {
+        "id": 4,
+        "text": "Cassette inlay"
+    },
+    {
+        "id": 5,
+        "text": "Cassette inlay - Front"
+    },
+    {
+        "id": 6,
+        "text": "Cassette inlay - Back"
+    },
+    {
+        "id": 8,
+        "text": "Tape image"
+    },
+    {
+        "id": 10,
+        "text": "Snapshot image"
+    },
+    {
+        "id": 11,
+        "text": "Disk image"
+    },
+    {
+        "id": 17,
+        "text": "Computer/ZX Interface 2 cartridge ROM image dump"
+    },
+    {
+        "id": 18,
+        "text": "DOCK cartridge ROM image dump"
+    },
+    {
+        "id": 19,
+        "text": "ZX81 archive file"
+    },
+    {
+        "id": 20,
+        "text": "Archive file"
+    },
+    {
+        "id": 21,
+        "text": "Covertape version"
+    },
+    {
+        "id": 22,
+        "text": "BUGFIX tape image"
+    },
+    {
+        "id": 23,
+        "text": "Ripped in-game/theme music in AY format"
+    },
+    {
+        "id": 24,
+        "text": "Sampled in-game/theme music in MP3 format"
+    },
+    {
+        "id": 25,
+        "text": "Recreated in-game/theme music in MIDI format"
+    },
+    {
+        "id": 26,
+        "text": "Magazine covertape music in MP3 format"
+    },
+    {
+        "id": 27,
+        "text": "Bonus soundtrack(s) in MP3 format"
+    },
+    {
+        "id": 28,
+        "text": "Instructions"
+    },
+    {
+        "id": 29,
+        "text": "Scanned instructions"
+    },
+    {
+        "id": 30,
+        "text": "Keyboard overlay"
+    },
+    {
+        "id": 31,
+        "text": "Game map"
+    },
+    {
+        "id": 32,
+        "text": "Source code"
+    },
+    {
+        "id": 33,
+        "text": "Code sheet"
+    },
+    {
+        "id": 34,
+        "text": "Sprite sheet"
+    },
+    {
+        "id": 35,
+        "text": "Clip-art (unlinked)"
+    },
+    {
+        "id": 36,
+        "text": "Fonts"
+    },
+    {
+        "id": 37,
+        "text": "Logo"
+    },
+    {
+        "id": 38,
+        "text": "Original artwork"
+    },
+    {
+        "id": 39,
+        "text": "Development material (sketches/notes)"
+    },
+    {
+        "id": 40,
+        "text": "Game additional material"
+    },
+    {
+        "id": 41,
+        "text": "Badge"
+    },
+    {
+        "id": 42,
+        "text": "Poster"
+    },
+    {
+        "id": 43,
+        "text": "Official company shipped poster"
+    },
+    {
+        "id": 44,
+        "text": "Magazine poster"
+    },
+    {
+        "id": 45,
+        "text": "Scan of the book cover"
+    },
+    {
+        "id": 46,
+        "text": "Complete book"
+    },
+    {
+        "id": 47,
+        "text": "Electronic magazine"
+    },
+    {
+        "id": 48,
+        "text": "Hardware picture"
+    },
+    {
+        "id": 49,
+        "text": "Hardware technical documentation"
+    },
+    {
+        "id": 50,
+        "text": "Hardware advertisement scan"
+    },
+    {
+        "id": 51,
+        "text": "Advertisement"
+    },
+    {
+        "id": 52,
+        "text": "Compilation advertisement"
+    },
+    {
+        "id": 53,
+        "text": "Hardware thumbnail"
+    },
+    {
+        "id": 54,
+        "text": "Photos and promotional material"
+    },
+    {
+        "id": 55,
+        "text": "Magazine cover scan"
+    },
+    {
+        "id": 56,
+        "text": "Magazine issue"
+    },
+    {
+        "id": 57,
+        "text": "Magazine contents scan"
+    },
+    {
+        "id": 58,
+        "text": "Magazine cartoon scan"
+    },
+    {
+        "id": 59,
+        "text": "Comic"
+    },
+    {
+        "id": 60,
+        "text": "Booklet"
+    },
+    {
+        "id": 61,
+        "text": "Newsletter"
+    },
+    {
+        "id": 62,
+        "text": "Alchemist Software PD library (unlinked)"
+    },
+    {
+        "id": 63,
+        "text": "RZX playback file"
+    },
+    {
+        "id": 64,
+        "text": "Video"
+    },
+    {
+        "id": 65,
+        "text": "Your Sinclair magazine Next Month panel scan"
+    },
+    {
+        "id": 66,
+        "text": "Your Sinclair magazine Doodlebugs scan"
+    },
+    {
+        "id": 67,
+        "text": "ZX Interface 2 cartridge box scan"
+    },
+    {
+        "id": 68,
+        "text": "Library interface for Boriel's ZX BASIC"
+    },
+    {
+        "id": 69,
+        "text": "Fan-made loading screen"
+    },
+    {
+        "id": 71,
+        "text": "BUGFIX source code"
+    },
+    {
+        "id": 72,
+        "text": "SLT snapshot image (unlinked)"
+    },
+    {
+        "id": 73,
+        "text": "Company pictures directory"
+    },
+    {
+        "id": 74,
+        "text": "POK pokes file"
+    },
+    {
+        "id": 75,
+        "text": "ZX Vega keymap file"
+    },
+    {
+        "id": 99,
+        "text": "?"
+    },
+    {
+        "id": 101,
+        "text": "Spectrum Emulator"
+    },
+    {
+        "id": 102,
+        "text": "Pentagon/Scorpion Emulator (TR-DOS)"
+    }
+]

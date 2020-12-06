@@ -1,5 +1,7 @@
 package com.ses.app.zxbrowser.model
 
+import com.ses.app.zxbrowser.zxcollection.ReleaseDate
+
 abstract class ModelEntry() {
     lateinit var model: Model
 

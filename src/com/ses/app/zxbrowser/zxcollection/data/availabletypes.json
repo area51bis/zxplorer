@@ -1,0 +1,30 @@
+[
+    {
+        "id": "*",
+        "text": "** DUPLICATED **"
+    },
+    {
+        "id": "A",
+        "text": "Available"
+    },
+    {
+        "id": "D",
+        "text": "Distribution denied"
+    },
+    {
+        "id": "d",
+        "text": "Distribution denied - still for sale"
+    },
+    {
+        "id": "?",
+        "text": "MIA"
+    },
+    {
+        "id": "N",
+        "text": "Never released"
+    },
+    {
+        "id": "R",
+        "text": "Never released - recovered"
+    }
+]

@@ -16,6 +16,8 @@ class App : Application() {
 
         lateinit var mainStage: Stage
         lateinit var mainScene: Scene
+
+        fun localFile(localPath: String): File = File(workingDir, localPath)
     }
 
     override fun start(primaryStage: Stage?) {

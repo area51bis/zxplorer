@@ -12,6 +12,8 @@ class ModelFileExtension(file: File) {
         const val SCR = "scr"   // Spectrum
 
         private val IMAGE_EXTENSIONS = arrayOf(BMP, GIF, JPG, PNG, SCR)
+
+        fun isImage(ext: String) : Boolean = IMAGE_EXTENSIONS.contains(ext.toLowerCase())
     }
 
     /** "AcroJet.tzx.zip" -> "tzx" */

@@ -1,6 +1,7 @@
 package com.ses.app.zxbrowser.model.local
 
 import com.ses.app.zxbrowser.model.*
+import com.ses.app.zxbrowser.zxcollection.ReleaseDate
 
 class LocalModelEntry : ModelEntry {
     constructor() : super()

@@ -1,6 +1,10 @@
-package com.ses.app.zxbrowser.model
+package com.ses.app.zxbrowser.zxcollection
 
 data class ReleaseDate(val year: Int? = null, val month: Int? = null, val day: Int? = null) : Comparable<ReleaseDate> {
+    companion object {
+        val NULL = ReleaseDate()
+    }
+
     val str: String? by lazy {
         if (year != null)
             StringBuilder().apply {
