@@ -3,7 +3,6 @@ package com.ses.app.zxbrowser
 import com.ses.app.zxbrowser.filters.EntryTitleFilter
 import com.ses.app.zxbrowser.filters.Filter
 import com.ses.app.zxbrowser.model.*
-import com.ses.app.zxbrowser.zxcollection.ZXCollection
 import com.ses.app.zxbrowser.ui.EditLibsDialog
 import com.ses.app.zxbrowser.ui.EditProgramDialog
 import com.ses.app.zxbrowser.ui.ProgressDialog
@@ -82,8 +81,6 @@ class MainController : Initializable {
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
         initUI()
-
-        ZXCollection(App.localFile("yandex2020.json"))
 
         App.mainStage.addEventFilter(WindowEvent.WINDOW_SHOWN) {
             checkLibraries {

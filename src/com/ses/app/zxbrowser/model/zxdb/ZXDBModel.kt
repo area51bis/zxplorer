@@ -19,7 +19,6 @@ class ZXDBModel(name: String, dir: File) : Model(name, dir) {
 
     private val _entries by lazy {
         ArrayList<ZXDBModelEntry>().also { list ->
-            list.clear()
             ZXDB.sql().select(ZXDBModelEntry::class) { entry ->
                 entry.model = this
                 list.add(entry)

@@ -4,6 +4,8 @@ import com.ses.app.zxbrowser.model.Model
 import com.ses.app.zxbrowser.model.local.LocalModel
 import com.ses.app.zxbrowser.model.zxcollection.ZXCModel
 import com.ses.app.zxbrowser.model.zxdb.ZXDBModel
+import com.ses.app.zxbrowser.zxcollection.ZXCollection
+import com.ses.app.zxbrowser.zxcollection.ZXCollectionInfo
 import java.io.File
 
 class Library(val type: String, var name: String, var path: String, val source: String? = null, model: Model? = null) : Cloneable {

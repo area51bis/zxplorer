@@ -9,9 +9,11 @@ import com.ses.app.zxbrowser.zxcollection.ReleaseDate
 class ZXCModelEntry(model: Model, val entry: Entry) : ModelEntry(model) {
     private val _downloads: List<ZXCModelDownload> by lazy {
         ArrayList<ZXCModelDownload>(entry.downloads.size).also { list ->
-            entry.downloads.forEach { list.add(ZXCModelDownload(model, it)) }
+            entry.downloads.forEach { list.add(ZXCModelDownload(this, it)) }
         }
     }
+
+    val releaseYearString: String get() = entry.releaseDate?.year?.toString() ?: Model.NULL_YEAR_STRING
 
     override fun getTitle(): String = entry.title
 

@@ -114,6 +114,7 @@ object Config {
             o.addProperty("type", lib.type)
             o.addProperty("name", lib.name)
             o.addProperty("path", lib.path)
+            if (lib.source != null) o.addProperty("source", lib.source)
             arr.add(o)
         }
 

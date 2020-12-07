@@ -1,6 +1,7 @@
 package com.ses.app.zxbrowser.ui
 
 import com.ses.app.zxbrowser.*
+import com.ses.app.zxbrowser.zxcollection.ZXCollection
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.scene.control.*
@@ -12,6 +13,7 @@ import javafx.stage.Stage
 import javafx.stage.StageStyle
 import java.io.File
 import java.net.URL
+import java.nio.file.Path
 import java.util.*
 
 class EditLibsDialog : AppDialog<Boolean>() {
@@ -108,16 +110,17 @@ class EditLibsDialog : AppDialog<Boolean>() {
             Library.TYPE_ZXDB -> lib = Library(type, "ZXDB", "zxdb")
 
             Library.TYPE_LOCAL -> {
-                val dir = chooseDirectory()
+                val dir = chooseDirectory(App.workingDir)
                 if (dir != null) {
                     lib = Library(type, dir.name, dir.absolutePath)
                 }
             }
 
             Library.TYPE_ZXC -> {
-                val file = chooseFile()
+                val file = chooseFile(App.workingDir)
                 if (file != null) {
-                    lib = Library(type, file.name, file.name, file.absolutePath)
+                    val info = ZXCollection.loadInfo(file)
+                    lib = Library(type, info!!.name, file.nameWithoutExtension, file.absolutePath)
                 }
             }
         }

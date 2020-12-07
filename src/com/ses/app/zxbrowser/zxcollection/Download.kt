@@ -3,12 +3,13 @@ package com.ses.app.zxbrowser.zxcollection
 import com.google.gson.annotations.SerializedName
 
 class Download {
-    @SerializedName("file_link")
+    @SerializedName("link")
     lateinit var fileLink: String
+    @SerializedName("ext")
     var extension: String? = null
-    @SerializedName("file_type")
+    @SerializedName("type")
     var fileType: FileType? = null
-    @SerializedName("file_name")
+    @SerializedName("name")
     var fileName: String? = null
     @SerializedName("release_date")
     var releaseDate: ReleaseDate? = null

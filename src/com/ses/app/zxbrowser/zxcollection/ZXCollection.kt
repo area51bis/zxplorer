@@ -3,13 +3,15 @@ package com.ses.app.zxbrowser.zxcollection
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.google.gson.stream.JsonReader
+import com.google.gson.stream.JsonToken
 import java.io.File
 import java.io.FileReader
 import java.io.InputStream
 import java.io.InputStreamReader
 import kotlin.reflect.KClass
 
-class ZXCollection(file: File? = null) {
+class ZXCollection() {
     val info = ZXCollectionInfo()
 
     // tabla principal
@@ -21,19 +23,6 @@ class ZXCollection(file: File? = null) {
     var languages = IdList<Language>()
     var fileTypes = IdList<FileType>()
     var availabilityTypes = IdList<Availability>()
-
-    init {
-        if (file != null) load(file)
-    }
-
-    /**
-     * Carga la biblioteca de un JSON.
-     */
-    fun load(file: File) {
-    }
-
-    fun save(file: File) {
-    }
 
     companion object {
         private val gson: Gson
@@ -60,6 +49,35 @@ class ZXCollection(file: File? = null) {
                     .registerTypeAdapter(FileType::class.java, IntReferenceTypeAdapter(fileTypes))
                     .registerTypeAdapter(Availability::class.java, StringReferenceTypeAdapter(availabilityTypes))
                     .create()
+        }
+
+        fun loadInfo(file: File): ZXCollectionInfo? {
+            return JsonReader(file.reader()).use { reader ->
+                var info: ZXCollectionInfo? = null
+
+                if (reader.peek() == JsonToken.BEGIN_OBJECT) {
+                    reader.beginObject()
+
+                    while (reader.hasNext()) {
+                        val token = reader.peek()
+                        println("token: $token")
+                        if (token == JsonToken.NAME) {
+                            val name = reader.nextName()
+                            println(name)
+                            if (name == "info") {
+                                info = Gson().fromJson(reader, ZXCollectionInfo::class.java)
+                                return@use info
+                            }
+
+                            //println("skip: $name")
+                        }
+
+                        reader.skipValue()
+                    }
+                }
+
+                info
+            }
         }
 
         fun loadCollection(file: File): ZXCollection {

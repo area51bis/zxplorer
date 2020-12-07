@@ -1,0 +1,534 @@
+{
+    "info": {
+        "name": "Yandex 2020",
+        "version": 1,
+        "author": "sés"
+    },
+    "entries": [
+        {
+            "title": "1024",
+            "genre": 20,
+            "machines": [3],
+            "languages": ["en"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/06%20-%201024/1024.ZIP",
+                    "ext": "tap",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/60661/c976106047413c9f0c39986bb8a35283efcc1df9/orig",
+                    "type": 1,
+                    "name": "1024 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/135516/43dfb38bd70838dcb1c66dd90f97ac75958d9af7/orig",
+                    "type": 2,
+                    "name": "1024 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/56833/189454cfa705b68678453babda966ef44aaa16e9/orig",
+                    "type": 2,
+                    "name": "1024 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/56833/b7267a017343b4744473bfe94291784de2e81034/orig",
+                    "type": 2,
+                    "name": "1024 4.png"
+                }
+            ]
+        },
+        {
+            "title": "6.6.6.6",
+            "genre": 21,
+            "machines": [3],
+            "languages": ["en"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/01%20-%20sixsixsixsix/sixsixsixsix.zip",
+                    "ext": "tap",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/118781/451e77a75fa3bf1e98a2e2143af6c6c17d073878/orig",
+                    "type": 1,
+                    "name": "6.6.6.6 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/56833/f6ec960133eeba65357eaae7c5cd346f6331b382/orig",
+                    "type": 2,
+                    "name": "6.6.6.6 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/118781/68a326d758038ce0e9207448cca82079c01f03cd/orig",
+                    "type": 2,
+                    "name": "6.6.6.6 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/118781/d24b232f1cd9a4b36dcbac7ea6a02e6fdfbc4128/orig",
+                    "type": 2,
+                    "name": "6.6.6.6 4.png"
+                }
+            ]
+        },
+        {
+            "title": "Marsmare: Alienation",
+            "genre": 11,
+            "machines": [3],
+            "languages": ["en"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/07%20-%20Marsmare%20-%20Alienation/Marsmare%20-%20Alienation.zip",
+                    "ext": "tap",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/61205/e8551e0d7d2c5f43d9584601f7720c2576473cf1/orig",
+                    "type": 2,
+                    "name": "Marsmare - Alienation 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/994123/8aef4445064f1222d9e163009cebdbc98d3b9f77/orig",
+                    "type": 2,
+                    "name": "Marsmare - Alienation 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/61205/1ae9f1bc42f94b1d82f2cc15f3bcca97d381ce2b/orig",
+                    "type": 2,
+                    "name": "Marsmare - Alienation 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/50064/9d15d17b27cb1f2492b1d46cb84d539d59fea925/orig",
+                    "type": 2,
+                    "name": "Marsmare - Alienation 4.png"
+                }
+            ]
+        },
+        {
+            "title": "Greentailed Batoot Simulator",
+            "genre": 21,
+            "machines": [3],
+            "languages": ["en"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/08%20-%20Greentailed%20Batoot%20Simulator/Greentailed%20Batoot%20Simulator.zip?",
+                    "ext": "trd",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/56833/6eab91e1c43f913bbfa3c6555d02cfab80362046/orig",
+                    "type": 2,
+                    "name": "Greentailed Batoot Simulator 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/60661/004b86ce63eeefe1d2e1e6d57c9ba3cfe5f4667e/orig",
+                    "type": 2,
+                    "name": "Greentailed Batoot Simulator 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/49769/3398850f20d09d13ecc92f29e51ac6f23531cab9/orig",
+                    "type": 2,
+                    "name": "Greentailed Batoot Simulator 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/49769/ab10b3debbc73334bb899f93c8d8f84f3a4e1a8c/orig",
+                    "type": 2,
+                    "name": "Greentailed Batoot Simulator 4.png"
+                }
+            ]
+        },
+        {
+            "title": "Bullet Storm",
+            "genre": 21,
+            "machines": [3],
+            "languages": ["en"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/13%20-%20Bullet%20Storm/Bullet%20Storm.zip?",
+                    "ext": "tap",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/998550/09adac08f778e1249314745d1063e16f3d1b6ba9/orig",
+                    "type": 1,
+                    "name": "Bullet Storm 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/61205/207a1e547207f99cb8f4d5c028419f51c64bf5ec/orig",
+                    "type": 2,
+                    "name": "Bullet Storm 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/61205/869f17d24e6f088f1cc5192e0f26570a90b20ab2/orig",
+                    "type": 2,
+                    "name": "Bullet Storm 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/61205/b7bac5910ab5e4b9fe226d4e57b52804717f47aa/orig",
+                    "type": 2,
+                    "name": "Bullet Storm 4.png"
+                }
+            ]
+        },
+        {
+            "title": "CODE-112",
+            "genre": 11,
+            "machines": [3],
+            "languages": ["en", "es"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/04%20-%20CODE-112/CODE-112.ZIP",
+                    "ext": "tap",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/120922/29962a028e39304350fec6849f31d2f78ce7edfb/orig",
+                    "type": 1,
+                    "name": "CODE-112 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/120922/5635a488e950386ad79496755c4a4e04fbb7e179/orig",
+                    "type": 2,
+                    "name": "CODE-112 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/56833/260368f6918448c918f0284d24b33f956c687e4f/orig",
+                    "type": 2,
+                    "name": "CODE-112 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/120922/5c06c22326e82248355ed44e2640cb0f7edad1f7/orig",
+                    "type": 2,
+                    "name": "CODE-112 4.png"
+                }
+            ]
+        },
+        {
+            "title": "Cosmic Payback",
+            "genre": 11,
+            "machines": [3],
+            "languages": ["en"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/05%20-%20CosmicPayback/CosmicPayback.zip",
+                    "ext": "tap",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/56833/da202c03d8071962e2d5ba9f6f2b742063f9c760/orig",
+                    "type": 1,
+                    "name": "Cosmic Payback 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/60661/0717766e0e86e8b5424778d29a8c9ba84eb1f9a8/orig",
+                    "type": 2,
+                    "name": "Cosmic Payback 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/60661/65957d29c4acca8cf6bf8b8338a5de35842fc5dd/orig",
+                    "type": 2,
+                    "name": "Cosmic Payback 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/135516/159b6be76ccac5f7d5b9849127964f0695547c9e/orig",
+                    "type": 2,
+                    "name": "Cosmic Payback 4.png"
+                }
+            ]
+        },
+        {
+            "title": "Cygnus: Alpha",
+            "genre": 15,
+            "machines": [3],
+            "languages": ["en"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/14%20-%20Cygnus%20-%20Alpha/Cygnus%20-%20Alpha.zip",
+                    "ext": "tzx",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/120922/08a87b3b67ecda80ebd21847d661091e236a0fb0/orig",
+                    "type": 1,
+                    "name": "Cygnus: Alpha 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/61205/42e299288c9b9a8e3f79e456964a080d50f11ce3/orig",
+                    "type": 2,
+                    "name": "Cygnus: Alpha 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/120922/89b32d4542d8831a1e0735664ce906b4e195318a/orig",
+                    "type": 2,
+                    "name": "Cygnus: Alpha 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/61205/ca5cd97dfb811e3c8e82f8f8b3ff2ee355b6f76a/orig",
+                    "type": 2,
+                    "name": "Cygnus: Alpha 4.png"
+                }
+            ]
+        },
+        {
+            "title": "ENIGMATIK",
+            "genre": 20,
+            "machines": [3],
+            "languages": ["en", "es", "pt", "ru"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/15%20-%20Enignimatik/Enignimatik.zip",
+                    "ext": "tap",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/50064/5f5c7bf3286c77adddee1ae711762f03affeca6a/orig",
+                    "type": 1,
+                    "name": "ENIGMATIK 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/128809/f013e05b8ae9378743c1de39d09b1eb733f5ef7f/orig",
+                    "type": 2,
+                    "name": "ENIGMATIK 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/998550/152b2def1340b4818516916cefb2f6e8e8c7a0c7/orig",
+                    "type": 2,
+                    "name": "ENIGMATIK 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/49769/f50f28aa6adf3ec2a3b48b1acdf9be5c8fecf2af/orig",
+                    "type": 2,
+                    "name": "ENIGMATIK 4.png"
+                }
+            ]
+        },
+        {
+            "title": "Капитан Гофер",
+            "genre": 13,
+            "machines": [5],
+            "languages": ["ru"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/02%20-%20Captain%20Gofer/Captain%20Gofer.zip",
+                    "ext": "tap",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/120922/ec686b13b54c05d53387e7b981252216e0e2dae8/orig",
+                    "type": 1,
+                    "name": "Captain Gofer 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/120922/b6d9375ce926ef94d8e8011507eb6395d1b6208d/orig",
+                    "type": 2,
+                    "name": "Captain Gofer 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/56833/3f029e2d55826e60588649d525f241dbaf2b9636/orig",
+                    "type": 2,
+                    "name": "Captain Gofer 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/120922/0c9778fcd446a1f3236865b35e9f0dd131b3a73b/orig",
+                    "type": 2,
+                    "name": "Captain Gofer 4.png"
+                }
+            ]
+        },
+        {
+            "title": "IceSpace",
+            "genre": 21,
+            "machines": [14],
+            "languages": ["en"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/09%20-%20IceSpace/IceSpace.zip",
+                    "ext": "trd",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/120922/87549af6ae1a634c91f652ad55a015e6fc7484ea/orig",
+                    "type": 2,
+                    "name": "IceSpace 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/49769/5059f2dad7e7f14397c3187e83ae38d2bcec0e8c/orig",
+                    "type": 2,
+                    "name": "IceSpace 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/50064/36abd076acdcf44ba03262eab050f7ce980b5020/orig",
+                    "type": 2,
+                    "name": "IceSpace 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/49769/477da3928531254744dc734c6c60be97b8a06860/orig",
+                    "type": 2,
+                    "name": "IceSpace 4.png"
+                }
+            ]
+        },
+        {
+            "title": "Red Raid: The beginning",
+            "genre": 11,
+            "machines": [3],
+            "languages": ["de", "en", "es", "it"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/11%20-%20Red%20Raid%20The%20beginning/Red%20Raid%20The%20beginning.zip",
+                    "ext": "tap",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/128809/ee78ed6031646eb71fbaf0af90252600ead6328d/orig",
+                    "type": 1,
+                    "name": "Red Raid 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/998550/7c1b93842baef32bf9dda4494c8ea86a2c2e2182/orig",
+                    "type": 2,
+                    "name": "Red Raid 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/50064/c20d204e90ee0543277f710fe45cb5f8579ec6ce/orig",
+                    "type": 2,
+                    "name": "Red Raid 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/128809/f0bb489ef51d7c470705fdd456124604d6244a00/orig",
+                    "type": 2,
+                    "name": "Red Raid 4.png"
+                }
+            ]
+        },
+        {
+            "title": "Techno Alice",
+            "genre": 11,
+            "machines": [3],
+            "languages": ["ru"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/03%20-%20Techno%20Alice/Techno%20Alice.zip",
+                    "ext": "tap",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/120922/480a84482a167aca51f3e8938054f80629d092a0/orig",
+                    "type": 2,
+                    "name": "Techno Alice 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/120922/651288bbeeea845f06bb72c909cd7da818220bb4/orig",
+                    "type": 2,
+                    "name": "Techno Alice 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/128809/51cea832c81a869f9de0a2deb65afafd50cf190e/orig",
+                    "type": 2,
+                    "name": "Techno Alice 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/128809/f0bc0ad50fc7ede44327278f71b7122fd4d775c8/orig",
+                    "type": 2,
+                    "name": "Techno Alice 4.png"
+                }
+            ]
+        },
+        {
+            "title": "White Jaguar",
+            "genre": 11,
+            "machines": [3],
+            "languages": ["en"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/10%20-%20White%20Jaguar/White%20Jaguar.zip",
+                    "ext": "tap",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/56833/82fe618bcf5554cb5e92a51b071ea7e487b046c6/orig",
+                    "type": 1,
+                    "name": "White Jaguar 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/50064/106ac72be245e76e83e2e424fc9635e9502ccb8b/orig",
+                    "type": 2,
+                    "name": "White Jaguar 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/50064/91939be5f5c94025e87ff5568005735cb0b1bfb4/orig",
+                    "type": 2,
+                    "name": "White Jaguar 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/56833/5faf90e1895523c06c8935ab273ac450f2d15a14/orig",
+                    "type": 2,
+                    "name": "White Jaguar 4.png"
+                }
+            ]
+        },
+        {
+            "title": "Yoyo's Great Adventure",
+            "genre": 13,
+            "machines": [3],
+            "languages": ["en"],
+            "release_date": "2020",
+            "downloads": [
+                {
+                    "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/12%20-%20Yoyo%27s%20Great%20Adventure/Yoyo%27s%20Great%20Adventure.zip",
+                    "ext": "tap",
+                    "type": 8,
+                    "machine": 3
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/128809/ba04375ab58d4e7f0ab9ac1b2ece12fc062832cb/orig",
+                    "type": 2,
+                    "name": "Yoyo's 1.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/120922/fd77c4a73a4b54dc257a839a05357e8602782a29/orig",
+                    "type": 2,
+                    "name": "Yoyo's 2.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/128809/2e905f6fc8857bfb581f72d92d8210761e45717c/orig",
+                    "type": 2,
+                    "name": "Yoyo's 3.png"
+                },
+                {
+                    "link": "https://avatars.mds.yandex.net/get-bunker/135516/f73916d01953ed43b8b24955f92557a5afde0db2/orig",
+                    "type": 2,
+                    "name": "Yoyo's 4.png"
+                }
+            ]
+        }
+    ]
+}
