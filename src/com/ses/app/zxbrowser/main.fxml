@@ -7,6 +7,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
@@ -55,7 +56,14 @@
                     <items>
                         <VBox>
                            <children>
-                              <TableView fx:id="tableView" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS" />
+                              <TableView fx:id="tableView" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+                                 <columns>
+                                    <TableColumn minWidth="50.0" prefWidth="200.0" text="%title" />
+                                    <TableColumn minWidth="50.0" prefWidth="150.0" text="%genre" />
+                                    <TableColumn minWidth="50.0" prefWidth="100.0" text="%date" />
+                                    <TableColumn minWidth="50.0" prefWidth="75.0" text="%machine" />
+                                    <TableColumn minWidth="50.0" prefWidth="100.0" text="%availability" />
+                                 </columns></TableView>
                               <Label fx:id="tableStatusLabel">
                                  <VBox.margin>
                                     <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
@@ -67,7 +75,15 @@
                            <items>
                               <VBox>
                                  <children>
-                                    <TableView fx:id="downloadsTableView" onContextMenuRequested="#onDownloadsTableContextMenuRequested" onMouseClicked="#onDownloadsTableRowClick" prefHeight="200.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS" />
+                                    <TableView fx:id="downloadsTableView" onContextMenuRequested="#onDownloadsTableContextMenuRequested" onMouseClicked="#onDownloadsTableRowClick" prefHeight="200.0" tableMenuButtonVisible="true" VBox.vgrow="ALWAYS">
+                                       <columns>
+                                          <TableColumn prefWidth="26.0" resizable="false" text="·" />
+                                          <TableColumn minWidth="50.0" prefWidth="200.0" text="%name" />
+                                          <TableColumn minWidth="60.0" prefWidth="100.0" text="%type" />
+                                          <TableColumn minWidth="50.0" prefWidth="60.0" text="%year" />
+                                          <TableColumn minWidth="50.0" prefWidth="120.0" text="%machine" />
+                                          <TableColumn minWidth="50.0" prefWidth="100.0" text="%source" />
+                                       </columns></TableView>
                                     <Label fx:id="downloadsStatusLabel">
                                        <VBox.margin>
                                           <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />

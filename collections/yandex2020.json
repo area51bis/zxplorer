@@ -11,6 +11,7 @@
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/06%20-%201024/1024.ZIP",
@@ -46,6 +47,7 @@
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/01%20-%20sixsixsixsix/sixsixsixsix.zip",
@@ -81,6 +83,7 @@
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/07%20-%20Marsmare%20-%20Alienation/Marsmare%20-%20Alienation.zip",
@@ -116,6 +119,7 @@
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/08%20-%20Greentailed%20Batoot%20Simulator/Greentailed%20Batoot%20Simulator.zip?",
@@ -151,6 +155,7 @@
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/13%20-%20Bullet%20Storm/Bullet%20Storm.zip?",
@@ -186,6 +191,7 @@
             "machines": [3],
             "languages": ["en", "es"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/04%20-%20CODE-112/CODE-112.ZIP",
@@ -221,6 +227,7 @@
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/05%20-%20CosmicPayback/CosmicPayback.zip",
@@ -256,6 +263,7 @@
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/14%20-%20Cygnus%20-%20Alpha/Cygnus%20-%20Alpha.zip",
@@ -291,6 +299,7 @@
             "machines": [3],
             "languages": ["en", "es", "pt", "ru"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/15%20-%20Enignimatik/Enignimatik.zip",
@@ -326,6 +335,7 @@
             "machines": [5],
             "languages": ["ru"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/02%20-%20Captain%20Gofer/Captain%20Gofer.zip",
@@ -361,6 +371,7 @@
             "machines": [14],
             "languages": ["en"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/09%20-%20IceSpace/IceSpace.zip",
@@ -396,6 +407,7 @@
             "machines": [3],
             "languages": ["de", "en", "es", "it"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/11%20-%20Red%20Raid%20The%20beginning/Red%20Raid%20The%20beginning.zip",
@@ -431,6 +443,7 @@
             "machines": [3],
             "languages": ["ru"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/03%20-%20Techno%20Alice/Techno%20Alice.zip",
@@ -466,6 +479,7 @@
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/10%20-%20White%20Jaguar/White%20Jaguar.zip",
@@ -501,6 +515,7 @@
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
+            "availability": "A",
             "downloads": [
                 {
                     "link": "https://yastatic.net/s3/distribution/yrgb/games/2020/_download/12%20-%20Yoyo%27s%20Great%20Adventure/Yoyo%27s%20Great%20Adventure.zip",

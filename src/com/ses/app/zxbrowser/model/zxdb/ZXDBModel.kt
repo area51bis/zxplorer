@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import java.io.File
 
 class ZXDBModel(name: String, dir: File) : Model(name, dir) {
-    private val downloadManager = DownloadManager(dir)
+    private val downloadManager = DownloadManager()
 
     private val _entries by lazy {
         ArrayList<ZXDBModelEntry>().also { list ->
@@ -159,6 +159,6 @@ class ZXDBModel(name: String, dir: File) : Model(name, dir) {
 
     override fun isImage(download: ModelDownload?): Boolean = (download?.isImage() == true)
     override fun isDownloaded(download: ModelDownload): Boolean = downloadManager.exists(download)
-    override fun getFile(download: ModelDownload): File = downloadManager.getFile(download)
-    override fun download(download: ModelDownload, completion: (file: File) -> Unit) = downloadManager.download(download, completion)
+    override fun getFile(download: ModelDownload): File = download.getFile()
+    override fun download(download: ModelDownload, completion: (file: File?) -> Unit) = downloadManager.download(download.getFullUrl(), download.getFile(), completion)
 }

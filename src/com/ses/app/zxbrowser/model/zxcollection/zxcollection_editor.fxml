@@ -28,10 +28,10 @@
                                     <TableView prefHeight="200.0" prefWidth="200.0">
                                       <columns>
                                         <TableColumn minWidth="50.0" prefWidth="200.0" text="Title" />
-                                        <TableColumn minWidth="50.0" prefWidth="120.0" text="Genre" />
+                                        <TableColumn minWidth="50.0" prefWidth="150.0" text="Genre" />
                                           <TableColumn minWidth="50.0" prefWidth="100.0" text="Date" />
                                           <TableColumn minWidth="50.0" prefWidth="75.0" text="Machines" />
-                                          <TableColumn minWidth="50.0" prefWidth="75.0" text="Availability" />
+                                          <TableColumn minWidth="50.0" prefWidth="100.0" text="Availability" />
                                       </columns>
                                     </TableView>
                                  </content>

@@ -7,7 +7,7 @@ class Entry {
     var genre: Genre? = null
     var machines: List<Machine>? = null
     var languages: List<Language>? = null
-    var availability: List<Availability>? = null
+    var availability: Availability? = null
     @SerializedName("release_date")
     var releaseDate: ReleaseDate? = null
 

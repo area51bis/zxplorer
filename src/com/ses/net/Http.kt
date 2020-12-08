@@ -53,6 +53,7 @@ class Http {
                 request(it, progressHandler)
             }
             if (errorCode == 0) progressHandler?.invoke(Status.Completed, 1f)
+            else progressHandler?.invoke(Status.Error, 0f)
         } catch (e: Exception) {
             progressHandler?.invoke(Status.Error, 0f)
         }

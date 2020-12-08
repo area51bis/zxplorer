@@ -25,7 +25,7 @@ class ZXCModelEntry(model: Model, val entry: Entry) : ModelEntry(model) {
 
     override fun getMachine(): String = entry.machines?.first()?.text ?: Model.NULL_MACHINE_TYPE_STRING
 
-    override fun getAvailability(): String = entry.availability?.first()?.text ?: Model.NULL_AVAILABLE_STRING
+    override fun getAvailability(): String = entry.availability?.text ?: Model.NULL_AVAILABLE_STRING
 
     override fun getDownloads(): List<ModelDownload> = _downloads
 }

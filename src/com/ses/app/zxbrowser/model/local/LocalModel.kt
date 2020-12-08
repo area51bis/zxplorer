@@ -83,7 +83,7 @@ class LocalModel(name: String, dir: File) : Model(name, dir) {
 
     override fun getFile(download: ModelDownload): File = download.getFile()
 
-    override fun download(download: ModelDownload, completion: (file: File) -> Unit) {
+    override fun download(download: ModelDownload, completion: (file: File?) -> Unit) {
         completion(getFile(download))
     }
 }

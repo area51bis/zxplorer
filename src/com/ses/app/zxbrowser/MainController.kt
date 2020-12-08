@@ -115,7 +115,7 @@ class MainController : Initializable {
         initMenu()
 
         createTree()
-        createTable()
+        createEntriesTable()
         createDownloadsTable()
 
         initObservers()
@@ -273,67 +273,25 @@ class MainController : Initializable {
         }
     }
 
-    private fun createTable() {
-        with(tableView.columns) {
-            clear()
-
-            add(TableColumn<ModelEntry, String>(T("title")).apply {
-                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.getTitle()) }
-            })
-            add(TableColumn<ModelEntry, String>(T("genre")).apply {
-                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.getGenre()) }
-            })
-            add(TableColumn<ModelEntry, ReleaseDate>(T("date")).apply {
-                cellValueFactory = Callback { p -> ReadOnlyObjectWrapper(p.value.getReleaseDate()) }
-            })
-            add(TableColumn<ModelEntry, String>(T("machine")).apply {
-                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getMachine()) }
-            })
-            add(TableColumn<ModelEntry, String>(T("availability")).apply {
-                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.getAvailability()) }
-            })
+    private fun createEntriesTable() {
+        tableView.columns.also { columns ->
+            columns[0].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getTitle()) }
+            columns[1].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getGenre()) }
+            columns[2].cellValueFactory = Callback { ReadOnlyObjectWrapper(it.value.getReleaseDate()) }
+            columns[3].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getMachine()) }
+            columns[4].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getAvailability()) }
         }
     }
 
     private fun createDownloadsTable() {
-        with(downloadsTableView.columns) {
-            clear()
-
-            add(TableColumn<ModelDownload, String>(T("·")).apply {
-                cellFactory = Callback { FileDownloadTableCell() }
-            })
-
-            add(TableColumn<ModelDownload, String>(T("name")).apply {
-                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getFileName()) }
-                //cellFactory = Callback { FileDownloadTableCell(downloadManager) }
-            })
-
-            add(TableColumn<ModelDownload, String>(T("type")).apply {
-                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getFileType().text) }
-            })
-
-            /*
-            add(TableColumn<Download, String>(T("format")).apply {
-                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.extension?.text) }
-            })
-            */
-
-            add(TableColumn<ModelDownload, String>(T("year")).apply {
-                cellValueFactory = Callback { p -> ReadOnlyStringWrapper(p.value.getReleaseYear()?.toString()) }
-            })
-
-            add(TableColumn<ModelDownload, String>(T("machine")).apply {
-                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getMachine()) }
-            })
-
-            add(TableColumn<ModelDownload, String>(T("source")).apply {
-                cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getSource()) }
-            })
+        downloadsTableView.columns.also { columns ->
+            columns[0].cellFactory = Callback { FileDownloadTableCell() }
+            columns[1].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getFileName()) }
+            columns[2].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getFileType().text) }
+            columns[3].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getReleaseYear()?.toString()) }
+            columns[4].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getMachine()) }
+            columns[5].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getSource()) }
         }
-
-        downloadsTableView.items = FXCollections.observableArrayList()
-
-        downloadsTableView.contextMenu = ContextMenu()
     }
 
     private fun setTextFilter(exp: String?) {
@@ -452,6 +410,8 @@ class MainController : Initializable {
     fun onDownloadsTableContextMenuRequested(e: ContextMenuEvent) {
         val download = downloadsTableView.selectionModel.selectedItem ?: return
 
+        if (downloadsTableView.contextMenu == null) downloadsTableView.contextMenu = ContextMenu()
+
         downloadsTableView.contextMenu.items.apply {
             clear()
 
@@ -509,9 +469,9 @@ class MainController : Initializable {
         val model = download.model
         model.download(download) { file ->
             downloadsTableView.refresh()
-            if (download.isImage()) selectedImage.value = file.toImage()
+            if (download.isImage()) selectedImage.value = file?.toImage()
             // runLater para capturar bien la excepción y mostrar la ventana de error
-            Platform.runLater { program?.launch(file) }
+            if (file != null) Platform.runLater { program?.launch(file) }
         }
     }
 }

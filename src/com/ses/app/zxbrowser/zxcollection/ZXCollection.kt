@@ -5,6 +5,9 @@ import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
 import com.google.gson.stream.JsonToken
+import com.ses.app.zxbrowser.zxcollection.adapters.IntReferenceTypeAdapter
+import com.ses.app.zxbrowser.zxcollection.adapters.ReleaseDateTypeAdapter
+import com.ses.app.zxbrowser.zxcollection.adapters.StringReferenceTypeAdapter
 import java.io.File
 import java.io.FileReader
 import java.io.InputStream
@@ -60,16 +63,12 @@ class ZXCollection() {
 
                     while (reader.hasNext()) {
                         val token = reader.peek()
-                        println("token: $token")
                         if (token == JsonToken.NAME) {
                             val name = reader.nextName()
-                            println(name)
                             if (name == "info") {
                                 info = Gson().fromJson(reader, ZXCollectionInfo::class.java)
                                 return@use info
                             }
-
-                            //println("skip: $name")
                         }
 
                         reader.skipValue()

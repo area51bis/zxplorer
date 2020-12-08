@@ -2,6 +2,8 @@ package com.ses.app.zxbrowser.ui
 
 import com.ses.app.zxbrowser.*
 import com.ses.app.zxbrowser.zxcollection.ZXCollection
+import com.ses.net.Http
+import javafx.application.Platform
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.scene.control.*
@@ -13,7 +15,6 @@ import javafx.stage.Stage
 import javafx.stage.StageStyle
 import java.io.File
 import java.net.URL
-import java.nio.file.Path
 import java.util.*
 
 class EditLibsDialog : AppDialog<Boolean>() {
@@ -38,7 +39,10 @@ class EditLibsDialog : AppDialog<Boolean>() {
     private var _result = false
 
     companion object {
-        fun create() = create<EditLibsDialog>("edit_libraries_dialog.fxml")
+        private const val TYPE_LOCAL_ZXC = "local_zxc"
+        private const val TYPE_REMOTE_ZXC = "remote_zxc"
+
+        fun create() = create<EditLibsDialog>("edit_libs_dialog.fxml")
     }
 
     override fun createStage(): Stage = super.createStage().apply {
@@ -99,49 +103,81 @@ class EditLibsDialog : AppDialog<Boolean>() {
         items.addAll(
                 MenuItem(T("lib_type_zxdb")).apply { setOnAction { addLibrary(Library.TYPE_ZXDB) } },
                 MenuItem(T("lib_type_local")).apply { setOnAction { addLibrary(Library.TYPE_LOCAL) } },
-                MenuItem(T("lib_type_zxc")).apply { setOnAction { addLibrary(Library.TYPE_ZXC) } },
+                MenuItem(T("lib_type_local_zxc")).apply { setOnAction { addLibrary(TYPE_LOCAL_ZXC) } },
+                MenuItem(T("lib_type_remote_zxc")).apply { setOnAction { addLibrary(TYPE_REMOTE_ZXC) } },
         )
     }
 
     private fun addLibrary(type: String) {
-        var lib: Library? = null
-
         when (type) {
-            Library.TYPE_ZXDB -> lib = Library(type, "ZXDB", "zxdb")
+            Library.TYPE_ZXDB -> {
+                val lib = Library(type, "ZXDB", "zxdb")
+                addLib(lib)
+            }
 
             Library.TYPE_LOCAL -> {
                 val dir = chooseDirectory(App.workingDir)
                 if (dir != null) {
-                    lib = Library(type, dir.name, dir.absolutePath)
+                    val lib = Library(type, dir.name, dir.absolutePath)
+                    addLib(lib)
                 }
             }
 
-            Library.TYPE_ZXC -> {
+            TYPE_LOCAL_ZXC -> {
                 val file = chooseFile(App.workingDir)
                 if (file != null) {
                     val info = ZXCollection.loadInfo(file)
-                    lib = Library(type, info!!.name, file.nameWithoutExtension, file.absolutePath)
+                    val lib = Library(Library.TYPE_ZXC, info!!.name, file.nameWithoutExtension, file.absolutePath)
+                    addLib(lib)
+                }
+            }
+
+            TYPE_REMOTE_ZXC -> {
+                val url = TextInputDialog().apply {
+                    title = "ZXCollection (remote)"
+                    headerText = null
+                    contentText = "URL"
+                    dialogPane.prefWidth = 400.0
+                }.showAndWait().orElse(null)
+
+                if (url != null) {
+                    val name = url.substringAfterLast('/').substringBefore('?')
+                    val file = App.localFile(name)
+                    DownloadManager().download(url, file) { f ->
+                        if (f != null) {
+                            try {
+                                val info = ZXCollection.loadInfo(f)
+                                if (info != null) {
+                                    val lib = Library(Library.TYPE_ZXC, info.name, f.nameWithoutExtension, f.absolutePath)
+                                    Platform.runLater { addLib(lib) }
+                                }
+                            } catch (e: Exception) {
+                                f.delete()
+                                Alert(Alert.AlertType.ERROR).apply {
+                                    title = T("error")
+                                    contentText = "Couldn't load collection"
+                                }.show()
+                            }
+                        } else {
+                            Alert(Alert.AlertType.ERROR).apply {
+                                title = T("error")
+                                contentText = "Download error"
+                            }.show()
+                        }
+                    }
                 }
             }
         }
+    }
 
-        if (lib != null) {
-            libList.add(lib)
-            listView.selectionModel.select(lib)
-        }
+    private fun addLib(lib: Library) {
+        libList.add(lib)
+        listView.selectionModel.select(lib)
     }
 
     @FXML
     fun onAddClick(e: MouseEvent) {
         addContextMenu.show(e.source as Button, e.screenX, e.screenY)
-        /*
-        val file = chooseDirectory()
-        if (file != null) {
-            val lib: Library = Library("zxdb", "ZXDB", "zxdb")
-            libList.add(lib)
-            listView.selectionModel.select(lib)
-        }
-        */
     }
 
     @FXML

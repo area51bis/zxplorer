@@ -11,7 +11,7 @@ import java.io.File
 class ZXCModel(name: String, dir: File, val source: String? = null) : Model(name, dir) {
     private val file: File = File(source)
     private val zxc: ZXCollection = ZXCollection.loadCollection(file)
-    private val downloadManager = DownloadManager(dir)
+    private val downloadManager = DownloadManager()
 
     private val _entries by lazy {
         ArrayList<ZXCModelEntry>().also { list ->
@@ -46,8 +46,8 @@ class ZXCModel(name: String, dir: File, val source: String? = null) : Model(name
     override fun isImage(download: ModelDownload?): Boolean = download?.isImage() == true
 
     override fun isDownloaded(download: ModelDownload): Boolean = downloadManager.exists(download)
-    override fun getFile(download: ModelDownload): File = downloadManager.getFile(download)
-    override fun download(download: ModelDownload, completion: (file: File) -> Unit) = downloadManager.download(download, completion)
+    override fun getFile(download: ModelDownload): File = download.getFile()
+    override fun download(download: ModelDownload, completion: (file: File?) -> Unit) = downloadManager.download(download.getFullUrl(), download.getFile(), completion)
 
     private fun createTree() {
         root.children.clear()

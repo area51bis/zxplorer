@@ -4,10 +4,13 @@ import com.ses.app.zxbrowser.model.Model
 import com.ses.app.zxbrowser.model.local.LocalModel
 import com.ses.app.zxbrowser.model.zxcollection.ZXCModel
 import com.ses.app.zxbrowser.model.zxdb.ZXDBModel
-import com.ses.app.zxbrowser.zxcollection.ZXCollection
-import com.ses.app.zxbrowser.zxcollection.ZXCollectionInfo
 import java.io.File
 
+/**
+ * @param type Tipo de biblioteca
+ * @param path Directorio de los datos/descargas
+ * @param source Dirección del origen. Depende de la biblioteca (fichero, directorio, url...)
+ */
 class Library(val type: String, var name: String, var path: String, val source: String? = null, model: Model? = null) : Cloneable {
     companion object {
         const val TYPE_ZXDB = "zxdb"
@@ -16,14 +19,13 @@ class Library(val type: String, var name: String, var path: String, val source: 
     }
 
     val model: Model by lazy {
-        model
-                ?: when (type) {
-                    TYPE_ZXDB -> ZXDBModel(name, File(path))
-                    TYPE_LOCAL -> LocalModel(name, File(path))
-                    TYPE_ZXC -> ZXCModel(name, File(path), source)
+        model ?: when (type) {
+            TYPE_ZXDB -> ZXDBModel(name, File(path))
+            TYPE_LOCAL -> LocalModel(name, File(path))
+            TYPE_ZXC -> ZXCModel(name, File(path), source)
 
-                    else -> throw Exception("Invalid library '$type'")
-                }
+            else -> throw Exception("Invalid library '$type'")
+        }
     }
 
     override fun toString(): String = name

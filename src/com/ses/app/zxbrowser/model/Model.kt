@@ -32,5 +32,5 @@ abstract class Model(val name: String, val dir: File) {
     abstract fun isImage(download: ModelDownload?): Boolean
     abstract fun isDownloaded(download: ModelDownload): Boolean
     abstract fun getFile(download: ModelDownload): File
-    abstract fun download(download: ModelDownload, completion: (file: File) -> Unit)
+    abstract fun download(download: ModelDownload, completion: (file: File?) -> Unit)
 }

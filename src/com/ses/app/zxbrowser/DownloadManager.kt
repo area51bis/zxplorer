@@ -8,12 +8,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.File
 
-class DownloadManager(val downloadDir: File) {
-    fun getFile(download: ModelDownload): File = download.getFile()
-
-    fun download(download: ModelDownload, completion: (file: File) -> Unit) {
-        val file = getFile(download)
-
+class DownloadManager() {
+    fun download(url: String, file: File, completion: (file: File?) -> Unit) {
         if (file.exists()) {
             completion(file)
             return
@@ -21,20 +17,21 @@ class DownloadManager(val downloadDir: File) {
 
         val dialog = ProgressDialog.create().apply {
             title = T("download")
-            message = download.getFileName()
+            message = file.name
             show()
         }
 
         GlobalScope.launch {
             Http().apply {
                 file.parentFile.mkdirs()
-                request = download.getFullUrl()
+                request = url
 
                 getFile(file) { status, progress ->
                     when (status) {
                         Http.Status.Connecting -> Platform.runLater { dialog.message = T("connecting_") }
-                        Http.Status.Connected -> Platform.runLater { dialog.message = T("downloading_fmt").format(download.getFileName()) }
+                        Http.Status.Connected -> Platform.runLater { dialog.message = T("downloading_fmt").format(file.name) }
                         Http.Status.Completed -> completion(file)
+                        Http.Status.Error -> completion(null)
                     }
                 }
                 Platform.runLater { dialog.hide() }
@@ -42,5 +39,5 @@ class DownloadManager(val downloadDir: File) {
         }
     }
 
-    fun exists(download: ModelDownload): Boolean = getFile(download).exists()
+    fun exists(download: ModelDownload): Boolean = download.getFile().exists()
 }
