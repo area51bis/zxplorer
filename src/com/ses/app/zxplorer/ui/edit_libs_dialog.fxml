@@ -60,7 +60,7 @@
                   <HBox alignment="CENTER_LEFT" spacing="4.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
                         <TextField fx:id="pathText" HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" onAction="#onSelectProgramClick" text="..." />
+                        <Button mnemonicParsing="false" onAction="#onSelectLibClick" text="..." />
                      </children>
                   </HBox>
                   <TextField fx:id="typeText" editable="false" focusTraversable="false" GridPane.columnIndex="1" />

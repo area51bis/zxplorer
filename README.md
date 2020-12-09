@@ -1,4 +1,4 @@
-# ZXplorer 0.8
+# ZXplorer 0.9a1: Collections
 
 ### Descripción
 **ZXplorer** es una aplicación para explorar, descargar y ejecutar el contenido de la base de datos de Spectrum [ZXDB](https://github.com/zxdb/ZXDB).
@@ -83,6 +83,7 @@ También se puede editar directamente el fichero `config.json` en la sección "`
 A partir de la versión 0.7, ZXplorer soporta distintos tipos de bibliotecas:
 - **ZXDB**: Base de datos ZXDB descargada de forma local.
 - **Local**: Cualquier directorio local de nuestro equipo.
+- **ZXCollection**: Colecciones creadas por cualquiera que se pueden compartir.
 
 Se pueden editar mediante el menú contextual del árbol de categorías:
 

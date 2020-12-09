@@ -41,6 +41,12 @@ class EditLibsDialog : AppDialog<Boolean>() {
         private const val TYPE_LOCAL_ZXC = "local_zxc"
         private const val TYPE_REMOTE_ZXC = "remote_zxc"
 
+        private val LIB_NAMES: Map<String, String> = mapOf(
+            Library.TYPE_ZXDB to T("lib_type_zxdb"),
+            Library.TYPE_LOCAL to T("lib_type_local"),
+            Library.TYPE_ZXC to T("lib_type_zxc")
+        )
+
         fun create() = create<EditLibsDialog>("edit_libs_dialog.fxml")
     }
 
@@ -73,12 +79,12 @@ class EditLibsDialog : AppDialog<Boolean>() {
         selectedLibrary = lib
     }
 
-    private fun updateLibInfo(program: Library?) {
-        editView.isDisable = (program == null)
-        if (program != null) {
-            typeText.text = program.type
-            nameText.text = program.name
-            pathText.text = program.path
+    private fun updateLibInfo(lib: Library?) {
+        editView.isDisable = (lib == null)
+        if (lib != null) {
+            typeText.text = LIB_NAMES[lib.type]
+            nameText.text = lib.name
+            pathText.text = lib.path
         } else {
             typeText.text = null
             nameText.text = null
@@ -102,8 +108,12 @@ class EditLibsDialog : AppDialog<Boolean>() {
         items.addAll(
                 MenuItem(T("lib_type_zxdb")).apply { setOnAction { addLibrary(Library.TYPE_ZXDB) } },
                 MenuItem(T("lib_type_local")).apply { setOnAction { addLibrary(Library.TYPE_LOCAL) } },
-                MenuItem(T("lib_type_local_zxc")).apply { setOnAction { addLibrary(TYPE_LOCAL_ZXC) } },
-                MenuItem(T("lib_type_remote_zxc")).apply { setOnAction { addLibrary(TYPE_REMOTE_ZXC) } },
+                Menu(T("lib_type_zxc")).apply {
+                    items.addAll(
+                            MenuItem(T("local")).apply { setOnAction { addLibrary(TYPE_LOCAL_ZXC) } },
+                            MenuItem(T("remote")).apply { setOnAction { addLibrary(TYPE_REMOTE_ZXC) } },
+                    )
+                }
         )
     }
 
@@ -133,7 +143,7 @@ class EditLibsDialog : AppDialog<Boolean>() {
 
             TYPE_REMOTE_ZXC -> {
                 val url = TextInputDialog().apply {
-                    title = "ZXCollection (remote)"
+                    title = "${T("lib_type_zxc")} (${T("remote")})"
                     headerText = null
                     contentText = "URL"
                     dialogPane.prefWidth = 400.0
@@ -189,39 +199,38 @@ class EditLibsDialog : AppDialog<Boolean>() {
 
             if (button == ButtonType.OK) {
                 libList.remove(selectedLibrary)
-                //selectedProgram = null
             }
         }
     }
 
     @FXML
     fun onMoveUp() {
-        val program = selectedLibrary
-        if (program != null) {
-            val index = libList.indexOf(program)
+        val lib = selectedLibrary
+        if (lib != null) {
+            val index = libList.indexOf(lib)
             if (index > 0) {
                 libList.removeAt(index)
-                libList.add(index - 1, program)
-                listView.selectionModel.select(program)
+                libList.add(index - 1, lib)
+                listView.selectionModel.select(lib)
             }
         }
     }
 
     @FXML
     fun onMoveDown() {
-        val program = selectedLibrary
-        if (program != null) {
-            val index = libList.indexOf(program)
+        val lib = selectedLibrary
+        if (lib != null) {
+            val index = libList.indexOf(lib)
             if (index < libList.lastIndex) {
                 libList.removeAt(index)
-                libList.add(index + 1, program)
-                listView.selectionModel.select(program)
+                libList.add(index + 1, lib)
+                listView.selectionModel.select(lib)
             }
         }
     }
 
     @FXML
-    fun onSelectProgramClick() {
+    fun onSelectLibClick() {
         val file = chooseDirectory(File(selectedLibrary!!.path))
         if (file != null) pathText.text = file.absolutePath
     }
