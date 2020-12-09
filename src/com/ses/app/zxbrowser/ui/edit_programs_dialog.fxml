@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="4.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ses.app.zxbrowser.ui.EditProgramDialog">
+<VBox spacing="4.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ses.app.zxbrowser.ui.EditProgramsDialog">
    <children>
       <HBox alignment="TOP_CENTER" fillHeight="false" spacing="4.0">
          <children>

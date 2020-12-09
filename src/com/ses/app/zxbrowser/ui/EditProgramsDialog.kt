@@ -4,7 +4,6 @@ import com.ses.app.zxbrowser.Config
 import com.ses.app.zxbrowser.KnownPrograms
 import com.ses.app.zxbrowser.Program
 import com.ses.app.zxbrowser.T
-import javafx.application.Platform
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
 import javafx.scene.control.*
@@ -16,7 +15,7 @@ import java.io.File
 import java.net.URL
 import java.util.*
 
-class EditProgramDialog : AppDialog<Unit>() {
+class EditProgramsDialog : AppDialog<Unit>() {
     @FXML
     lateinit var listView: ListView<Program>
 
@@ -44,7 +43,7 @@ class EditProgramDialog : AppDialog<Unit>() {
     private var selectedProgram: Program? = null
 
     companion object {
-        fun create() = create<EditProgramDialog>("edit_program_dialog.fxml")
+        fun create() = create<EditProgramsDialog>("edit_programs_dialog.fxml")
     }
 
     override fun createStage(): Stage = super.createStage().apply {

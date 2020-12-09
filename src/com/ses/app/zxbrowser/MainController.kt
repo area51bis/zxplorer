@@ -4,14 +4,12 @@ import com.ses.app.zxbrowser.filters.EntryTitleFilter
 import com.ses.app.zxbrowser.filters.Filter
 import com.ses.app.zxbrowser.model.*
 import com.ses.app.zxbrowser.ui.EditLibsDialog
-import com.ses.app.zxbrowser.ui.EditProgramDialog
+import com.ses.app.zxbrowser.ui.EditProgramsDialog
 import com.ses.app.zxbrowser.ui.ProgressDialog
-import com.ses.app.zxbrowser.zxcollection.ReleaseDate
 import javafx.application.Platform
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.beans.property.SimpleObjectProperty
-import javafx.collections.FXCollections
 import javafx.collections.ListChangeListener
 import javafx.collections.ObservableList
 import javafx.fxml.FXML
@@ -145,7 +143,6 @@ class MainController : Initializable {
             progress = ProgressBar.INDETERMINATE_PROGRESS
         }
         */
-
         GlobalScope.launch {
             Config.allLibraries.forEach { lib ->
                 ProgressManager.current?.notify(ProgressBar.INDETERMINATE_PROGRESS, null, "${lib.name}...")
@@ -319,7 +316,7 @@ class MainController : Initializable {
 
     @FXML
     fun menuConfigurePrograms() {
-        EditProgramDialog.create().show(App.mainStage)
+        EditProgramsDialog.create().show(App.mainStage)
     }
 
     private fun checkLibraries(whenFinish: (() -> Unit)? = null) {
@@ -439,7 +436,7 @@ class MainController : Initializable {
                     }
                     menu.items.add(MenuItem(T("configure_programs")).apply {
                         setOnAction {
-                            EditProgramDialog.create().show(App.mainStage)
+                            EditProgramsDialog.create().show(App.mainStage)
                         }
                     })
                 })

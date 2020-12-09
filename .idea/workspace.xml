@@ -32,28 +32,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4907fc0-9ae3-45b2-a941-903078f601e8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/adapters/IntReferenceTypeAdapter.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/adapters/StringReferenceTypeAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/org_xerial_sqlite_jdbc_3_32_3_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/org_jetbrains_kotlinx_kotlinx_coroutines_core_1_3_9.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/org_jetbrains_kotlinx_kotlinx_coroutines_core_1_4_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/org_xerial_sqlite_jdbc_3_32_3_2.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collections/yandex2020.json" beforeDir="false" afterPath="$PROJECT_DIR$/collections/yandex2020.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/strings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/strings.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/strings_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/strings_es.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/DownloadManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/DownloadManager.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Library.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/Library.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ZXBrowser.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ZXBrowser.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/MainController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/MainController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/Model.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/Model.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/local/LocalModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/local/LocalModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxcollection/ZXCModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxcollection/ZXCModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxcollection/ZXCModelEntry.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxcollection/ZXCModelEntry.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxcollection/zxcollection_editor.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxcollection/zxcollection_editor.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxdb/ZXDBModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/model/zxdb/ZXDBModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/EditLibsDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/EditLibsDialog.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/edit_libraries_dialog.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/edit_libs_dialog.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/Entry.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/Entry.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/TypeAdapters.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/adapters/ReleaseDateTypeAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/ZXCollection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/zxcollection/ZXCollection.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/net/Http.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/net/Http.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/EditProgramDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/EditProgramsDialog.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/edit_program_dialog.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxbrowser/ui/edit_programs_dialog.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,9 +68,10 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15332031" />
     <property name="project.structure.side.proportion" value="0.25057736" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.JSON" />
@@ -220,7 +207,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607383395983</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="[*] Mejoras en ZXCollections.">
+      <created>1607466805076</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1607466805076</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -259,5 +253,26 @@
     <MESSAGE value="[*] ZXCollections (WIP)." />
     <MESSAGE value="[*] Mejoras en ZXCollections." />
     <option name="LAST_COMMIT_MESSAGE" value="[*] Mejoras en ZXCollections." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/com/ses/zxdb/ZXDB.kt</url>
+          <line>27</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/com/ses/zxdb/ZXDB.kt</url>
+          <line>37</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/com/ses/zxdb/ZXDB.kt</url>
+          <line>33</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
