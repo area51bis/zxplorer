@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="ZXplorer JAR" />
       <artifact name="ZXplorer JAR JFX" />
     </artifacts-to-build>
   </component>
@@ -34,10 +33,8 @@
     <list default="true" id="b4907fc0-9ae3-45b2-a941-903078f601e8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/strings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/strings.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/strings_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/strings_es.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/ui/EditLibsDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/ui/EditLibsDialog.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/ui/edit_libs_dialog.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/ui/edit_libs_dialog.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/collections/yandex2020.json" beforeDir="false" afterPath="$PROJECT_DIR$/collections/yandex2020.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/App.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +65,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15332031" />
     <property name="project.structure.side.proportion" value="0.25057736" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -232,7 +229,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607547211242</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="[*] Pequeños ajustes.">
+      <created>1607550715205</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1607550715205</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -272,6 +276,7 @@
     <MESSAGE value="[*] Mejoras en ZXCollections." />
     <MESSAGE value="[*] Actualización de dependencias." />
     <MESSAGE value="[*] Cambio de nombre: ZXBrowser -&gt; ZXplorer." />
-    <option name="LAST_COMMIT_MESSAGE" value="[*] Cambio de nombre: ZXBrowser -&gt; ZXplorer." />
+    <MESSAGE value="[*] Pequeños ajustes." />
+    <option name="LAST_COMMIT_MESSAGE" value="[*] Pequeños ajustes." />
   </component>
 </project>

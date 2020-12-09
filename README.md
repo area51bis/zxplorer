@@ -83,7 +83,7 @@ También se puede editar directamente el fichero `config.json` en la sección "`
 A partir de la versión 0.7, ZXplorer soporta distintos tipos de bibliotecas:
 - **ZXDB**: Base de datos ZXDB descargada de forma local.
 - **Local**: Cualquier directorio local de nuestro equipo.
-- **ZXCollection**: Colecciones creadas por cualquiera que se pueden compartir.
+- **ZXCollection**: Colecciones creadas por cualquiera que se pueden compartir (ver [ZXCollections](https://github.com/area51bis/zxplorer/wiki/ZX-Collections)).
 
 Se pueden editar mediante el menú contextual del árbol de categorías:
 
