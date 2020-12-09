@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ZXBrowser.iml" filepath="$PROJECT_DIR$/ZXBrowser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ZXplorer.iml" filepath="$PROJECT_DIR$/ZXplorer.iml" />
     </modules>
   </component>
 </project>

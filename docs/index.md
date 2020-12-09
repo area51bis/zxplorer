@@ -1,1 +1,1 @@
-# ZXBrowser 0.7.2
+# ZXplorer 0.8

@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: com.ses.app.zxbrowser.LauncherKt
+Main-Class: com.ses.app.zxplorer.LauncherKt
 

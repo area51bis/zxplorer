@@ -1,7 +1,7 @@
-# ZXBrowser 0.8
+# ZXplorer 0.8
 
 ### Descripción
-**ZXBrowser** es una aplicación para explorar, descargar y ejecutar el contenido de la base de datos de Spectrum [ZXDB](https://github.com/zxdb/ZXDB).
+**ZXplorer** es una aplicación para explorar, descargar y ejecutar el contenido de la base de datos de Spectrum [ZXDB](https://github.com/zxdb/ZXDB).
 
 ![](screenshots/screenshot-0.7.jpg)
 
@@ -14,7 +14,7 @@ veces me cuesta encontrar el fichero. Luego, en el caso más sencillo, tengo que
 ejecutarlo... pero no siempre es así. A veces tienes que buscar el fichero desde el propio emulador y otras, además
 tienes que descomprimirlo porque no lee directamente los ficheros comprimidos.
 
-Por eso decidí que necesitaba algo como ZXBrowser.
+Por eso decidí que necesitaba algo como ZXplorer.
 
 La verdad es que la idea viene de lejos. De hecho tengo una vieja versión por ahí que cargaba los datos del fichero
 **rainbow-wos.zip** (alojado en WoS), pero eso es otra historia...
@@ -23,7 +23,7 @@ Ahora tengo una versión medianamente decente que me gustaría compartir con tod
 les guste y les sea tan útil como a mí.
 
 ### Descargas
-[Binarios](https://github.com/area51bis/zxbrowser-jfx/releases)
+[Binarios](https://github.com/area51bis/zxplorer/releases)
 
 ### Instrucciones
 El programa es bastante sencillo. Basta con ejecutarlo y, automáticamente, descargará la base datos de ZXDB.
@@ -80,7 +80,7 @@ También se puede editar directamente el fichero `config.json` en la sección "`
 - **default_for**: Extensiones que abrirá por defecto  al hacer doble clic. Opcional.
 
 ### Bibliotecas
-A partir de la versión 0.7, ZXBrowser soporta distintos tipos de bibliotecas:
+A partir de la versión 0.7, ZXplorer soporta distintos tipos de bibliotecas:
 - **ZXDB**: Base de datos ZXDB descargada de forma local.
 - **Local**: Cualquier directorio local de nuestro equipo.
 
