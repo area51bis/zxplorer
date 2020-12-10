@@ -25,25 +25,25 @@
                           <items>
                               <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" text="Entries">
                                  <content>
-                                    <TableView prefHeight="200.0" prefWidth="200.0">
+                                    <TableView fx:id="entriesTable" editable="true" prefHeight="200.0" prefWidth="200.0">
                                       <columns>
-                                        <TableColumn minWidth="50.0" prefWidth="200.0" text="Title" />
-                                        <TableColumn minWidth="50.0" prefWidth="150.0" text="Genre" />
-                                          <TableColumn minWidth="50.0" prefWidth="100.0" text="Date" />
-                                          <TableColumn minWidth="50.0" prefWidth="75.0" text="Machines" />
-                                          <TableColumn minWidth="50.0" prefWidth="100.0" text="Availability" />
+                                        <TableColumn minWidth="50.0" prefWidth="200.0" text="%title" />
+                                        <TableColumn minWidth="50.0" prefWidth="150.0" text="%genre" />
+                                          <TableColumn minWidth="50.0" prefWidth="100.0" text="%date" />
+                                          <TableColumn minWidth="50.0" prefWidth="120.0" text="%machine" />
+                                          <TableColumn minWidth="50.0" prefWidth="100.0" text="%availability" />
                                       </columns>
                                     </TableView>
                                  </content>
                               </TitledPane>
                               <TitledPane collapsible="false" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" text="Downloads" SplitPane.resizableWithParent="false">
                                  <content>
-                                    <TableView prefHeight="200.0" prefWidth="200.0">
+                                    <TableView fx:id="downloadsTable" editable="true" prefHeight="200.0" prefWidth="200.0">
                                       <columns>
-                                        <TableColumn maxWidth="26.0" minWidth="26.0" prefWidth="26.0" resizable="false" text="·" />
-                                        <TableColumn minWidth="50.0" prefWidth="200.0" text="Name" />
-                                          <TableColumn minWidth="50.0" prefWidth="100.0" text="Date" />
-                                          <TableColumn minWidth="50.0" prefWidth="120.0" text="Machine" />
+                                        <TableColumn minWidth="50.0" prefWidth="200.0" text="%name" />
+                                          <TableColumn minWidth="50.0" prefWidth="120.0" text="%type" />
+                                          <TableColumn minWidth="50.0" prefWidth="100.0" text="%date" />
+                                          <TableColumn minWidth="50.0" prefWidth="120.0" text="%machine" />
                                       </columns>
                                     </TableView>
                                  </content>

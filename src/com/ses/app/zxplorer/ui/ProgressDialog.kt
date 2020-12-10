@@ -38,7 +38,7 @@ class ProgressDialog : AppDialog<Unit>() {
         }
 
     companion object {
-        fun create() = create<ProgressDialog>("progressdialog.fxml").apply {
+        fun create() = create(ProgressDialog::class, "progressdialog.fxml").apply {
             stage.scene.fill = Color.TRANSPARENT // para bordes redondeados
         }
     }

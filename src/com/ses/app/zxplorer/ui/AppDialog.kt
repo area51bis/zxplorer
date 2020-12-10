@@ -9,13 +9,14 @@ import javafx.stage.StageStyle
 import javafx.stage.Window
 import java.net.URL
 import java.util.*
+import kotlin.reflect.KClass
 
 abstract class AppDialog<R> : Initializable {
     protected val stage: Stage by lazy { createStage() }
 
     companion object {
-        fun <T : AppDialog<*>> create(fxmlName: String): T {
-            val loader = fxmlLoader(fxmlName)
+        fun <T : AppDialog<*>> create(cls: KClass<T>, fxmlName: String): T {
+            val loader = cls.fxmlLoader(fxmlName)
             val scene = Scene(loader.load())
             val dialog: T = loader.getController()
             dialog.stage.scene = scene

@@ -12,6 +12,8 @@ module app {
 
     exports com.ses.zxdb.dao;
     exports com.ses.app.zxplorer.model;
+    exports com.ses.app.zxplorer.model.zxcollection;
+    exports com.ses.app.zxplorer.zxcollection;
     exports com.ses.app.zxplorer.ui;
     exports com.ses.app.zxplorer.model.zxdb;
 

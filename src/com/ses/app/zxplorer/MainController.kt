@@ -3,6 +3,8 @@ package com.ses.app.zxplorer
 import com.ses.app.zxplorer.filters.EntryTitleFilter
 import com.ses.app.zxplorer.filters.Filter
 import com.ses.app.zxplorer.model.*
+import com.ses.app.zxplorer.model.zxcollection.ZXCModel
+import com.ses.app.zxplorer.model.zxcollection.ZXCollectionEditor
 import com.ses.app.zxplorer.ui.EditLibsDialog
 import com.ses.app.zxplorer.ui.EditProgramsDialog
 import com.ses.app.zxplorer.ui.ProgressDialog
@@ -35,7 +37,7 @@ import kotlin.collections.ArrayList
 class MainController : Initializable {
     companion object {
         fun load(): Parent {
-            val loader = fxmlLoader("main.fxml")
+            val loader = this::class.fxmlLoader("main.fxml")
             return loader.load()
         }
     }
@@ -235,8 +237,14 @@ class MainController : Initializable {
         if (node?.parent == treeView.root) {
             // miro si es el raíz de alguna biblioteca
             val lib = Config.allLibraries.find { it.model.root == node }
-            if (lib?.model?.canUpdate() == true) { // mostrar opción si es posible
+            val model = lib?.model
+            if (model?.canUpdate() == true) { // mostrar opción si es posible
                 contextMenu.items.add(menuItem(T("update")) { onUpdateLibraryOption(lib) })
+            }
+            if (model is ZXCModel) {
+                contextMenu.items.add(menuItem(T("edit")) {
+                    ZXCollectionEditor.create(model.zxc).show(App.mainStage)
+                })
             }
         }
 
@@ -271,23 +279,23 @@ class MainController : Initializable {
     }
 
     private fun createEntriesTable() {
-        tableView.columns.also { columns ->
-            columns[0].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getTitle()) }
-            columns[1].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getGenre()) }
-            columns[2].cellValueFactory = Callback { ReadOnlyObjectWrapper(it.value.getReleaseDate()) }
-            columns[3].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getMachine()) }
-            columns[4].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getAvailability()) }
+        with(tableView.columns) {
+            this[0].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getTitle()) }
+            this[1].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getGenre()) }
+            this[2].cellValueFactory = Callback { ReadOnlyObjectWrapper(it.value.getReleaseDate()) }
+            this[3].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getMachine()) }
+            this[4].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getAvailability()) }
         }
     }
 
     private fun createDownloadsTable() {
-        downloadsTableView.columns.also { columns ->
-            columns[0].cellFactory = Callback { FileDownloadTableCell() }
-            columns[1].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getFileName()) }
-            columns[2].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getFileType().text) }
-            columns[3].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getReleaseYear()?.toString()) }
-            columns[4].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getMachine()) }
-            columns[5].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getSource()) }
+        with(downloadsTableView.columns) {
+            this[0].cellFactory = Callback { FileDownloadTableCell() }
+            this[1].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getFileName()) }
+            this[2].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getFileType().text) }
+            this[3].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getReleaseYear()?.toString()) }
+            this[4].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getMachine()) }
+            this[5].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.getSource()) }
         }
     }
 
@@ -469,35 +477,6 @@ class MainController : Initializable {
             if (download.isImage()) selectedImage.value = file?.toImage()
             // runLater para capturar bien la excepción y mostrar la ventana de error
             if (file != null) Platform.runLater { program?.launch(file) }
-        }
-    }
-}
-
-class FileDownloadTableCell : TableCell<ModelDownload, String>() {
-    private val cloudImage = I("cloud")
-    private val downloadedImage = I("file")
-    private val webImage = I("web")
-
-    private val iconView = ImageView()
-
-    init {
-        graphic = iconView
-    }
-
-    override fun updateItem(value: String?, empty: Boolean) {
-        val download = tableRow?.item
-
-        if (empty || (download == null)) {
-            //text = null
-            iconView.image = null
-        } else {
-            //text = download.fileName
-            val model = download.model
-            iconView.image = when {
-                download.getType() == ModelDownload.Type.Web -> webImage
-                model.isDownloaded(download) -> downloadedImage
-                else -> cloudImage
-            }
         }
     }
 }

@@ -10,7 +10,7 @@ import java.io.File
 
 class ZXCModel(name: String, dir: File, val source: String? = null) : Model(name, dir) {
     private val file: File = File(source)
-    private val zxc: ZXCollection = ZXCollection.loadCollection(file)
+    val zxc: ZXCollection = ZXCollection.loadCollection(file)
     private val downloadManager = DownloadManager()
 
     private val _entries by lazy {

@@ -11,8 +11,8 @@ import java.net.URLDecoder
 class ZXCModelDownload(val entry: ZXCModelEntry, private val download: Download) : ModelDownload(entry.model) {
     private val _fileType: FileType by lazy {
         FileType().apply {
-            id = download.fileType?.id!!
-            text = download.fileType?.text!!
+            id = download.type?.id!!
+            text = download.type?.text!!
         }
     }
 
@@ -31,17 +31,16 @@ class ZXCModelDownload(val entry: ZXCModelEntry, private val download: Download)
                 .removePrefix("http://")
                 .removePrefix("https://")
                 .replace('/', File.separatorChar)
-        val name = download.fileName
+        val name = download.name
         return if (name == null) {
             path
         } else {
-            "${path.substringBeforeLast(File.separatorChar)}${File.separatorChar}${download.fileName}"
+            "${path.substringBeforeLast(File.separatorChar)}${File.separatorChar}${download.name}"
         }
         //return URLDecoder.decode(download.fileLink, "utf-8").removePrefix("http://").removePrefix("https://")
     }
 
     override fun getFileName(): String = download.fileName
-            ?: URLDecoder.decode(download.fileLink, "utf-8").substringAfterLast('/').substringBeforeLast('?')
 
     override fun getLink(): String = download.fileLink
 

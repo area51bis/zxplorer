@@ -3,12 +3,14 @@
         "name": "Yandex 2020",
         "version": 1,
         "author": "sés",
-        "url": "https://github.com/area51bis/zxplorer/raw/main/collections/yandex2020.json"
+        "url": "https://github.com/area51bis/zxplorer/raw/main/collections/yandex2020.json",
+        "web": "https://rgb.yandex.ru/2020"
     },
     "entries": [
         {
             "title": "1024",
             "genre": 20,
+            "author": "Savely Ivankov (Yprit)",
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
@@ -45,6 +47,7 @@
         {
             "title": "6.6.6.6",
             "genre": 21,
+            "author": "Anhot studio (team)",
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
@@ -81,6 +84,7 @@
         {
             "title": "Marsmare: Alienation",
             "genre": 11,
+            "author": "Drunk Fly (team)",
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
@@ -117,6 +121,7 @@
         {
             "title": "Greentailed Batoot Simulator",
             "genre": 21,
+            "author": "Victor Lopatin",
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
@@ -154,6 +159,7 @@
             "title": "Bullet Storm",
             "genre": 21,
             "machines": [3],
+            "author": "VolatiL (team)",
             "languages": ["en"],
             "release_date": "2020",
             "availability": "A",
@@ -189,6 +195,7 @@
         {
             "title": "CODE-112",
             "genre": 11,
+            "author": "PCNONOGames (team)",
             "machines": [3],
             "languages": ["en", "es"],
             "release_date": "2020",
@@ -225,6 +232,7 @@
         {
             "title": "Cosmic Payback",
             "genre": 11,
+            "author": "John Connolly (PROSM)",
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
@@ -261,6 +269,7 @@
         {
             "title": "Cygnus: Alpha",
             "genre": 15,
+            "author": "ILFORD (team)",
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
@@ -297,6 +306,7 @@
         {
             "title": "ENIGMATIK",
             "genre": 20,
+            "author": "IADVD (team)",
             "machines": [3],
             "languages": ["en", "es", "pt", "ru"],
             "release_date": "2020",
@@ -331,8 +341,9 @@
             ]
         },
         {
-            "title": "Капитан Гофер",
+            "title": "Captain Gofer",
             "genre": 13,
+            "author": "Viktor Davydov (Dwa83)",
             "machines": [5],
             "languages": ["ru"],
             "release_date": "2020",
@@ -369,6 +380,7 @@
         {
             "title": "IceSpace",
             "genre": 21,
+            "author": "Victor Lopatin",
             "machines": [14],
             "languages": ["en"],
             "release_date": "2020",
@@ -405,6 +417,7 @@
         {
             "title": "Red Raid: The beginning",
             "genre": 11,
+            "author": "ZXBitles (team)",
             "machines": [3],
             "languages": ["de", "en", "es", "it"],
             "release_date": "2020",
@@ -441,6 +454,7 @@
         {
             "title": "Techno Alice",
             "genre": 11,
+            "author": "Alexander Konstantinov (ALKO)",
             "machines": [3],
             "languages": ["ru"],
             "release_date": "2020",
@@ -477,6 +491,7 @@
         {
             "title": "White Jaguar",
             "genre": 11,
+            "author": "Roman Vartholomeev (romancha)",
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",
@@ -513,6 +528,7 @@
         {
             "title": "Yoyo's Great Adventure",
             "genre": 13,
+            "author": "Rafał Miazga",
             "machines": [3],
             "languages": ["en"],
             "release_date": "2020",

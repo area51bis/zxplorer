@@ -59,6 +59,12 @@
             "type": "zxdb",
             "name": "ZXDB",
             "path": "zxdb"
+        },
+        {
+            "type": "zxc",
+            "name": "Yandex 2020",
+            "path": "yandex2020",
+            "source": "D:\\proyectos\\github\\area51bis\\zxplorer\\collections\\yandex2020.json"
         }
     ]
 }

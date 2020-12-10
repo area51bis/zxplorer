@@ -13,6 +13,7 @@ import javafx.scene.control.TableView
 import javafx.scene.image.Image
 import javafx.util.Callback
 import java.io.File
+import kotlin.reflect.KClass
 
 /**
 Atajo para añadir columnas. Equivalente a:
@@ -29,7 +30,8 @@ fun <S, T> TableView<S>.addColumn(name: String, callback: Callback<TableColumn.C
     }
 }
 
-fun Any.fxmlLoader(name: String): FXMLLoader = FXMLLoader(javaClass.getResource(name), App.strings)
+//fun Any.fxmlLoader(name: String): FXMLLoader = FXMLLoader(javaClass.getResource(name), App.strings)
+fun KClass<*>.fxmlLoader(name: String): FXMLLoader = FXMLLoader(this.java.getResource(name), App.strings)
 
 /** Texto localizado. */
 fun T(key: String): String = try {

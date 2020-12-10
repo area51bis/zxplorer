@@ -47,7 +47,7 @@ class EditLibsDialog : AppDialog<Boolean>() {
             Library.TYPE_ZXC to T("lib_type_zxc")
         )
 
-        fun create() = create<EditLibsDialog>("edit_libs_dialog.fxml")
+        fun create() = create(EditLibsDialog::class, "edit_libs_dialog.fxml")
     }
 
     override fun createStage(): Stage = super.createStage().apply {

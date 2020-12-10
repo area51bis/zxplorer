@@ -43,7 +43,7 @@ class EditProgramsDialog : AppDialog<Unit>() {
     private var selectedProgram: Program? = null
 
     companion object {
-        fun create() = create<EditProgramsDialog>("edit_programs_dialog.fxml")
+        fun create() = create(EditProgramsDialog::class, "edit_programs_dialog.fxml")
     }
 
     override fun createStage(): Stage = super.createStage().apply {

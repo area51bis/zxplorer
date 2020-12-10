@@ -21,12 +21,14 @@ class App : Application() {
     }
 
     override fun start(primaryStage: Stage?) {
+        /*
         Thread.setDefaultUncaughtExceptionHandler { t, e ->
             Platform.runLater {
                 println(e.stackTraceToString())
                 ErrorDialog().show(e)
             }
         }
+        */
 
         mainStage = primaryStage!!
 
