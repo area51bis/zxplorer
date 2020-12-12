@@ -8,7 +8,7 @@ import com.ses.app.zxplorer.zxcollection.IdText
 
 class IntReferenceTypeAdapter<T : IdText<Int>>(val list: IdList<T>) : TypeAdapter<T>() {
     override fun write(writer: JsonWriter?, value: T) {
-        writer?.name("id")?.value(value.id)
+        writer?.value(value.id)
     }
 
     override fun read(reader: JsonReader?): T {

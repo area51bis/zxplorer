@@ -31,25 +31,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4907fc0-9ae3-45b2-a941-903078f601e8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/FileDownloadTableCell.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/zxcollection/ZXCAnnotations.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collections/yandex2020.json" beforeDir="false" afterPath="$PROJECT_DIR$/collections/yandex2020.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/strings.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/strings.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/strings_es.properties" beforeDir="false" afterPath="$PROJECT_DIR$/resources/strings_es.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/App.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/Extensions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/Extensions.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/MainController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/MainController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/ZXCModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/ZXCModel.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/ZXCModelDownload.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/ZXCModelDownload.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/ZXCModelEntry.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/ZXCModelEntry.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/ZXCollectionEditor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/ZXCollectionEditor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/zxcollection_editor.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/zxcollection_editor.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/ui/AppDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/ui/AppDialog.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/ui/EditLibsDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/ui/EditLibsDialog.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/ui/EditProgramsDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/ui/EditProgramsDialog.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/ui/ProgressDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/ui/ProgressDialog.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/zxcollection/Download.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/zxcollection/Download.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/zxcollection/IdList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/zxcollection/IdList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/zxcollection/ReleaseDate.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/zxcollection/ReleaseDate.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/zxcollection/ZXCollection.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/zxcollection/ZXCollection.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/zxcollection/adapters/IntReferenceTypeAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/zxcollection/adapters/IntReferenceTypeAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/zxcollection/adapters/ReleaseDateTypeAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/zxcollection/adapters/ReleaseDateTypeAdapter.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,14 +52,13 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
-        <option value="Kotlin File" />
         <option value="Kotlin Class" />
+        <option value="Kotlin File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="ProjectId" id="1kCkCc48R2jTYeFjg0UaaxEYAC9" />
   <component name="ProjectViewState">
@@ -259,7 +250,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607552825707</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="[+] Editor de collecciones (WIP).">
+      <created>1607644122699</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1607644122699</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -300,6 +298,7 @@
     <MESSAGE value="[*] Actualización de dependencias." />
     <MESSAGE value="[*] Cambio de nombre: ZXBrowser -&gt; ZXplorer." />
     <MESSAGE value="[*] Pequeños ajustes." />
-    <option name="LAST_COMMIT_MESSAGE" value="[*] Pequeños ajustes." />
+    <MESSAGE value="[+] Editor de collecciones (WIP)." />
+    <option name="LAST_COMMIT_MESSAGE" value="[+] Editor de collecciones (WIP)." />
   </component>
 </project>

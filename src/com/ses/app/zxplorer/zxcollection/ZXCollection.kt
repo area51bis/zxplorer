@@ -1,5 +1,7 @@
 package com.ses.app.zxplorer.zxcollection
 
+import com.google.gson.ExclusionStrategy
+import com.google.gson.FieldAttributes
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -27,6 +29,8 @@ class ZXCollection() {
     var fileTypes = IdList<FileType>()
     var availabilityTypes = IdList<Availability>()
 
+    fun genres() = ZXCollection.genres.rows
+
     companion object {
         private val gson: Gson
 
@@ -37,6 +41,11 @@ class ZXCollection() {
         private val fileTypes: IdList<FileType>
         private val availabilityTypes: IdList<Availability>
 
+        private val exclusionStrategy = object: ExclusionStrategy {
+            override fun shouldSkipField(f: FieldAttributes?): Boolean = f?.getAnnotation(Exclude::class.java) != null
+            override fun shouldSkipClass(cls: Class<*>?): Boolean = cls?.getAnnotation(Exclude::class.java) != null
+        }
+
         init {
             genres = readInternalList("genretypes", Genre::class)
             machines = readInternalList("machinetypes", Machine::class)
@@ -45,6 +54,8 @@ class ZXCollection() {
             availabilityTypes = readInternalList("availabletypes", Availability::class)
 
             gson = GsonBuilder()
+                    .addSerializationExclusionStrategy(exclusionStrategy)
+                    .addDeserializationExclusionStrategy(exclusionStrategy)
                     .registerTypeAdapter(ReleaseDate::class.java, ReleaseDateTypeAdapter())
                     .registerTypeAdapter(Genre::class.java, IntReferenceTypeAdapter(genres))
                     .registerTypeAdapter(Machine::class.java, IntReferenceTypeAdapter(machines))
@@ -53,6 +64,8 @@ class ZXCollection() {
                     .registerTypeAdapter(Availability::class.java, StringReferenceTypeAdapter(availabilityTypes))
                     .create()
         }
+
+        fun genres() = genres.rows
 
         fun loadInfo(file: File): ZXCollectionInfo? {
             return JsonReader(file.reader()).use { reader ->

@@ -2,7 +2,7 @@ package com.ses.app.zxplorer.zxcollection
 
 class IdList<T : IdText<*>> {
     private val _rows: LinkedHashMap<Any, T> = LinkedHashMap()
-    val rows: Iterable<T> get() = _rows.values
+    val rows: Collection<T> get() = _rows.values
 
     fun addRow(row: T) {
         _rows[row.id] = row

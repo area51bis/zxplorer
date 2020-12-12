@@ -27,7 +27,7 @@ class ZXCModelDownload(val entry: ZXCModelEntry, private val download: Download)
     override fun getType(): Type = Type.File
 
     override fun getFilePath(): String {
-        val path = URLDecoder.decode(download.fileLink, "utf-8")
+        val path = URLDecoder.decode(download.link, "utf-8")
                 .removePrefix("http://")
                 .removePrefix("https://")
                 .replace('/', File.separatorChar)
@@ -42,9 +42,9 @@ class ZXCModelDownload(val entry: ZXCModelEntry, private val download: Download)
 
     override fun getFileName(): String = download.fileName
 
-    override fun getLink(): String = download.fileLink
+    override fun getLink(): String = download.link
 
-    override fun getFullUrl(): String = download.fileLink
+    override fun getFullUrl(): String = download.link
 
     override fun getExtension(): Extension? = null
 

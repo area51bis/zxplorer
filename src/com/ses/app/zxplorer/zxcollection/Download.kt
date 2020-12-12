@@ -4,8 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.net.URLDecoder
 
 class Download {
-    @SerializedName("link")
-    lateinit var fileLink: String
+    lateinit var link: String
     @SerializedName("ext")
     var extension: String? = null
     var type: FileType? = null
@@ -14,6 +13,7 @@ class Download {
     var releaseDate: ReleaseDate? = null
     var machine: Machine? = null
 
+    @Exclude
     val fileName: String get() = name
-            ?: URLDecoder.decode(fileLink, "utf-8").substringAfterLast('/').substringBeforeLast('?')
+            ?: URLDecoder.decode(link, "utf-8").substringAfterLast('/').substringBeforeLast('?')
 }

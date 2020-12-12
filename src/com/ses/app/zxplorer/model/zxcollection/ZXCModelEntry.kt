@@ -21,7 +21,7 @@ class ZXCModelEntry(model: Model, val entry: Entry) : ModelEntry(model) {
 
     override fun getReleaseYear(): Int? = entry.releaseDate?.year
 
-    override fun getReleaseDate(): ReleaseDate = entry.releaseDate ?: ReleaseDate.NULL
+    override fun getReleaseDate(): ReleaseDate = entry.releaseDate ?: ReleaseDate.EMPTY
 
     override fun getMachine(): String = entry.machines?.first()?.text ?: Model.NULL_MACHINE_TYPE_STRING
 
