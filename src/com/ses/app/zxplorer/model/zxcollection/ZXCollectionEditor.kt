@@ -7,6 +7,7 @@ import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.beans.property.SimpleStringProperty
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
+import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.cell.ComboBoxTableCell
 import javafx.scene.control.cell.TextFieldTableCell
@@ -14,6 +15,10 @@ import javafx.util.Callback
 import javafx.util.StringConverter
 import java.net.URL
 import java.util.*
+import kotlin.reflect.KMutableProperty
+import kotlin.reflect.KProperty
+import kotlin.reflect.cast
+import kotlin.reflect.jvm.jvmErasure
 
 
 class ZXCollectionEditor : AppDialog<Unit>() {
@@ -48,15 +53,25 @@ class ZXCollectionEditor : AppDialog<Unit>() {
         initDownloadsTable()
     }
 
+    //private fun <S, T> setupStringTableColumn( column: TableColumn<S, *>, cls: KClass<*> ) {
+    private fun <S> setupStringTableColumn(column: TableColumn<S, *>, propertyName: String ) {
+        column.cellValueFactory = Callback { o ->
+            val prop: KProperty<*> = o.value!!::class.members.find { p -> p.name == propertyName } as KProperty<*>
+            SimpleStringProperty(prop.getter.call(o.value).toString())
+        }
+
+        column.cellFactory = TextFieldTableCell.forTableColumn()
+
+        column.setOnEditCommit { ev ->
+            val prop: KMutableProperty<*> = ev.rowValue!!::class.members.find { p -> p.name == propertyName } as KMutableProperty<*>
+            prop.setter.call(ev.rowValue, prop.returnType.jvmErasure.cast(ev.newValue))
+        }
+    }
+
     private fun initEntriesTable() {
         with(entriesTable.columns) {
-            this[0].cellValueFactory = Callback { SimpleStringProperty(it.value.title) }
-            this[0].cellFactory = TextFieldTableCell.forTableColumn()
-            this[0].setOnEditCommit { it.rowValue.title = it.newValue as String }
-
-            this[1].cellValueFactory = Callback { ReadOnlyObjectWrapper(it.value.genre?.text) }
-            this[1].cellFactory = ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(ZXCollection.genres()))
-            this[1].setOnEditCommit { it.rowValue.genre = it.newValue as Genre }
+            StringColumnEditor(this[0], "title").configure()
+            ComboColumnEditor(this[1], "genre", ZXCollection.genres()).configure()
 
             this[2].cellValueFactory = Callback { ReadOnlyObjectWrapper(it.value.releaseDate) }
             this[2].cellFactory = TextFieldTableCell.forTableColumn(object : StringConverter<ReleaseDate>() {
@@ -66,7 +81,8 @@ class ZXCollectionEditor : AppDialog<Unit>() {
             this[2].setOnEditCommit { it.rowValue.releaseDate = it.newValue as ReleaseDate }
 
             this[3].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.machines?.first()?.text) }
-            this[4].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.availability?.text) }
+            //this[4].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.availability?.text) }
+            ComboColumnEditor(this[4], "availability", ZXCollection.availabilityTypes()).configure()
         }
 
         entriesTable.selectionModel.selectedItemProperty().addListener { _, _, entry ->

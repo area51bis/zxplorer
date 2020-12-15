@@ -66,6 +66,7 @@ class ZXCollection() {
         }
 
         fun genres() = genres.rows
+        fun availabilityTypes() = availabilityTypes.rows
 
         fun loadInfo(file: File): ZXCollectionInfo? {
             return JsonReader(file.reader()).use { reader ->

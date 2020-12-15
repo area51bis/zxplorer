@@ -16,10 +16,10 @@ class SQL(private val conn: Connection) {
         fun getTableName(cls: KClass<*>): String? = cls.findAnnotation<Table>()?.name
 
         /** primero busca [@Query], luego [@Table]. */
-        fun getQuery(cls: KClass<*>): String? = cls.findAnnotation<Query>()?.query
+        fun getQuery(cls: KClass<*>): String = cls.findAnnotation<Query>()?.query
                 ?: "SELECT * FROM ${getTableName(cls)}"
 
-        fun getKeyProperty(cls: KClass<*>): KProperty<*>? = cls.members.find { it.hasAnnotation<Key>() } as KProperty<*>
+        fun getKeyProperty(cls: KClass<*>): KProperty<*> = cls.members.find { it.hasAnnotation<Key>() } as KProperty<*>
     }
 
     fun select(query: String, f: (rs: ResultSet) -> Unit) {
