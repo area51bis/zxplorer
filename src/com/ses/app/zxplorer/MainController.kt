@@ -4,7 +4,7 @@ import com.ses.app.zxplorer.filters.EntryTitleFilter
 import com.ses.app.zxplorer.filters.Filter
 import com.ses.app.zxplorer.model.*
 import com.ses.app.zxplorer.model.zxcollection.ZXCModel
-import com.ses.app.zxplorer.model.zxcollection.ZXCollectionEditor
+import com.ses.app.zxplorer.model.zxcollection.editor.ZXCollectionEditor
 import com.ses.app.zxplorer.ui.EditLibsDialog
 import com.ses.app.zxplorer.ui.EditProgramsDialog
 import com.ses.app.zxplorer.ui.ProgressDialog

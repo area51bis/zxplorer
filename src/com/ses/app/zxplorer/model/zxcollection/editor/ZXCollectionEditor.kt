@@ -1,15 +1,13 @@
-package com.ses.app.zxplorer.model.zxcollection
+package com.ses.app.zxplorer.model.zxcollection.editor
 
 import com.ses.app.zxplorer.ui.AppDialog
 import com.ses.app.zxplorer.zxcollection.*
 import javafx.beans.property.ReadOnlyObjectWrapper
 import javafx.beans.property.ReadOnlyStringWrapper
 import javafx.beans.property.SimpleStringProperty
-import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
-import javafx.scene.control.cell.ComboBoxTableCell
 import javafx.scene.control.cell.TextFieldTableCell
 import javafx.util.Callback
 import javafx.util.StringConverter
@@ -54,7 +52,7 @@ class ZXCollectionEditor : AppDialog<Unit>() {
     }
 
     //private fun <S, T> setupStringTableColumn( column: TableColumn<S, *>, cls: KClass<*> ) {
-    private fun <S> setupStringTableColumn(column: TableColumn<S, *>, propertyName: String ) {
+    private fun <S> setupStringTableColumn(column: TableColumn<S, *>, propertyName: String) {
         column.cellValueFactory = Callback { o ->
             val prop: KProperty<*> = o.value!!::class.members.find { p -> p.name == propertyName } as KProperty<*>
             SimpleStringProperty(prop.getter.call(o.value).toString())
@@ -72,16 +70,9 @@ class ZXCollectionEditor : AppDialog<Unit>() {
         with(entriesTable.columns) {
             StringColumnEditor(this[0], "title").configure()
             ComboColumnEditor(this[1], "genre", ZXCollection.genres()).configure()
-
-            this[2].cellValueFactory = Callback { ReadOnlyObjectWrapper(it.value.releaseDate) }
-            this[2].cellFactory = TextFieldTableCell.forTableColumn(object : StringConverter<ReleaseDate>() {
-                override fun toString(date: ReleaseDate?): String = date.toString()
-                override fun fromString(s: String?): ReleaseDate = ReleaseDate.from(s)
-            })
-            this[2].setOnEditCommit { it.rowValue.releaseDate = it.newValue as ReleaseDate }
+            StringColumnEditor(this[2], "releaseDate", ReleaseDate.stringConverter).configure()
 
             this[3].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.machines?.first()?.text) }
-            //this[4].cellValueFactory = Callback { ReadOnlyStringWrapper(it.value.availability?.text) }
             ComboColumnEditor(this[4], "availability", ZXCollection.availabilityTypes()).configure()
         }
 
