@@ -30,14 +30,7 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b4907fc0-9ae3-45b2-a941-903078f601e8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/MainController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/MainController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/ColumnEditor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/editor/ColumnEditor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/ZXCollectionEditor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/editor/ZXCollectionEditor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/zxcollection_editor.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/ses/app/zxplorer/model/zxcollection/editor/zxcollection_editor.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/module-info.java" afterDir="false" />
-    </list>
+    <list default="true" id="b4907fc0-9ae3-45b2-a941-903078f601e8" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -267,7 +260,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608069603485</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="[*] Mejoras en editor de colecciones.">
+      <created>1608801621488</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1608801621488</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
